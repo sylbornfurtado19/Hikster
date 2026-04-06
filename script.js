@@ -1,202 +1,334 @@
-// 1. The Destination Database (Linked to local images1 folder)
+// ================= DESTINATIONS DATA (21 TREKS) =================
+
 const destinations = [
-    {
-        name: "Bali, Indonesia", region: "Asia", image: "images1/BALI.jpg",
-        desc: "Tropical beaches, ancient temples, and serene yoga retreats",
-        climate: ["beach", "tropical"], trip: ["relaxation", "cultural"],
-        budget: ["budget", "midrange"], companions: ["solo", "couple", "friends"],
-        activities: ["nature"]
-    },
-    {
-        name: "Tokyo, Japan", region: "Asia", image: "images1/TOKYO.jpg",
-        desc: "Vibrant city life, cherry blossoms, and world-class cuisine",
-        climate: ["city"], trip: ["cultural", "culinary"],
-        budget: ["midrange", "luxury"], companions: ["solo", "couple", "friends"],
-        activities: ["food", "nightlife"]
-    },
-    {
-        name: "Bangkok, Thailand", region: "Asia", image: "images1/BANGKOK.jpg",
-        desc: "Bustling markets, golden temples, and street food adventures",
-        climate: ["city", "tropical"], trip: ["cultural", "culinary"],
-        budget: ["budget", "midrange"], companions: ["solo", "couple", "friends"],
-        activities: ["food", "history", "nightlife"]
-    },
-    {
-        name: "Taj Mahal, India", region: "Asia", image: "images1/TAJ MAHAL.jpg",
-        desc: "Iconic marble mausoleum and rich Mughal history",
-        climate: ["city"], trip: ["cultural"],
-        budget: ["budget", "midrange"], companions: ["solo", "couple", "family"],
-        activities: ["history"]
-    },
-    {
-        name: "Swiss Alps, Switzerland", region: "Europe", image: "images1/SWISS ALPS.jpg",
-        desc: "Snow-capped peaks, chocolate, and alpine hiking trails",
-        climate: ["mountains"], trip: ["adventure", "relaxation"],
-        budget: ["luxury"], companions: ["couple", "family", "friends"],
-        activities: ["nature"]
-    },
-    {
-        name: "Paris, France", region: "Europe", image: "images/paris.jpg", 
-        desc: "Romantic streets, art museums, and fresh croissants",
-        climate: ["city"], trip: ["cultural", "culinary", "relaxation"],
-        budget: ["midrange", "luxury"], companions: ["solo", "couple", "friends"],
-        activities: ["history", "food"]
-    },
-    {
-        name: "Santorini, Greece", region: "Europe", image: "images1/SANTORINI.jpg",
-        desc: "Cliffside villages, azure waters, and volcanic sunsets",
-        climate: ["beach"], trip: ["relaxation"],
-        budget: ["luxury"], companions: ["couple"],
-        activities: ["nature", "food"]
-    },
-    {
-        name: "Reykjavik, Iceland", region: "Europe", image: "images1/ICELAND.png",
-        desc: "Northern lights, hot springs, and rugged landscapes",
-        climate: ["mountains"], trip: ["adventure"],
-        budget: ["luxury"], companions: ["solo", "couple", "friends"],
-        activities: ["nature"]
-    },
-    {
-        name: "New York City, USA", region: "North America", image: "images1/NEW YORK.jpg",
-        desc: "Skyscrapers, Broadway shows, and diverse neighborhoods",
-        climate: ["city"], trip: ["cultural", "culinary"],
-        budget: ["luxury"], companions: ["solo", "couple", "friends"],
-        activities: ["history", "food", "nightlife"]
-    },
-    {
-        name: "Grand Canyon, USA", region: "North America", image: "images1/GRAND CANYON.jpg",
-        desc: "Majestic red rock formations and thrilling rafting",
-        climate: ["mountains"], trip: ["adventure"],
-        budget: ["budget", "midrange"], companions: ["solo", "family", "friends"],
-        activities: ["nature"]
-    },
-    {
-        name: "Vancouver, Canada", region: "North America", image: "images1/VANCOUVER.jpg",
-        desc: "Coastal beauty, fresh seafood, and urban parks",
-        climate: ["city", "mountains"], trip: ["adventure", "culinary"],
-        budget: ["midrange"], companions: ["solo", "couple", "family"],
-        activities: ["nature", "food"]
-    },
-    {
-        name: "Rio de Janeiro, Brazil", region: "South America", image: "images1/RIO DE JANEIRO.jpg",
-        desc: "Iconic beaches, samba rhythms, and Christ the Redeemer",
-        climate: ["beach", "tropical"], trip: ["adventure", "cultural"],
-        budget: ["midrange"], companions: ["solo", "couple", "friends"],
-        activities: ["nature", "nightlife"]
-    },
-    {
-        name: "Machu Picchu, Peru", region: "South America", image: "images1/MACHU PICCHU.jpg",
-        desc: "Ancient Incan citadel high in the Andes",
-        climate: ["mountains"], trip: ["adventure", "cultural"],
-        budget: ["midrange"], companions: ["solo", "couple", "friends"],
-        activities: ["history", "nature"]
-    },
-    {
-        name: "Galapagos Islands, Ecuador", region: "South America", image: "images1/ECUADOR.jpg",
-        desc: "Unique wildlife, volcanic islands, and Darwin's legacy",
-        climate: ["beach", "tropical"], trip: ["adventure"],
-        budget: ["luxury"], companions: ["couple", "family"],
-        activities: ["nature"]
-    },
-    {
-        name: "Cape Town, South Africa", region: "Africa", image: "images1/CAPE TOWN.jpg",
-        desc: "Dramatic coastlines, wine regions, and penguin beaches",
-        climate: ["beach", "mountains"], trip: ["adventure", "culinary"],
-        budget: ["midrange"], companions: ["couple", "family", "friends"],
-        activities: ["nature", "food"]
-    },
-    {
-        name: "Serengeti, Tanzania", region: "Africa", image: "images1/SERENGETI.jpg",
-        desc: "Great Migration, big game safaris, and endless plains",
-        climate: ["tropical"], trip: ["adventure"],
-        budget: ["luxury"], companions: ["couple", "family"],
-        activities: ["nature"]
-    },
-    {
-        name: "Marrakech, Morocco", region: "Africa", image: "images1/MARAKECH.jpg",
-        desc: "Colorful souks, riads, and Sahara desert gateways",
-        climate: ["city"], trip: ["cultural"],
-        budget: ["budget", "midrange"], companions: ["solo", "couple", "friends"],
-        activities: ["history", "food"]
-    },
-    {
-        name: "Sydney, Australia", region: "Oceania", image: "images1/SYDNEY.jpg",
-        desc: "Iconic harbor, surf beaches, and vibrant arts scene",
-        climate: ["city", "beach"], trip: ["adventure", "cultural"],
-        budget: ["midrange", "luxury"], companions: ["solo", "couple", "family"],
-        activities: ["nature", "nightlife"]
-    },
-    {
-        name: "Great Barrier Reef, Australia", region: "Oceania", image: "images1/GREAT BARRIER REEF.jpg",
-        desc: "World's largest coral reef system and marine life",
-        climate: ["beach", "tropical"], trip: ["adventure", "relaxation"],
-        budget: ["luxury"], companions: ["solo", "couple", "family"],
-        activities: ["nature"]
-    },
-    {
-        name: "Queenstown, New Zealand", region: "Oceania", image: "images/Queenstown.jpg",
-        desc: "Adventure capital, fjords, and extreme sports",
-        climate: ["mountains"], trip: ["adventure"],
-        budget: ["midrange", "luxury"], companions: ["solo", "friends"],
-        activities: ["nature", "nightlife"]
-    }
+
+/* ---------- INDIA ---------- */
+{
+name:"Hampta Pass Trek",
+image:"images1/HAMPTA.jpg",
+desc:"A perfect crossover trek from lush green valleys to cold deserts of Spiti.",
+difficulty:"moderate",
+terrain:"mountain",
+altitude:"medium",
+duration:5,
+experience:"intermediate",
+budget:"budget"
+},
+
+{
+name:"Kedarkantha Trek",
+image:"images1/KEDARKANTHA.jpg",
+desc:"A beginner-friendly snow trek with stunning summit views.",
+difficulty:"easy",
+terrain:"snow",
+altitude:"medium",
+duration:4,
+experience:"beginner",
+budget:"budget"
+},
+
+{
+name:"Chadar Trek",
+image:"images1/CHADAR.jpg",
+desc:"Walk over a frozen river in extreme Himalayan winters.",
+difficulty:"hard",
+terrain:"snow",
+altitude:"high",
+duration:9,
+experience:"advanced",
+budget:"high"
+},
+
+{
+name:"Roopkund Trek",
+image:"images1/ROOPKUND.jpg",
+desc:"Mysterious skeleton lake trek in high Himalayas.",
+difficulty:"moderate",
+terrain:"mountain",
+altitude:"high",
+duration:7,
+experience:"intermediate",
+budget:"budget"
+},
+
+{
+name:"Valley of Flowers Trek",
+image:"images1/VALLEY.jpg",
+desc:"Colorful alpine flowers spread across scenic meadows.",
+difficulty:"easy",
+terrain:"forest",
+altitude:"medium",
+duration:5,
+experience:"beginner",
+budget:"budget"
+},
+
+{
+name:"Rajmachi Trek",
+image:"images1/RAJMACHI.jpg",
+desc:"A scenic monsoon trek near Pune with forts and waterfalls.",
+difficulty:"easy",
+terrain:"forest",
+altitude:"low",
+duration:2,
+experience:"beginner",
+budget:"budget"
+},
+
+{
+name:"Sandakphu Trek",
+image:"images1/SANDAKPHU.jpg",
+desc:"Witness Everest, Kanchenjunga, and more in one frame.",
+difficulty:"moderate",
+terrain:"mountain",
+altitude:"high",
+duration:7,
+experience:"intermediate",
+budget:"mid"
+},
+
+{
+name:"Kumara Parvatha Trek",
+image:"images1/KUMARA.jpg",
+desc:"One of the toughest treks in South India.",
+difficulty:"hard",
+terrain:"forest",
+altitude:"medium",
+duration:2,
+experience:"advanced",
+budget:"budget"
+},
+
+{
+name:"Triund Trek",
+image:"images1/TRIUND.jpg",
+desc:"Short and scenic trek near Dharamshala.",
+difficulty:"easy",
+terrain:"mountain",
+altitude:"low",
+duration:2,
+experience:"beginner",
+budget:"budget"
+},
+
+{
+name:"Tadiandamol Trek",
+image:"images1/TADIANDAMOL.jpg",
+desc:"Highest peak in Coorg with lush green landscapes.",
+difficulty:"easy",
+terrain:"forest",
+altitude:"low",
+duration:2,
+experience:"beginner",
+budget:"budget"
+},
+
+/* ---------- INTERNATIONAL ---------- */
+
+{
+name:"Everest Base Camp Trek",
+image:"images1/EVEREST.jpg",
+desc:"The ultimate Himalayan adventure to the base of the world's tallest peak.",
+difficulty:"hard",
+terrain:"mountain",
+altitude:"high",
+duration:12,
+experience:"advanced",
+budget:"high"
+},
+
+{
+name:"Annapurna Circuit Trek",
+image:"images1/ANNAPURNA.jpg",
+desc:"A diverse trek covering forests, rivers, and high passes.",
+difficulty:"moderate",
+terrain:"mountain",
+altitude:"high",
+duration:10,
+experience:"intermediate",
+budget:"mid"
+},
+
+{
+name:"Inca Trail",
+image:"images1/INCA.jpg",
+desc:"Ancient trail leading to Machu Picchu.",
+difficulty:"moderate",
+terrain:"mountain",
+altitude:"medium",
+duration:4,
+experience:"intermediate",
+budget:"mid"
+},
+
+{
+name:"Mount Kilimanjaro Trek",
+image:"images1/KILIMANJARO.jpg",
+desc:"Africa’s highest peak and a bucket-list climb.",
+difficulty:"hard",
+terrain:"mountain",
+altitude:"high",
+duration:8,
+experience:"advanced",
+budget:"high"
+},
+
+{
+name:"Torres del Paine Trek",
+image:"images1/PATAGONIA.jpg",
+desc:"Dramatic landscapes of glaciers and peaks.",
+difficulty:"moderate",
+terrain:"mountain",
+altitude:"medium",
+duration:6,
+experience:"intermediate",
+budget:"high"
+},
+
+{
+name:"Dolomites Trek",
+image:"images1/DOLOMITES.jpg",
+desc:"Alpine trekking with stunning jagged peaks.",
+difficulty:"moderate",
+terrain:"mountain",
+altitude:"medium",
+duration:5,
+experience:"intermediate",
+budget:"high"
+},
+
+{
+name:"Laugavegur Trail",
+image:"images1/ICELAND.jpg",
+desc:"Colorful volcanic landscapes in Iceland.",
+difficulty:"moderate",
+terrain:"mountain",
+altitude:"medium",
+duration:4,
+experience:"intermediate",
+budget:"high"
+},
+
+{
+name:"Mount Fuji Trek",
+image:"images1/FUJI.jpg",
+desc:"Iconic sunrise trek in Japan.",
+difficulty:"moderate",
+terrain:"mountain",
+altitude:"high",
+duration:2,
+experience:"intermediate",
+budget:"mid"
+},
+
+{
+name:"Appalachian Trail",
+image:"images1/APPALACHIAN.jpg",
+desc:"One of the longest trekking routes in the world.",
+difficulty:"hard",
+terrain:"forest",
+altitude:"medium",
+duration:14,
+experience:"advanced",
+budget:"mid"
+},
+
+{
+name:"Overland Track",
+image:"images1/OVERLAND.jpg",
+desc:"Tasmania’s famous wilderness trek.",
+difficulty:"moderate",
+terrain:"forest",
+altitude:"medium",
+duration:6,
+experience:"intermediate",
+budget:"high"
+},
+
+{
+name:"Trolltunga Trek",
+image:"images1/TROLLTUNGA.jpg",
+desc:"A dramatic cliff hike in Norway.",
+difficulty:"hard",
+terrain:"mountain",
+altitude:"high",
+duration:1,
+experience:"advanced",
+budget:"high"
+}
+
 ];
 
-// 2. Grader Function (The matching algorithm)
-function gradeDestinations(userPrefs) {
-    let scoredDestinations = destinations.map(dest => {
-        let score = 0;
-        let matchedTags = [];
 
-        if (dest.climate.includes(userPrefs.climate)) { score += 2; matchedTags.push("Climate"); }
-        if (dest.trip.includes(userPrefs.trip)) { score += 2; matchedTags.push("Vibe"); }
-        if (dest.budget.includes(userPrefs.budget)) { score += 1; matchedTags.push("Budget"); }
-        if (dest.companions.includes(userPrefs.companions)) { score += 1; matchedTags.push("Party Size"); }
-        if (dest.activities.includes(userPrefs.activities)) { score += 2; matchedTags.push("Activities"); }
+// ================= MATCHING LOGIC =================
 
-        return { ...dest, score, matchedTags };
-    });
+function gradeDestinations(userPrefs){
 
-    // Sort by highest score, then slice top 3
-    scoredDestinations.sort((a, b) => b.score - a.score);
-    return scoredDestinations.slice(0, 3);
+return destinations.map(dest =>{
+
+let score = 0;
+
+if(dest.difficulty === userPrefs.difficulty) score += 2;
+if(dest.terrain === userPrefs.terrain) score += 2;
+if(dest.altitude === userPrefs.altitude) score += 1;
+if(dest.experience === userPrefs.experience) score += 2;
+
+// duration match
+if(userPrefs.days <= dest.duration) score += 1;
+
+// budget match
+if(dest.budget === userPrefs.budget) score += 1;
+
+return {...dest, score};
+
+})
+.sort((a,b)=>b.score-a.score)
+.slice(0,3);
+
 }
 
-// 3. Dynamic Tailwind Card Generator
-function buildCardHTML(dest, isMatchResult = false) {
-    // Generate pill tags for the card
-    const allTags = [...dest.trip, ...dest.climate];
-    const topTags = allTags.slice(0, 2).map(tag => 
-        `<span class="px-3 py-1 bg-mint/10 text-mint text-xs font-bold rounded-full uppercase tracking-wider">${tag}</span>`
-    ).join('');
 
-    // Optional match score badge for the results page
-    let matchBadge = '';
-    if (isMatchResult) {
-        const matchPercentage = Math.round((dest.score / 8) * 100);
-        matchBadge = `<div class="absolute top-4 right-4 bg-juniper text-mint px-3 py-1 rounded-full font-bold text-sm shadow-md border border-mint/20">
-            ${matchPercentage}% Match
-        </div>`;
-    }
+// ================= CARD UI =================
 
-    // Return the injected Tailwind HTML
-    return `
-        <div class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 border border-gray-100 dark:border-gray-700 flex flex-col h-full relative">
-            ${matchBadge}
-            <img src="${dest.image}" alt="${dest.name}" class="w-full h-56 object-cover">
-            
-            <div class="p-6 flex-1 flex flex-col">
-                <div class="flex gap-2 mb-3">
-                    ${topTags}
-                </div>
-                
-                <h3 class="text-2xl font-bold text-juniper dark:text-white mb-2 leading-tight">${dest.name}</h3>
-                <p class="text-gray-600 dark:text-gray-400 mb-6 flex-1 text-sm leading-relaxed">${dest.desc}</p>
-                
-                <a href="destination.html?id=${encodeURIComponent(dest.name)}" class="mt-auto block text-center px-6 py-3 bg-mint hover:bg-teal text-juniper font-bold rounded-xl transition-colors w-full">
-                    View Itinerary
-                </a>
-            </div>
-        </div>
-    `;
+function buildCardHTML(dest, isMatch=false){
+
+return `
+<div class="destination-card bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:-translate-y-2 transition-all"
+data-type="${dest.difficulty} ${dest.terrain} ${dest.altitude}">
+
+<img src="${dest.image}" class="w-full h-56 object-cover">
+
+<div class="p-5 flex flex-col h-full">
+
+<h3 class="text-xl font-bold mb-2">${dest.name}</h3>
+
+<p class="text-sm text-gray-500 mb-4 flex-1">${dest.desc}</p>
+
+<div class="text-xs mb-4 flex gap-2 flex-wrap">
+<span class="bg-mint px-2 py-1 rounded">${dest.difficulty}</span>
+<span class="bg-mint px-2 py-1 rounded">${dest.terrain}</span>
+<span class="bg-mint px-2 py-1 rounded">${dest.altitude}</span>
+</div>
+
+<a href="destination.html?id=${encodeURIComponent(dest.name)}"
+class="mt-auto bg-mint text-juniper text-center py-2 rounded font-bold">
+View Trek
+</a>
+
+</div>
+</div>
+`;
 }
+
+
+// ================= LOAD ALL DESTINATIONS =================
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+const container = document.getElementById("catalog-container");
+
+if(container){
+container.innerHTML = destinations.map(d=>buildCardHTML(d)).join("");
+}
+
+});
