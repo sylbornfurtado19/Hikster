@@ -359,3 +359,29 @@ opacity: 1;
 transform: translateY(0);
 }
 }
+/* Smooth interaction for the entire grid */
+#catalog-container {
+    perspective: 1000px; /* Adds depth to the lift effect */
+}
+
+/* Enhancing the destination card */
+.destination-card {
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); /* Custom smooth easing */
+}
+
+/* The subtle "Glow" effect when hovering */
+.destination-card:hover {
+    box-shadow: 0 25px 50px -12px rgba(45, 212, 191, 0.4);
+}
+
+/* Button ripple-like hover */
+.destination-card a:hover {
+    letter-spacing: 0.5px;
+    transform: translateY(-1px);
+}
+
+/* Dark mode adjustments for cards */
+.dark .destination-card {
+    background: #1f2937;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
