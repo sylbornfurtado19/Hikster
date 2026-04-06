@@ -214,7 +214,8 @@ function buildCardHTML(dest, isMatch=false){
     }
 
     return `
-    <div class="destination-card group relative bg-white dark:bg-gray-800 rounded-3xl shadow-md overflow-hidden transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_50px_rgba(45,212,191,0.25)] border border-transparent hover:border-mint/30">
+    <div class="destination-card group relative bg-white dark:bg-gray-800 rounded-3xl shadow-md overflow-hidden transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_50px_rgba(45,212,191,0.25)] border border-transparent hover:border-mint/30" 
+     data-type="${dest.difficulty} ${dest.terrain} ${dest.altitude}">
         
         ${matchBadge}
 
