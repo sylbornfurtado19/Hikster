@@ -139,17 +139,30 @@ themeToggle.onclick = () => {
     }
 };
 
-/* FILTER LOGIC */
+/* FIXED FILTER LOGIC */
 const buttons = document.querySelectorAll('.filter-btn');
 
-buttons.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-        const filter = btn.dataset.filter;
+buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        // 1. Update Button Styles (Visual Feedback)
+        buttons.forEach(b => {
+            b.classList.remove('bg-juniper', 'text-white');
+            b.classList.add('bg-gray-100', 'text-gray-600');
+        });
+        btn.classList.remove('bg-gray-100', 'text-gray-600');
+        btn.classList.add('bg-juniper', 'text-white');
 
-        document.querySelectorAll('.destination-card').forEach(card=>{
-            if(filter === "all"){
+        // 2. Get the filter value
+        const filter = btn.dataset.filter.toLowerCase();
+        const cards = document.querySelectorAll('.destination-card');
+
+        // 3. Show/Hide cards
+        cards.forEach(card => {
+            const cardData = card.getAttribute('data-type').toLowerCase();
+            
+            if (filter === "all") {
                 card.style.display = "block";
-            } else if(card.dataset.type.includes(filter)){
+            } else if (cardData.includes(filter)) {
                 card.style.display = "block";
             } else {
                 card.style.display = "none";
