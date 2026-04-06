@@ -2,179 +2,203 @@
 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hikster Trek Quiz</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hikster Trek Quiz</title>
 
-```
-<link rel="icon" href="logo/logo.png" type="image/png">
+<link rel="icon" href="logo/logo.png">
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <script>
-    tailwind.config = {
-        darkMode: 'class',
-        theme: {
-            extend: {
-                colors: {
-                    mint: '#2dd4bf',
-                    teal: '#14b8a6',
-                    juniper: '#0f373b',
-                    pearl: '#f8f9fa',
-                }
-            }
-        }
-    }
+tailwind.config = {
+darkMode: 'class',
+theme: {
+extend: {
+colors: {
+mint: '#2dd4bf',
+teal: '#14b8a6',
+juniper: '#0f373b',
+pearl: '#f8f9fa'
+}
+}
+}
+}
 </script>
 
 <style>
-    body { font-family: 'Inter', system-ui, sans-serif; }
+body { font-family: 'Inter', sans-serif; }
 
-    .option-card {
-        transition: 0.3s;
-    }
-    .option-card:hover {
-        transform: translateY(-4px);
-    }
-    .peer:checked + .option-card {
-        border-color: #2dd4bf;
-        background: #ccfbf1;
-    }
+.option-card {
+transition: all 0.3s ease;
+border: 2px solid #e5e7eb;
+}
+.option-card:hover {
+transform: translateY(-4px);
+}
+.peer:checked + .option-card {
+border-color: #2dd4bf;
+background: #ccfbf1;
+}
 </style>
-```
 
 </head>
 
 <body class="bg-pearl min-h-screen flex flex-col">
 
 <header class="bg-juniper text-white px-6 py-4 flex justify-between">
-    <a href="home.html" class="flex items-center gap-2">
-        <img src="logo/logo.png" class="h-10">
-        <span class="text-xl font-bold">Hikster</span>
-    </a>
+<a href="home.html" class="flex items-center gap-2">
+<img src="logo/logo.png" class="h-10">
+<span class="text-xl font-bold">Hikster</span>
+</a>
 </header>
 
 <section class="flex-1 flex items-center justify-center px-4 py-10">
-<div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-8">
+<div class="w-full max-w-3xl bg-white rounded-3xl shadow-xl p-10 border">
 
-<form id="quiz-form" action="recommendation.html" method="get">
+<form action="recommendation.html" method="get">
 
 <!-- Q1 -->
 
 <div class="question">
-<h2 class="text-2xl font-bold mb-6 text-center">Your trekking experience?</h2>
+<h2 class="text-3xl font-bold mb-6 text-center">What is your trekking experience?</h2>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="experience" value="beginner" class="peer hidden">
-<div class="option-card border p-4 rounded-xl cursor-pointer text-center">Beginner</div>
+<div class="option-card p-4 rounded-xl text-center font-semibold">Beginner</div>
 </label>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="experience" value="intermediate" class="peer hidden">
-<div class="option-card border p-4 rounded-xl cursor-pointer text-center">Intermediate</div>
+<div class="option-card p-4 rounded-xl text-center font-semibold">Intermediate</div>
 </label>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="experience" value="advanced" class="peer hidden">
-<div class="option-card border p-4 rounded-xl cursor-pointer text-center">Advanced</div>
+<div class="option-card p-4 rounded-xl text-center font-semibold">Advanced</div>
 </label>
 </div>
 
 <!-- Q2 -->
 
 <div class="question hidden">
-<h2 class="text-2xl font-bold mb-6 text-center">Preferred terrain?</h2>
+<h2 class="text-3xl font-bold mb-6 text-center">Preferred terrain?</h2>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="terrain" value="mountain" class="peer hidden">
-<div class="option-card border p-4 rounded-xl text-center">Mountains</div>
+<div class="option-card p-4 rounded-xl text-center">Mountains</div>
 </label>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="terrain" value="forest" class="peer hidden">
-<div class="option-card border p-4 rounded-xl text-center">Forest</div>
+<div class="option-card p-4 rounded-xl text-center">Forest</div>
 </label>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="terrain" value="snow" class="peer hidden">
-<div class="option-card border p-4 rounded-xl text-center">Snow</div>
+<div class="option-card p-4 rounded-xl text-center">Snow</div>
 </label>
 </div>
 
 <!-- Q3 -->
 
 <div class="question hidden">
-<h2 class="text-2xl font-bold mb-6 text-center">Difficulty level?</h2>
+<h2 class="text-3xl font-bold mb-6 text-center">Choose difficulty</h2>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="difficulty" value="easy" class="peer hidden">
-<div class="option-card border p-4 rounded-xl text-center">Easy</div>
+<div class="option-card p-4 rounded-xl text-center">Easy</div>
 </label>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="difficulty" value="moderate" class="peer hidden">
-<div class="option-card border p-4 rounded-xl text-center">Moderate</div>
+<div class="option-card p-4 rounded-xl text-center">Moderate</div>
 </label>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="difficulty" value="hard" class="peer hidden">
-<div class="option-card border p-4 rounded-xl text-center">Hard</div>
+<div class="option-card p-4 rounded-xl text-center">Hard</div>
 </label>
 </div>
 
 <!-- Q4 -->
 
 <div class="question hidden text-center">
-<h2 class="text-2xl font-bold mb-4">Trip duration (days)</h2>
-<input type="range" name="days" min="1" max="14" value="5" class="w-full">
+<h2 class="text-3xl font-bold mb-4">Trip duration</h2>
+
+<div class="text-2xl font-bold text-mint mb-3">
+<span id="days-value">5</span> Days
+</div>
+
+<input type="range" name="days" min="1" max="14" value="5" id="days-slider" class="w-full">
 </div>
 
 <!-- Q5 -->
 
 <div class="question hidden">
-<h2 class="text-2xl font-bold mb-6 text-center">Altitude comfort?</h2>
+<h2 class="text-3xl font-bold mb-6 text-center">Altitude preference</h2>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="altitude" value="low" class="peer hidden">
-<div class="option-card border p-4 rounded-xl text-center">Below 3000m</div>
+<div class="option-card p-4 rounded-xl text-center">Below 3000m</div>
 </label>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="altitude" value="medium" class="peer hidden">
-<div class="option-card border p-4 rounded-xl text-center">3000–5000m</div>
+<div class="option-card p-4 rounded-xl text-center">3000–5000m</div>
 </label>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="altitude" value="high" class="peer hidden">
-<div class="option-card border p-4 rounded-xl text-center">5000m+</div>
+<div class="option-card p-4 rounded-xl text-center">5000m+</div>
 </label>
 </div>
 
 <!-- Q6 -->
 
 <div class="question hidden">
-<h2 class="text-2xl font-bold mb-6 text-center">Who are you traveling with?</h2>
+<h2 class="text-3xl font-bold mb-6 text-center">Who are you traveling with?</h2>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="group" value="solo" class="peer hidden">
-<div class="option-card border p-4 rounded-xl text-center">Solo</div>
+<div class="option-card p-4 rounded-xl text-center">Solo</div>
 </label>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="group" value="friends" class="peer hidden">
-<div class="option-card border p-4 rounded-xl text-center">Friends</div>
+<div class="option-card p-4 rounded-xl text-center">Friends</div>
 </label>
 
-<label class="block mb-3">
+<label class="block mb-4">
 <input type="radio" name="group" value="guided" class="peer hidden">
-<div class="option-card border p-4 rounded-xl text-center">Guided Group</div>
+<div class="option-card p-4 rounded-xl text-center">Guided Group</div>
 </label>
 </div>
 
-<div class="flex justify-between mt-8">
-<button type="button" id="prev" class="px-4 py-2 bg-gray-200 rounded">Back</button>
-<button type="button" id="next" class="px-6 py-2 bg-mint rounded">Next</button>
-<button type="submit" id="submit" class="hidden px-6 py-2 bg-juniper text-white rounded">Finish</button>
+<!-- Q7 (BUDGET) -->
+
+<div class="question hidden">
+<h2 class="text-3xl font-bold mb-6 text-center">Select your budget</h2>
+
+<label class="block mb-4">
+<input type="radio" name="budget" value="budget" class="peer hidden">
+<div class="option-card p-4 rounded-xl text-center">Budget</div>
+</label>
+
+<label class="block mb-4">
+<input type="radio" name="budget" value="mid" class="peer hidden">
+<div class="option-card p-4 rounded-xl text-center">Mid Range</div>
+</label>
+
+<label class="block mb-4">
+<input type="radio" name="budget" value="high" class="peer hidden">
+<div class="option-card p-4 rounded-xl text-center">Luxury</div>
+</label>
+</div>
+
+<div class="flex justify-between mt-10">
+<button type="button" id="prev" class="px-5 py-2 bg-gray-300 rounded-lg">Back</button>
+<button type="button" id="next" class="px-6 py-2 bg-mint rounded-lg">Next</button>
+<button type="submit" id="submit" class="hidden px-6 py-2 bg-juniper text-white rounded-lg">Finish</button>
 </div>
 
 </form>
@@ -185,23 +209,22 @@
 const steps = document.querySelectorAll('.question');
 let current = 0;
 
-function showStep(index){
-steps.forEach((s,i)=>s.classList.toggle('hidden', i!==index));
-document.getElementById('prev').style.display = index===0?'none':'inline-block';
-document.getElementById('next').style.display = index===steps.length-1?'none':'inline-block';
-document.getElementById('submit').style.display = index===steps.length-1?'inline-block':'none';
+function showStep(i){
+steps.forEach((s,index)=>s.classList.toggle('hidden', index!==i));
+prev.style.display = i===0?'none':'block';
+next.style.display = i===steps.length-1?'none':'block';
+submit.style.display = i===steps.length-1?'block':'none';
 }
 showStep(0);
 
-document.getElementById('next').onclick=()=>{
-current++;
-showStep(current);
-};
+next.onclick=()=>{current++; showStep(current);}
+prev.onclick=()=>{current--; showStep(current);}
 
-document.getElementById('prev').onclick=()=>{
-current--;
-showStep(current);
-};
+const slider=document.getElementById("days-slider");
+const output=document.getElementById("days-value");
+
+output.innerText=slider.value;
+slider.oninput=()=>output.innerText=slider.value;
 </script>
 
 </body>
