@@ -161,9 +161,9 @@ buttons.forEach(btn => {
             const cardData = card.getAttribute('data-type').toLowerCase();
             
             if (filter === "all") {
-                card.style.display = "block";
+                card.style.display = "flex";
             } else if (cardData.includes(filter)) {
-                card.style.display = "block";
+                card.style.display = "flex";
             } else {
                 card.style.display = "none";
             }
