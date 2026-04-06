@@ -1,327 +1,245 @@
-// ================= DESTINATIONS DATA (21 TREKS) =================
+// ================= DESTINATION DATABASE =================
 
 const destinations = [
 
-/* ---------- INDIA ---------- */
 {
-name:"Hampta Pass Trek",
-image:"images1/HAMPTA.jpg",
-desc:"A perfect crossover trek from lush green valleys to cold deserts of Spiti.",
-difficulty:"moderate",
-terrain:"mountain",
-altitude:"medium",
-duration:5,
-experience:"intermediate",
-budget:"budget"
+name:"Hampta Pass Trek", region:"India", image:"images1/HAMPTA.jpg",
+desc:"A stunning crossover trek from lush green valleys to the cold desert of Spiti.",
+difficulty:"moderate", terrain:"mountain", altitude:"medium",
+duration:5, experience:"intermediate", budget:"budget"
 },
 
 {
-name:"Kedarkantha Trek",
-image:"images1/KEDARKANTHA.jpg",
-desc:"A beginner-friendly snow trek with stunning summit views.",
-difficulty:"easy",
-terrain:"snow",
-altitude:"medium",
-duration:4,
-experience:"beginner",
-budget:"budget"
+name:"Swiss Alps Trek", region:"Europe", image:"images1/SWISS ALPS.jpg",
+desc:"Luxury alpine trekking with breathtaking views and scenic landscapes.",
+difficulty:"moderate", terrain:"mountain", altitude:"high",
+duration:6, experience:"intermediate", budget:"high"
 },
 
 {
-name:"Chadar Trek",
-image:"images1/CHADAR.jpg",
-desc:"Walk over a frozen river in extreme Himalayan winters.",
-difficulty:"hard",
-terrain:"snow",
-altitude:"high",
-duration:9,
-experience:"advanced",
-budget:"high"
+name:"Everest Base Camp Trek", region:"Nepal", image:"images1/EVEREST.jpg",
+desc:"The ultimate high-altitude Himalayan adventure.",
+difficulty:"hard", terrain:"mountain", altitude:"high",
+duration:12, experience:"advanced", budget:"high"
 },
 
 {
-name:"Roopkund Trek",
-image:"images1/ROOPKUND.jpg",
-desc:"Mysterious skeleton lake trek in high Himalayas.",
-difficulty:"moderate",
-terrain:"mountain",
-altitude:"high",
-duration:7,
-experience:"intermediate",
-budget:"budget"
+name:"Kedarkantha Trek", region:"India", image:"images1/KEDARKANTHA.jpg",
+desc:"Perfect beginner snow trek with summit views.",
+difficulty:"easy", terrain:"snow", altitude:"medium",
+duration:4, experience:"beginner", budget:"budget"
 },
 
 {
-name:"Valley of Flowers Trek",
-image:"images1/VALLEY.jpg",
-desc:"Colorful alpine flowers spread across scenic meadows.",
-difficulty:"easy",
-terrain:"forest",
-altitude:"medium",
-duration:5,
-experience:"beginner",
-budget:"budget"
+name:"Chadar Trek", region:"India", image:"images1/CHADAR.jpg",
+desc:"Frozen river trek in Ladakh winters.",
+difficulty:"hard", terrain:"snow", altitude:"high",
+duration:9, experience:"advanced", budget:"high"
 },
 
 {
-name:"Rajmachi Trek",
-image:"images1/RAJMACHI.jpg",
-desc:"A scenic monsoon trek near Pune with forts and waterfalls.",
-difficulty:"easy",
-terrain:"forest",
-altitude:"low",
-duration:2,
-experience:"beginner",
-budget:"budget"
+name:"Roopkund Trek", region:"India", image:"images1/ROOPKUND.jpg",
+desc:"Famous skeleton lake trek in Himalayas.",
+difficulty:"moderate", terrain:"mountain", altitude:"high",
+duration:7, experience:"intermediate", budget:"budget"
 },
 
 {
-name:"Sandakphu Trek",
-image:"images1/SANDAKPHU.jpg",
-desc:"Witness Everest, Kanchenjunga, and more in one frame.",
-difficulty:"moderate",
-terrain:"mountain",
-altitude:"high",
-duration:7,
-experience:"intermediate",
-budget:"mid"
+name:"Valley of Flowers Trek", region:"India", image:"images1/VALLEY.jpg",
+desc:"Colorful alpine meadows and scenic beauty.",
+difficulty:"easy", terrain:"forest", altitude:"medium",
+duration:5, experience:"beginner", budget:"budget"
 },
 
 {
-name:"Kumara Parvatha Trek",
-image:"images1/KUMARA.jpg",
-desc:"One of the toughest treks in South India.",
-difficulty:"hard",
-terrain:"forest",
-altitude:"medium",
-duration:2,
-experience:"advanced",
-budget:"budget"
+name:"Rajmachi Trek", region:"India", image:"images1/RAJMACHI.jpg",
+desc:"Monsoon trek near Pune with forts.",
+difficulty:"easy", terrain:"forest", altitude:"low",
+duration:2, experience:"beginner", budget:"budget"
 },
 
 {
-name:"Triund Trek",
-image:"images1/TRIUND.jpg",
-desc:"Short and scenic trek near Dharamshala.",
-difficulty:"easy",
-terrain:"mountain",
-altitude:"low",
-duration:2,
-experience:"beginner",
-budget:"budget"
+name:"Sandakphu Trek", region:"India", image:"images1/SANDAKPHU.jpg",
+desc:"View Everest and Kanchenjunga together.",
+difficulty:"moderate", terrain:"mountain", altitude:"high",
+duration:7, experience:"intermediate", budget:"mid"
 },
 
 {
-name:"Tadiandamol Trek",
-image:"images1/TADIANDAMOL.jpg",
-desc:"Highest peak in Coorg with lush green landscapes.",
-difficulty:"easy",
-terrain:"forest",
-altitude:"low",
-duration:2,
-experience:"beginner",
-budget:"budget"
-},
-
-/* ---------- INTERNATIONAL ---------- */
-
-{
-name:"Everest Base Camp Trek",
-image:"images1/EVEREST.jpg",
-desc:"The ultimate Himalayan adventure to the base of the world's tallest peak.",
-difficulty:"hard",
-terrain:"mountain",
-altitude:"high",
-duration:12,
-experience:"advanced",
-budget:"high"
+name:"Kumara Parvatha Trek", region:"India", image:"images1/KUMARA.jpg",
+desc:"Challenging trek in Western Ghats.",
+difficulty:"hard", terrain:"forest", altitude:"medium",
+duration:2, experience:"advanced", budget:"budget"
 },
 
 {
-name:"Annapurna Circuit Trek",
-image:"images1/ANNAPURNA.jpg",
-desc:"A diverse trek covering forests, rivers, and high passes.",
-difficulty:"moderate",
-terrain:"mountain",
-altitude:"high",
-duration:10,
-experience:"intermediate",
-budget:"mid"
+name:"Triund Trek", region:"India", image:"images1/TRIUND.jpg",
+desc:"Short scenic trek near Dharamshala.",
+difficulty:"easy", terrain:"mountain", altitude:"low",
+duration:2, experience:"beginner", budget:"budget"
 },
 
 {
-name:"Inca Trail",
-image:"images1/INCA.jpg",
-desc:"Ancient trail leading to Machu Picchu.",
-difficulty:"moderate",
-terrain:"mountain",
-altitude:"medium",
-duration:4,
-experience:"intermediate",
-budget:"mid"
+name:"Tadiandamol Trek", region:"India", image:"images1/TADIANDAMOL.jpg",
+desc:"Highest peak in Coorg.",
+difficulty:"easy", terrain:"forest", altitude:"low",
+duration:2, experience:"beginner", budget:"budget"
 },
 
 {
-name:"Mount Kilimanjaro Trek",
-image:"images1/KILIMANJARO.jpg",
-desc:"Africa’s highest peak and a bucket-list climb.",
-difficulty:"hard",
-terrain:"mountain",
-altitude:"high",
-duration:8,
-experience:"advanced",
-budget:"high"
+name:"Annapurna Circuit Trek", region:"Nepal", image:"images1/ANNAPURNA.jpg",
+desc:"Diverse Himalayan landscapes.",
+difficulty:"moderate", terrain:"mountain", altitude:"high",
+duration:10, experience:"intermediate", budget:"mid"
 },
 
 {
-name:"Torres del Paine Trek",
-image:"images1/PATAGONIA.jpg",
-desc:"Dramatic landscapes of glaciers and peaks.",
-difficulty:"moderate",
-terrain:"mountain",
-altitude:"medium",
-duration:6,
-experience:"intermediate",
-budget:"high"
+name:"Inca Trail", region:"Peru", image:"images1/INCA.jpg",
+desc:"Ancient trail to Machu Picchu.",
+difficulty:"moderate", terrain:"mountain", altitude:"medium",
+duration:4, experience:"intermediate", budget:"mid"
 },
 
 {
-name:"Dolomites Trek",
-image:"images1/DOLOMITES.jpg",
-desc:"Alpine trekking with stunning jagged peaks.",
-difficulty:"moderate",
-terrain:"mountain",
-altitude:"medium",
-duration:5,
-experience:"intermediate",
-budget:"high"
+name:"Mount Kilimanjaro Trek", region:"Tanzania", image:"images1/KILIMANJARO.jpg",
+desc:"Africa’s highest peak climb.",
+difficulty:"hard", terrain:"mountain", altitude:"high",
+duration:8, experience:"advanced", budget:"high"
 },
 
 {
-name:"Laugavegur Trail",
-image:"images1/ICELAND.jpg",
-desc:"Colorful volcanic landscapes in Iceland.",
-difficulty:"moderate",
-terrain:"mountain",
-altitude:"medium",
-duration:4,
-experience:"intermediate",
-budget:"high"
+name:"Torres del Paine Trek", region:"Chile", image:"images1/PATAGONIA.jpg",
+desc:"Glaciers and rugged Patagonia views.",
+difficulty:"moderate", terrain:"mountain", altitude:"medium",
+duration:6, experience:"intermediate", budget:"high"
 },
 
 {
-name:"Mount Fuji Trek",
-image:"images1/FUJI.jpg",
+name:"Dolomites Trek", region:"Italy", image:"images1/DOLOMITES.jpg",
+desc:"Alpine trekking paradise.",
+difficulty:"moderate", terrain:"mountain", altitude:"medium",
+duration:5, experience:"intermediate", budget:"high"
+},
+
+{
+name:"Laugavegur Trail", region:"Iceland", image:"images1/ICELAND.jpg",
+desc:"Colorful Icelandic landscapes.",
+difficulty:"moderate", terrain:"mountain", altitude:"medium",
+duration:4, experience:"intermediate", budget:"high"
+},
+
+{
+name:"Mount Fuji Trek", region:"Japan", image:"images1/FUJI.jpg",
 desc:"Iconic sunrise trek in Japan.",
-difficulty:"moderate",
-terrain:"mountain",
-altitude:"high",
-duration:2,
-experience:"intermediate",
-budget:"mid"
+difficulty:"moderate", terrain:"mountain", altitude:"high",
+duration:2, experience:"intermediate", budget:"mid"
 },
 
 {
-name:"Appalachian Trail",
-image:"images1/APPALACHIAN.jpg",
-desc:"One of the longest trekking routes in the world.",
-difficulty:"hard",
-terrain:"forest",
-altitude:"medium",
-duration:14,
-experience:"advanced",
-budget:"mid"
+name:"Appalachian Trail", region:"USA", image:"images1/APPALACHIAN.jpg",
+desc:"Legendary long-distance forest trail.",
+difficulty:"hard", terrain:"forest", altitude:"medium",
+duration:14, experience:"advanced", budget:"mid"
 },
 
 {
-name:"Overland Track",
-image:"images1/OVERLAND.jpg",
-desc:"Tasmania’s famous wilderness trek.",
-difficulty:"moderate",
-terrain:"forest",
-altitude:"medium",
-duration:6,
-experience:"intermediate",
-budget:"high"
+name:"Overland Track", region:"Australia", image:"images1/OVERLAND.jpg",
+desc:"Tasmania wilderness trek.",
+difficulty:"moderate", terrain:"forest", altitude:"medium",
+duration:6, experience:"intermediate", budget:"high"
 },
 
 {
-name:"Trolltunga Trek",
-image:"images1/TROLLTUNGA.jpg",
-desc:"A dramatic cliff hike in Norway.",
-difficulty:"hard",
-terrain:"mountain",
-altitude:"high",
-duration:1,
-experience:"advanced",
-budget:"high"
+name:"Trolltunga Trek", region:"Norway", image:"images1/TROLLTUNGA.jpg",
+desc:"Cliff-edge hike in Norway.",
+difficulty:"hard", terrain:"mountain", altitude:"high",
+duration:1, experience:"advanced", budget:"high"
 }
 
 ];
-
 
 // ================= MATCHING LOGIC =================
 
 function gradeDestinations(userPrefs){
 
-return destinations.map(dest =>{
+const userDays = parseInt(userPrefs.days);
+
+let scored = destinations.map(dest =>{
 
 let score = 0;
+let matchedTags = [];
 
-if(dest.difficulty === userPrefs.difficulty) score += 2;
-if(dest.terrain === userPrefs.terrain) score += 2;
-if(dest.altitude === userPrefs.altitude) score += 1;
-if(dest.experience === userPrefs.experience) score += 2;
-
-// duration match
-if(userPrefs.days <= dest.duration) score += 1;
-
-// budget match
-if(dest.budget === userPrefs.budget) score += 1;
-
-return {...dest, score};
-
-})
-.sort((a,b)=>b.score-a.score)
-.slice(0,3);
-
+if(dest.difficulty === userPrefs.difficulty){
+score += 2; matchedTags.push("Difficulty");
 }
 
+if(dest.terrain === userPrefs.terrain){
+score += 2; matchedTags.push("Terrain");
+}
 
-// ================= CARD UI =================
+if(dest.experience === userPrefs.experience){
+score += 2; matchedTags.push("Experience");
+}
+
+if(dest.altitude === userPrefs.altitude){
+score += 1; matchedTags.push("Altitude");
+}
+
+if(Math.abs(dest.duration - userDays) <= 2){
+score += 1; matchedTags.push("Duration");
+}
+
+if(dest.budget === userPrefs.budget){
+score += 1; matchedTags.push("Budget");
+}
+
+return {...dest, score, matchedTags};
+
+});
+
+scored.sort((a,b)=>b.score-a.score);
+return scored.slice(0,3);
+}
+
+// ================= CARD GENERATOR =================
 
 function buildCardHTML(dest, isMatch=false){
 
+let tags = `<span class="px-2 py-1 bg-mint/10 text-mint text-xs rounded">${dest.difficulty}</span> <span class="px-2 py-1 bg-mint/10 text-mint text-xs rounded">${dest.terrain}</span>`;
+
+let matchBadge = "";
+
+if(isMatch){
+let percent = Math.round((dest.score/9)*100);
+matchBadge = `<div class="absolute top-3 right-3 bg-juniper text-mint px-3 py-1 rounded-full text-sm">${percent}% Match</div>`;
+}
+
 return `
-<div class="destination-card bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:-translate-y-2 transition-all"
-data-type="${dest.difficulty} ${dest.terrain} ${dest.altitude}">
+
+<div class="destination-card relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+
+${matchBadge}
 
 <img src="${dest.image}" class="w-full h-56 object-cover">
 
-<div class="p-5 flex flex-col h-full">
+<div class="p-5 flex flex-col">
+
+<div class="flex gap-2 mb-3">${tags}</div>
 
 <h3 class="text-xl font-bold mb-2">${dest.name}</h3>
 
 <p class="text-sm text-gray-500 mb-4 flex-1">${dest.desc}</p>
 
-<div class="text-xs mb-4 flex gap-2 flex-wrap">
-<span class="bg-mint px-2 py-1 rounded">${dest.difficulty}</span>
-<span class="bg-mint px-2 py-1 rounded">${dest.terrain}</span>
-<span class="bg-mint px-2 py-1 rounded">${dest.altitude}</span>
-</div>
-
 <a href="destination.html?id=${encodeURIComponent(dest.name)}"
-class="mt-auto bg-mint text-juniper text-center py-2 rounded font-bold">
-View Trek
-</a>
+class="mt-auto bg-mint text-juniper py-2 text-center rounded font-bold">
+View Trek </a>
 
 </div>
 </div>
 `;
 }
 
-
-// ================= LOAD ALL DESTINATIONS =================
+// ================= LOAD =================
 
 document.addEventListener("DOMContentLoaded",()=>{
 
