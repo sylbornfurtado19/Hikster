@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>History • Hikster</title>
+
+<link rel="icon" href="logo/logo.png">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+darkMode: 'class',
+theme: {
+extend: {
+colors: {
+mint:'#2dd4bf',
+teal:'#14b8a6',
+juniper:'#0f373b',
+pearl:'#f8f9fa'
+}
+}
+}
+}
+</script>
+
+<style>
+body { font-family: 'Inter', sans-serif; }
+</style>
+
+</head>
+
+<body class="bg-pearl min-h-screen flex flex-col">
+
+<!-- HEADER -->
+
+<header class="bg-juniper text-white px-6 py-4 flex justify-between">
+<a href="home.html" class="flex items-center gap-2">
+<img src="logo/logo.png" class="h-10">
+<span class="text-xl font-bold">Hikster</span>
+</a>
+
+<nav class="flex gap-6 items-center">
+<a href="home.html">Home</a>
+<a href="all-destinations.html">Destinations</a>
+<a href="quiz.html" class="bg-mint px-4 py-2 rounded-full text-juniper font-bold">
+Take Quiz
+</a>
+</nav>
+</header>
+
+<!-- TITLE -->
+
+<section class="py-12 text-center">
+<h1 class="text-4xl font-extrabold text-juniper mb-2">Your Trek History</h1>
+<p class="text-gray-500">Review your past trekking recommendations</p>
+</section>
+
+<!-- HISTORY -->
+
+<section class="px-6 pb-16 flex-1">
+<div id="history-container" class="max-w-6xl mx-auto space-y-10"></div>
+
+<div class="text-center mt-10">
+<button onclick="clearHistory()" class="px-6 py-3 bg-red-500 text-white rounded-full font-bold hover:bg-red-600">
+Clear History
+</button>
+</div>
+</section>
+
+<footer class="bg-juniper text-center py-6 text-gray-400">
+© 2026 Hikster
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+const history = JSON.parse(localStorage.getItem("hiksterHistory")) || [];
+const container = document.getElementById("history-container");
+
+// IF EMPTY
+if(history.length === 0){
+container.innerHTML = `
+<div class="text-center py-20 text-gray-500">
+<h2 class="text-2xl font-bold mb-3">No History Found</h2>
+<a href="quiz.html" class="px-6 py-3 bg-mint text-juniper rounded-full font-bold">
+Take Quiz
+</a>
+</div>
+`;
+}
+
+// LOAD HISTORY
+history.forEach(item => {
+
+let cards = item.results.map(dest => buildCardHTML(dest)).join('');
+
+container.innerHTML += `
+<div class="bg-white rounded-2xl shadow-lg p-6">
+
+<!-- DATE -->
+<div class="text-sm text-gray-400 mb-4">
+${item.date}
+</div>
+
+<!-- PREFS -->
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-2 py-1 bg-gray-100 rounded text-xs">${item.preferences.difficulty}</span>
+<span class="px-2 py-1 bg-gray-100 rounded text-xs">${item.preferences.terrain}</span>
+<span class="px-2 py-1 bg-gray-100 rounded text-xs">${item.preferences.altitude}</span>
+<span class="px-2 py-1 bg-gray-100 rounded text-xs">${item.preferences.budget}</span>
+</div>
+
+<!-- CARDS -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+${cards}
+</div>
+
+</div>
+`;
+});
+
+// CLEAR FUNCTION
+function clearHistory(){
+localStorage.removeItem("hiksterHistory");
+location.reload();
+}
+</script>
+
+</body>
+</html>
