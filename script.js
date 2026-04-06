@@ -204,40 +204,40 @@ return scored.slice(0,3);
 // ================= CARD GENERATOR =================
 
 function buildCardHTML(dest, isMatch=false){
+    let tags = `<span class="px-2 py-1 bg-mint/10 text-mint text-xs font-bold rounded-md uppercase tracking-wider">${dest.difficulty}</span> 
+                <span class="px-2 py-1 bg-mint/10 text-mint text-xs font-bold rounded-md uppercase tracking-wider">${dest.terrain}</span>`;
 
-let tags = `<span class="px-2 py-1 bg-mint/10 text-mint text-xs rounded">${dest.difficulty}</span> <span class="px-2 py-1 bg-mint/10 text-mint text-xs rounded">${dest.terrain}</span>`;
+    let matchBadge = "";
+    if(isMatch){
+        let percent = Math.round((dest.score/9)*100);
+        matchBadge = `<div class="absolute top-3 right-3 bg-juniper/90 backdrop-blur-md text-mint px-3 py-1 rounded-full text-sm font-bold z-10 border border-mint/30">${percent}% Match</div>`;
+    }
 
-let matchBadge = "";
+    return `
+    <div class="destination-card group relative bg-white dark:bg-gray-800 rounded-3xl shadow-md overflow-hidden transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_50px_rgba(45,212,191,0.25)] border border-transparent hover:border-mint/30">
+        
+        ${matchBadge}
 
-if(isMatch){
-let percent = Math.round((dest.score/9)*100);
-matchBadge = `<div class="absolute top-3 right-3 bg-juniper text-mint px-3 py-1 rounded-full text-sm">${percent}% Match</div>`;
+        <div class="overflow-hidden h-60 relative">
+            <img src="${dest.image}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        </div>
+
+        <div class="p-6 flex flex-col">
+            <div class="flex gap-2 mb-4">${tags}</div>
+
+            <h3 class="text-2xl font-extrabold mb-2 text-juniper dark:text-white group-hover:text-mint transition-colors duration-300">${dest.name}</h3>
+
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 line-clamp-2 leading-relaxed">${dest.desc}</p>
+
+            <a href="destination.html?id=${encodeURIComponent(dest.name)}"
+               class="mt-auto bg-mint text-juniper py-3 text-center rounded-xl font-bold transition-all duration-300 hover:bg-juniper hover:text-mint hover:shadow-lg active:scale-95">
+                Explore Journey
+            </a>
+        </div>
+    </div>
+    `;
 }
-
-return `
-<div class="destination-card relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-2 hover:ring-mint">
-
-${matchBadge}
-
-<img src="${dest.image}" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105">
-
-<div class="p-5 flex flex-col">
-
-<div class="flex gap-2 mb-3">${tags}</div>
-
-<h3 class="text-xl font-bold mb-2">${dest.name}</h3>
-
-<p class="text-sm text-gray-500 mb-4 flex-1">${dest.desc}</p>
-
-<a href="destination.html?id=${encodeURIComponent(dest.name)}"
-class="mt-auto bg-mint text-juniper py-2 text-center rounded font-bold transition-colors hover:bg-juniper hover:text-mint">
-View Trek </a>
-
-</div>
-</div>
-`;
-}
-
 // ================= LOAD =================
 
 document.addEventListener("DOMContentLoaded",()=>{
