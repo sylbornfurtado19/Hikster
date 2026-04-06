@@ -215,12 +215,11 @@ matchBadge = `<div class="absolute top-3 right-3 bg-juniper text-mint px-3 py-1 
 }
 
 return `
-
-<div class="destination-card relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+<div class="destination-card relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:ring-2 hover:ring-mint">
 
 ${matchBadge}
 
-<img src="${dest.image}" class="w-full h-56 object-cover">
+<img src="${dest.image}" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105">
 
 <div class="p-5 flex flex-col">
 
@@ -231,7 +230,7 @@ ${matchBadge}
 <p class="text-sm text-gray-500 mb-4 flex-1">${dest.desc}</p>
 
 <a href="destination.html?id=${encodeURIComponent(dest.name)}"
-class="mt-auto bg-mint text-juniper py-2 text-center rounded font-bold">
+class="mt-auto bg-mint text-juniper py-2 text-center rounded font-bold transition-colors hover:bg-juniper hover:text-mint">
 View Trek </a>
 
 </div>
