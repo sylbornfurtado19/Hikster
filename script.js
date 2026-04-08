@@ -6,154 +6,176 @@ const destinations = [
 name:"Hampta Pass Trek", region:"India", image:"images1/HAMPTA.jpg",
 desc:"A stunning crossover trek from lush green valleys to the cold desert of Spiti.",
 difficulty:"moderate", terrain:"mountain", altitude:"medium",
-duration:5, experience:"intermediate", budget:"budget"
+duration:5, experience:"intermediate", budget:"budget",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"peak","Jun":"peak","Jul":"monsoon","Aug":"monsoon","Sep":"peak","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
 },
 
 {
 name:"Swiss Alps Trek", region:"Europe", image:"images1/SWISS ALPS.jpg",
 desc:"Luxury alpine trekking with breathtaking views and scenic landscapes.",
 difficulty:"moderate", terrain:"mountain", altitude:"high",
-duration:6, experience:"intermediate", budget:"high"
+duration:6, experience:"intermediate", budget:"high",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"peak","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
 },
 
 {
 name:"Everest Base Camp Trek", region:"Nepal", image:"images1/EVEREST.jpg",
 desc:"The ultimate high-altitude Himalayan adventure.",
 difficulty:"hard", terrain:"mountain", altitude:"high",
-duration:12, experience:"advanced", budget:"high"
+duration:12, experience:"advanced", budget:"high",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"peak","May":"peak","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"peak","Oct":"peak","Nov":"avoid","Dec":"avoid"}
 },
 
 {
 name:"Kedarkantha Trek", region:"India", image:"images1/KEDARKANTHA.jpg",
 desc:"Perfect beginner snow trek with summit views.",
 difficulty:"easy", terrain:"snow", altitude:"medium",
-duration:4, experience:"beginner", budget:"budget"
+duration:4, experience:"beginner", budget:"budget",
+season:{"Jan":"peak","Feb":"peak","Mar":"peak","Apr":"avoid","May":"avoid","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"avoid","Oct":"avoid","Nov":"peak","Dec":"peak"}
 },
 
 {
 name:"Chadar Trek", region:"India", image:"images1/CHADAR.jpg",
 desc:"Frozen river trek in Ladakh winters.",
 difficulty:"hard", terrain:"snow", altitude:"high",
-duration:9, experience:"advanced", budget:"high"
+duration:9, experience:"advanced", budget:"high",
+season:{"Jan":"peak","Feb":"peak","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"avoid","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
 },
 
 {
 name:"Roopkund Trek", region:"India", image:"images1/ROOPKUND.jpg",
 desc:"Famous skeleton lake trek in Himalayas.",
 difficulty:"moderate", terrain:"mountain", altitude:"high",
-duration:7, experience:"intermediate", budget:"budget"
+duration:7, experience:"intermediate", budget:"budget",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"peak","Jun":"peak","Jul":"avoid","Aug":"avoid","Sep":"peak","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
 },
 
 {
 name:"Valley of Flowers Trek", region:"India", image:"images1/VALLEY.jpg",
 desc:"Colorful alpine meadows and scenic beauty.",
 difficulty:"easy", terrain:"forest", altitude:"medium",
-duration:5, experience:"beginner", budget:"budget"
+duration:5, experience:"beginner", budget:"budget",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"avoid","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
 },
 
 {
 name:"Rajmachi Trek", region:"India", image:"images1/RAJMACHI.jpg",
 desc:"Monsoon trek near Pune with forts.",
 difficulty:"easy", terrain:"forest", altitude:"low",
-duration:2, experience:"beginner", budget:"budget"
+duration:2, experience:"beginner", budget:"budget",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"monsoon","Jul":"monsoon","Aug":"monsoon","Sep":"monsoon","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
 },
 
 {
 name:"Sandakphu Trek", region:"India", image:"images1/SANDAKPHU.jpg",
 desc:"View Everest and Kanchenjunga together.",
 difficulty:"moderate", terrain:"mountain", altitude:"high",
-duration:7, experience:"intermediate", budget:"mid"
+duration:7, experience:"intermediate", budget:"mid",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"peak","May":"peak","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"avoid","Oct":"peak","Nov":"peak","Dec":"avoid"}
 },
 
 {
 name:"Kumara Parvatha Trek", region:"India", image:"images1/KUMARA.jpg",
 desc:"Challenging trek in Western Ghats.",
 difficulty:"hard", terrain:"forest", altitude:"medium",
-duration:2, experience:"advanced", budget:"budget"
+duration:2, experience:"advanced", budget:"budget",
+season:{"Jan":"peak","Feb":"peak","Mar":"peak","Apr":"avoid","May":"avoid","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"avoid","Oct":"peak","Nov":"peak","Dec":"peak"}
 },
 
 {
 name:"Triund Trek", region:"India", image:"images1/TRIUND.jpg",
 desc:"Short scenic trek near Dharamshala.",
 difficulty:"easy", terrain:"mountain", altitude:"low",
-duration:2, experience:"beginner", budget:"budget"
+duration:2, experience:"beginner", budget:"budget",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"peak","May":"peak","Jun":"peak","Jul":"monsoon","Aug":"monsoon","Sep":"peak","Oct":"peak","Nov":"avoid","Dec":"avoid"}
 },
 
 {
 name:"Tadiandamol Trek", region:"India", image:"images1/TADIANDAMOL.jpg",
 desc:"Highest peak in Coorg.",
 difficulty:"easy", terrain:"forest", altitude:"low",
-duration:2, experience:"beginner", budget:"budget"
+duration:2, experience:"beginner", budget:"budget",
+season:{"Jan":"peak","Feb":"peak","Mar":"peak","Apr":"avoid","May":"avoid","Jun":"monsoon","Jul":"monsoon","Aug":"monsoon","Sep":"avoid","Oct":"peak","Nov":"peak","Dec":"peak"}
 },
 
 {
 name:"Annapurna Circuit Trek", region:"Nepal", image:"images1/ANNAPURNA.jpg",
 desc:"Diverse Himalayan landscapes.",
 difficulty:"moderate", terrain:"mountain", altitude:"high",
-duration:10, experience:"intermediate", budget:"mid"
+duration:10, experience:"intermediate", budget:"mid",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"peak","Apr":"peak","May":"peak","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"peak","Oct":"peak","Nov":"avoid","Dec":"avoid"}
 },
 
 {
 name:"Inca Trail", region:"Peru", image:"images1/INCA.jpg",
 desc:"Ancient trail to Machu Picchu.",
 difficulty:"moderate", terrain:"mountain", altitude:"medium",
-duration:4, experience:"intermediate", budget:"mid"
+duration:4, experience:"intermediate", budget:"mid",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"peak","May":"peak","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"peak","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
 },
 
 {
 name:"Mount Kilimanjaro Trek", region:"Tanzania", image:"images1/KILIMANJARO.jpg",
-desc:"Africa’s highest peak climb.",
+desc:"Africa's highest peak climb.",
 difficulty:"hard", terrain:"mountain", altitude:"high",
-duration:8, experience:"advanced", budget:"high"
+duration:8, experience:"advanced", budget:"high",
+season:{"Jan":"peak","Feb":"peak","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"peak","Oct":"avoid","Nov":"avoid","Dec":"peak"}
 },
 
 {
 name:"Torres del Paine Trek", region:"Chile", image:"images1/PATAGONIA.jpg",
 desc:"Glaciers and rugged Patagonia views.",
 difficulty:"moderate", terrain:"mountain", altitude:"medium",
-duration:6, experience:"intermediate", budget:"high"
+duration:6, experience:"intermediate", budget:"high",
+season:{"Jan":"peak","Feb":"peak","Mar":"peak","Apr":"avoid","May":"avoid","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"avoid","Oct":"peak","Nov":"peak","Dec":"peak"}
 },
 
 {
 name:"Dolomites Trek", region:"Italy", image:"images1/DOLOMITES.jpg",
 desc:"Alpine trekking paradise.",
 difficulty:"moderate", terrain:"mountain", altitude:"medium",
-duration:5, experience:"intermediate", budget:"high"
+duration:5, experience:"intermediate", budget:"high",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"peak","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
 },
 
 {
 name:"Laugavegur Trail", region:"Iceland", image:"images1/ICELAND.jpg",
 desc:"Colorful Icelandic landscapes.",
 difficulty:"moderate", terrain:"mountain", altitude:"medium",
-duration:4, experience:"intermediate", budget:"high"
+duration:4, experience:"intermediate", budget:"high",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"avoid","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
 },
 
 {
 name:"Mount Fuji Trek", region:"Japan", image:"images1/FUJI.jpg",
 desc:"Iconic sunrise trek in Japan.",
 difficulty:"moderate", terrain:"mountain", altitude:"high",
-duration:2, experience:"intermediate", budget:"mid"
+duration:2, experience:"intermediate", budget:"mid",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"avoid","Jul":"peak","Aug":"peak","Sep":"avoid","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
 },
 
 {
 name:"Appalachian Trail", region:"USA", image:"images1/APPALACHIAN.jpg",
 desc:"Legendary long-distance forest trail.",
 difficulty:"hard", terrain:"forest", altitude:"medium",
-duration:14, experience:"advanced", budget:"mid"
+duration:14, experience:"advanced", budget:"mid",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"peak","May":"peak","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"peak","Oct":"peak","Nov":"avoid","Dec":"avoid"}
 },
 
 {
 name:"Overland Track", region:"Australia", image:"images1/OVERLAND.jpg",
 desc:"Tasmania wilderness trek.",
 difficulty:"moderate", terrain:"forest", altitude:"medium",
-duration:6, experience:"intermediate", budget:"high"
+duration:6, experience:"intermediate", budget:"high",
+season:{"Jan":"peak","Feb":"peak","Mar":"peak","Apr":"avoid","May":"avoid","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"avoid","Oct":"peak","Nov":"peak","Dec":"peak"}
 },
 
 {
 name:"Trolltunga Trek", region:"Norway", image:"images1/TROLLTUNGA.jpg",
 desc:"Cliff-edge hike in Norway.",
 difficulty:"hard", terrain:"mountain", altitude:"high",
-duration:1, experience:"advanced", budget:"high"
+duration:1, experience:"advanced", budget:"high",
+season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"avoid","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
 }
 
 ];
