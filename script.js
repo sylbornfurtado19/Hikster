@@ -418,10 +418,17 @@ function buildCardHTML(dest, isMatch=false){
             ${dest.desc}
         </p>
 
-        <a href="destination.html?id=${dest.id}"
-           class="mt-auto bg-mint text-juniper py-3 text-center rounded-xl font-bold transition-all duration-300 hover:bg-juniper hover:text-mint hover:shadow-lg active:scale-95 block w-full">
-            Explore Journey
-        </a>
+        <div class="flex gap-2 mt-auto">
+<a href="destination.html?id=${encodeURIComponent(dest.name)}"
+class="flex-1 bg-mint text-juniper py-2 text-center rounded font-bold">
+View Trek
+</a>
+
+<button onclick="saveFavorite('${dest.name}')"
+class="px-3 bg-red-100 text-red-500 rounded">
+❤️
+</button>
+</div>
     </div>
 </div>
 `;
