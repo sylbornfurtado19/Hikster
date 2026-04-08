@@ -3,179 +3,355 @@
 const destinations = [
 
 {
-name:"Hampta Pass Trek", region:"India", image:"images1/HAMPTA.jpg",
+id:"hampta-pass",
+name:"Hampta Pass Trek",
+region:"India",
+location:"Himachal Pradesh, India",
+image:"images1/HAMPTA.jpg",
 desc:"A stunning crossover trek from lush green valleys to the cold desert of Spiti.",
 difficulty:"moderate", terrain:"mountain", altitude:"medium",
 duration:5, experience:"intermediate", budget:"budget",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"peak","Jun":"peak","Jul":"monsoon","Aug":"monsoon","Sep":"peak","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
+bestTime:"May - September",
+startPoint:"Manali",
+fitness:"Moderate",
+cost:"₹8,000 - ₹12,000",
+season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"avoid",May:"peak",Jun:"peak",Jul:"monsoon",Aug:"monsoon",Sep:"peak",Oct:"avoid",Nov:"avoid",Dec:"avoid"}
 },
 
 {
-name:"Swiss Alps Trek", region:"Europe", image:"images1/SWISS ALPS.jpg",
+id:"swiss-alps",
+name:"Swiss Alps Trek",
+region:"Europe",
+location:"Switzerland",
+image:"images1/SWISS ALPS.jpg",
 desc:"Luxury alpine trekking with breathtaking views and scenic landscapes.",
 difficulty:"moderate", terrain:"mountain", altitude:"high",
 duration:6, experience:"intermediate", budget:"high",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"peak","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
+bestTime:"June - September",
+startPoint:"Interlaken",
+fitness:"Moderate",
+cost:"₹1,50,000+",
+season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"avoid",May:"avoid",Jun:"peak",Jul:"peak",Aug:"peak",Sep:"peak",Oct:"avoid",Nov:"avoid",Dec:"avoid"}
 },
 
 {
-name:"Everest Base Camp Trek", region:"Nepal", image:"images1/EVEREST.jpg",
+id:"everest-base-camp",
+name:"Everest Base Camp Trek",
+region:"Nepal",
+location:"Nepal",
+image:"images1/EVEREST.jpg",
 desc:"The ultimate high-altitude Himalayan adventure.",
 difficulty:"hard", terrain:"mountain", altitude:"high",
 duration:12, experience:"advanced", budget:"high",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"peak","May":"peak","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"peak","Oct":"peak","Nov":"avoid","Dec":"avoid"}
+bestTime:"April - May, Sept - Oct",
+startPoint:"Lukla",
+fitness:"High",
+cost:"₹1,20,000+",
+season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"peak",May:"peak",Jun:"avoid",Jul:"avoid",Aug:"avoid",Sep:"peak",Oct:"peak",Nov:"avoid",Dec:"avoid"}
 },
 
 {
-name:"Kedarkantha Trek", region:"India", image:"images1/KEDARKANTHA.jpg",
+id:"kedarkantha",
+name:"Kedarkantha Trek",
+region:"India",
+location:"Uttarakhand, India",
+image:"images1/KEDARKANTHA.jpg",
 desc:"Perfect beginner snow trek with summit views.",
 difficulty:"easy", terrain:"snow", altitude:"medium",
 duration:4, experience:"beginner", budget:"budget",
-season:{"Jan":"peak","Feb":"peak","Mar":"peak","Apr":"avoid","May":"avoid","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"avoid","Oct":"avoid","Nov":"peak","Dec":"peak"}
+bestTime:"Dec - April",
+startPoint:"Sankri",
+fitness:"Easy",
+cost:"₹6,000 - ₹10,000",
+season:{Jan:"peak",Feb:"peak",Mar:"peak",Apr:"avoid",May:"avoid",Jun:"avoid",Jul:"avoid",Aug:"avoid",Sep:"avoid",Oct:"avoid",Nov:"peak",Dec:"peak"}
 },
 
 {
-name:"Chadar Trek", region:"India", image:"images1/CHADAR.jpg",
+id:"chadar",
+name:"Chadar Trek",
+region:"India",
+location:"Ladakh, India",
+image:"images1/CHADAR.jpg",
 desc:"Frozen river trek in Ladakh winters.",
 difficulty:"hard", terrain:"snow", altitude:"high",
 duration:9, experience:"advanced", budget:"high",
-season:{"Jan":"peak","Feb":"peak","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"avoid","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
+bestTime:"Jan - Feb",
+startPoint:"Leh",
+fitness:"High",
+cost:"₹25,000+",
+season:{Jan:"peak",Feb:"peak",Mar:"avoid",Apr:"avoid",May:"avoid",Jun:"avoid",Jul:"avoid",Aug:"avoid",Sep:"avoid",Oct:"avoid",Nov:"avoid",Dec:"avoid"}
 },
 
 {
-name:"Roopkund Trek", region:"India", image:"images1/ROOPKUND.jpg",
+id:"roopkund",
+name:"Roopkund Trek",
+region:"India",
+location:"Uttarakhand, India",
+image:"images1/ROOPKUND.jpg",
 desc:"Famous skeleton lake trek in Himalayas.",
 difficulty:"moderate", terrain:"mountain", altitude:"high",
 duration:7, experience:"intermediate", budget:"budget",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"peak","Jun":"peak","Jul":"avoid","Aug":"avoid","Sep":"peak","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
+bestTime:"May - June, Sept",
+startPoint:"Lohajung",
+fitness:"Moderate",
+cost:"₹8,000 - ₹12,000",
+season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"avoid",May:"peak",Jun:"peak",Jul:"avoid",Aug:"avoid",Sep:"peak",Oct:"avoid",Nov:"avoid",Dec:"avoid"}
 },
 
 {
-name:"Valley of Flowers Trek", region:"India", image:"images1/VALLEY.jpg",
+id:"valley-of-flowers",
+name:"Valley of Flowers Trek",
+region:"India",
+location:"Uttarakhand, India",
+image:"images1/VALLEY.jpg",
 desc:"Colorful alpine meadows and scenic beauty.",
 difficulty:"easy", terrain:"forest", altitude:"medium",
 duration:5, experience:"beginner", budget:"budget",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"avoid","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
+bestTime:"July - August",
+startPoint:"Govindghat",
+fitness:"Easy",
+cost:"₹6,000 - ₹9,000",
+season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"avoid",May:"avoid",Jun:"peak",Jul:"peak",Aug:"peak",Sep:"avoid",Oct:"avoid",Nov:"avoid",Dec:"avoid"}
 },
 
 {
-name:"Rajmachi Trek", region:"India", image:"images1/RAJMACHI.jpg",
+id:"rajmachi",
+name:"Rajmachi Trek",
+region:"India",
+location:"Maharashtra, India",
+image:"images1/RAJMACHI.jpg",
 desc:"Monsoon trek near Pune with forts.",
 difficulty:"easy", terrain:"forest", altitude:"low",
 duration:2, experience:"beginner", budget:"budget",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"monsoon","Jul":"monsoon","Aug":"monsoon","Sep":"monsoon","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
+bestTime:"June - September",
+startPoint:"Lonavala",
+fitness:"Easy",
+cost:"₹1,000 - ₹2,000",
+season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"avoid",May:"avoid",Jun:"monsoon",Jul:"monsoon",Aug:"monsoon",Sep:"monsoon",Oct:"avoid",Nov:"avoid",Dec:"avoid"}
 },
 
 {
-name:"Sandakphu Trek", region:"India", image:"images1/SANDAKPHU.jpg",
+id:"sandakphu",
+name:"Sandakphu Trek",
+region:"India",
+location:"West Bengal, India",
+image:"images1/SANDAKPHU.jpg",
 desc:"View Everest and Kanchenjunga together.",
 difficulty:"moderate", terrain:"mountain", altitude:"high",
 duration:7, experience:"intermediate", budget:"mid",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"peak","May":"peak","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"avoid","Oct":"peak","Nov":"peak","Dec":"avoid"}
+bestTime:"April - May, Oct - Nov",
+startPoint:"Manebhanjan",
+fitness:"Moderate",
+cost:"₹10,000 - ₹15,000",
+season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"peak",May:"peak",Jun:"avoid",Jul:"avoid",Aug:"avoid",Sep:"avoid",Oct:"peak",Nov:"peak",Dec:"avoid"}
 },
 
 {
-name:"Kumara Parvatha Trek", region:"India", image:"images1/KUMARA.jpg",
+id:"kumara-parvatha",
+name:"Kumara Parvatha Trek",
+region:"India",
+location:"Karnataka, India",
+image:"images1/KUMARA.jpg",
 desc:"Challenging trek in Western Ghats.",
 difficulty:"hard", terrain:"forest", altitude:"medium",
 duration:2, experience:"advanced", budget:"budget",
-season:{"Jan":"peak","Feb":"peak","Mar":"peak","Apr":"avoid","May":"avoid","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"avoid","Oct":"peak","Nov":"peak","Dec":"peak"}
+bestTime:"Oct - Feb",
+startPoint:"Kukke Subramanya",
+fitness:"High",
+cost:"₹2,000 - ₹4,000",
+season:{Jan:"peak",Feb:"peak",Mar:"peak",Apr:"avoid",May:"avoid",Jun:"avoid",Jul:"avoid",Aug:"avoid",Sep:"avoid",Oct:"peak",Nov:"peak",Dec:"peak"}
 },
 
 {
-name:"Triund Trek", region:"India", image:"images1/TRIUND.jpg",
+id:"triund",
+name:"Triund Trek",
+region:"India",
+location:"Himachal Pradesh, India",
+image:"images1/TRIUND.jpg",
 desc:"Short scenic trek near Dharamshala.",
 difficulty:"easy", terrain:"mountain", altitude:"low",
 duration:2, experience:"beginner", budget:"budget",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"peak","May":"peak","Jun":"peak","Jul":"monsoon","Aug":"monsoon","Sep":"peak","Oct":"peak","Nov":"avoid","Dec":"avoid"}
+bestTime:"March - June, Sept - Dec",
+startPoint:"McLeod Ganj",
+fitness:"Easy",
+cost:"₹1,000 - ₹3,000",
+season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"peak",May:"peak",Jun:"peak",Jul:"monsoon",Aug:"monsoon",Sep:"peak",Oct:"peak",Nov:"avoid",Dec:"avoid"}
 },
 
 {
-name:"Tadiandamol Trek", region:"India", image:"images1/TADIANDAMOL.jpg",
+id:"tadiandamol",
+name:"Tadiandamol Trek",
+region:"India",
+location:"Karnataka, India",
+image:"images1/TADIANDAMOL.jpg",
 desc:"Highest peak in Coorg.",
 difficulty:"easy", terrain:"forest", altitude:"low",
 duration:2, experience:"beginner", budget:"budget",
-season:{"Jan":"peak","Feb":"peak","Mar":"peak","Apr":"avoid","May":"avoid","Jun":"monsoon","Jul":"monsoon","Aug":"monsoon","Sep":"avoid","Oct":"peak","Nov":"peak","Dec":"peak"}
+bestTime:"Oct - Feb",
+startPoint:"Kakkabe",
+fitness:"Easy",
+cost:"₹1,500 - ₹3,000",
+season:{Jan:"peak",Feb:"peak",Mar:"peak",Apr:"avoid",May:"avoid",Jun:"monsoon",Jul:"monsoon",Aug:"monsoon",Sep:"avoid",Oct:"peak",Nov:"peak",Dec:"peak"}
 },
 
 {
-name:"Annapurna Circuit Trek", region:"Nepal", image:"images1/ANNAPURNA.jpg",
+id:"annapurna-circuit",
+name:"Annapurna Circuit Trek",
+region:"Nepal",
+location:"Nepal",
+image:"images1/ANNAPURNA.jpg",
 desc:"Diverse Himalayan landscapes.",
 difficulty:"moderate", terrain:"mountain", altitude:"high",
 duration:10, experience:"intermediate", budget:"mid",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"peak","Apr":"peak","May":"peak","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"peak","Oct":"peak","Nov":"avoid","Dec":"avoid"}
+bestTime:"March - May, Sept - Nov",
+startPoint:"Besisahar",
+fitness:"Moderate",
+cost:"₹40,000+",
+season:{Jan:"avoid",Feb:"avoid",Mar:"peak",Apr:"peak",May:"peak",Jun:"avoid",Jul:"avoid",Aug:"avoid",Sep:"peak",Oct:"peak",Nov:"avoid",Dec:"avoid"}
 },
 
 {
-name:"Inca Trail", region:"Peru", image:"images1/INCA.jpg",
+id:"inca-trail",
+name:"Inca Trail",
+region:"Peru",
+location:"Peru",
+image:"images1/INCA.jpg",
 desc:"Ancient trail to Machu Picchu.",
 difficulty:"moderate", terrain:"mountain", altitude:"medium",
 duration:4, experience:"intermediate", budget:"mid",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"peak","May":"peak","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"peak","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
+bestTime:"May - September",
+startPoint:"Cusco",
+fitness:"Moderate",
+cost:"₹70,000+",
+season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"peak",May:"peak",Jun:"peak",Jul:"peak",Aug:"peak",Sep:"peak",Oct:"avoid",Nov:"avoid",Dec:"avoid"}
 },
 
 {
-name:"Mount Kilimanjaro Trek", region:"Tanzania", image:"images1/KILIMANJARO.jpg",
+id:"kilimanjaro",
+name:"Mount Kilimanjaro Trek",
+region:"Tanzania",
+location:"Tanzania",
+image:"images1/KILIMANJARO.jpg",
 desc:"Africa's highest peak climb.",
 difficulty:"hard", terrain:"mountain", altitude:"high",
 duration:8, experience:"advanced", budget:"high",
-season:{"Jan":"peak","Feb":"peak","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"peak","Oct":"avoid","Nov":"avoid","Dec":"peak"}
+bestTime:"Jan - March, June - Oct",
+startPoint:"Moshi",
+fitness:"High",
+cost:"₹1,50,000+",
+season:{Jan:"peak",Feb:"peak",Mar:"avoid",Apr:"avoid",May:"avoid",Jun:"peak",Jul:"peak",Aug:"peak",Sep:"peak",Oct:"avoid",Nov:"avoid",Dec:"peak"}
 },
 
 {
-name:"Torres del Paine Trek", region:"Chile", image:"images1/PATAGONIA.jpg",
+id:"torres-del-paine",
+name:"Torres del Paine Trek",
+region:"Chile",
+location:"Chile",
+image:"images1/PATAGONIA.jpg",
 desc:"Glaciers and rugged Patagonia views.",
 difficulty:"moderate", terrain:"mountain", altitude:"medium",
 duration:6, experience:"intermediate", budget:"high",
-season:{"Jan":"peak","Feb":"peak","Mar":"peak","Apr":"avoid","May":"avoid","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"avoid","Oct":"peak","Nov":"peak","Dec":"peak"}
+bestTime:"Nov - March",
+startPoint:"Puerto Natales",
+fitness:"Moderate",
+cost:"₹1,20,000+",
+season:{Jan:"peak",Feb:"peak",Mar:"peak",Apr:"avoid",May:"avoid",Jun:"avoid",Jul:"avoid",Aug:"avoid",Sep:"avoid",Oct:"peak",Nov:"peak",Dec:"peak"}
 },
 
 {
-name:"Dolomites Trek", region:"Italy", image:"images1/DOLOMITES.jpg",
+id:"dolomites",
+name:"Dolomites Trek",
+region:"Italy",
+location:"Italy",
+image:"images1/DOLOMITES.jpg",
 desc:"Alpine trekking paradise.",
 difficulty:"moderate", terrain:"mountain", altitude:"medium",
 duration:5, experience:"intermediate", budget:"high",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"peak","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
+bestTime:"June - September",
+startPoint:"Cortina",
+fitness:"Moderate",
+cost:"₹1,00,000+",
+season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"avoid",May:"avoid",Jun:"peak",Jul:"peak",Aug:"peak",Sep:"peak",Oct:"avoid",Nov:"avoid",Dec:"avoid"}
 },
 
 {
-name:"Laugavegur Trail", region:"Iceland", image:"images1/ICELAND.jpg",
+id:"laugavegur",
+name:"Laugavegur Trail",
+region:"Iceland",
+location:"Iceland",
+image:"images1/ICELAND.jpg",
 desc:"Colorful Icelandic landscapes.",
 difficulty:"moderate", terrain:"mountain", altitude:"medium",
 duration:4, experience:"intermediate", budget:"high",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"avoid","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
+bestTime:"June - August",
+startPoint:"Landmannalaugar",
+fitness:"Moderate",
+cost:"₹90,000+",
+season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"avoid",May:"avoid",Jun:"peak",Jul:"peak",Aug:"peak",Sep:"avoid",Oct:"avoid",Nov:"avoid",Dec:"avoid"}
 },
 
 {
-name:"Mount Fuji Trek", region:"Japan", image:"images1/FUJI.jpg",
+id:"mount-fuji",
+name:"Mount Fuji Trek",
+region:"Japan",
+location:"Japan",
+image:"images1/FUJI.jpg",
 desc:"Iconic sunrise trek in Japan.",
 difficulty:"moderate", terrain:"mountain", altitude:"high",
 duration:2, experience:"intermediate", budget:"mid",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"avoid","Jul":"peak","Aug":"peak","Sep":"avoid","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
+bestTime:"July - August",
+startPoint:"Fujinomiya",
+fitness:"Moderate",
+cost:"₹30,000+",
+season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"avoid",May:"avoid",Jun:"avoid",Jul:"peak",Aug:"peak",Sep:"avoid",Oct:"avoid",Nov:"avoid",Dec:"avoid"}
 },
 
 {
-name:"Appalachian Trail", region:"USA", image:"images1/APPALACHIAN.jpg",
+id:"appalachian",
+name:"Appalachian Trail",
+region:"USA",
+location:"United States",
+image:"images1/APPALACHIAN.jpg",
 desc:"Legendary long-distance forest trail.",
 difficulty:"hard", terrain:"forest", altitude:"medium",
 duration:14, experience:"advanced", budget:"mid",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"peak","May":"peak","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"peak","Oct":"peak","Nov":"avoid","Dec":"avoid"}
+bestTime:"April - October",
+startPoint:"Georgia",
+fitness:"High",
+cost:"₹50,000+",
+season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"peak",May:"peak",Jun:"peak",Jul:"peak",Aug:"peak",Sep:"peak",Oct:"peak",Nov:"avoid",Dec:"avoid"}
 },
 
 {
-name:"Overland Track", region:"Australia", image:"images1/OVERLAND.jpg",
+id:"overland-track",
+name:"Overland Track",
+region:"Australia",
+location:"Tasmania, Australia",
+image:"images1/OVERLAND.jpg",
 desc:"Tasmania wilderness trek.",
 difficulty:"moderate", terrain:"forest", altitude:"medium",
 duration:6, experience:"intermediate", budget:"high",
-season:{"Jan":"peak","Feb":"peak","Mar":"peak","Apr":"avoid","May":"avoid","Jun":"avoid","Jul":"avoid","Aug":"avoid","Sep":"avoid","Oct":"peak","Nov":"peak","Dec":"peak"}
+bestTime:"Dec - March",
+startPoint:"Cradle Mountain",
+fitness:"Moderate",
+cost:"₹80,000+",
+season:{Jan:"peak",Feb:"peak",Mar:"peak",Apr:"avoid",May:"avoid",Jun:"avoid",Jul:"avoid",Aug:"avoid",Sep:"avoid",Oct:"peak",Nov:"peak",Dec:"peak"}
 },
 
 {
-name:"Trolltunga Trek", region:"Norway", image:"images1/TROLLTUNGA.jpg",
+id:"trolltunga",
+name:"Trolltunga Trek",
+region:"Norway",
+location:"Norway",
+image:"images1/TROLLTUNGA.jpg",
 desc:"Cliff-edge hike in Norway.",
 difficulty:"hard", terrain:"mountain", altitude:"high",
 duration:1, experience:"advanced", budget:"high",
-season:{"Jan":"avoid","Feb":"avoid","Mar":"avoid","Apr":"avoid","May":"avoid","Jun":"peak","Jul":"peak","Aug":"peak","Sep":"avoid","Oct":"avoid","Nov":"avoid","Dec":"avoid"}
+bestTime:"June - August",
+startPoint:"Odda",
+fitness:"High",
+cost:"₹1,00,000+",
+season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"avoid",May:"avoid",Jun:"peak",Jul:"peak",Aug:"peak",Sep:"avoid",Oct:"avoid",Nov:"avoid",Dec:"avoid"}
 }
 
 ];
@@ -257,7 +433,7 @@ function buildCardHTML(dest, isMatch=false){
             ${dest.desc}
         </p>
 
-        <a href="destination.html?id=${encodeURIComponent(dest.name)}"
+        <a href="destination.html?id=${dest.id}"
            class="mt-auto bg-mint text-juniper py-3 text-center rounded-xl font-bold transition-all duration-300 hover:bg-juniper hover:text-mint hover:shadow-lg active:scale-95 block w-full">
             Explore Journey
         </a>
