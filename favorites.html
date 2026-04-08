@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Favorites • Hikster</title>
+
+<link rel="icon" href="logo/logo.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<script>
+tailwind.config = {
+darkMode: 'class',
+theme: {
+extend: {
+colors: {
+mint:'#2dd4bf',
+teal:'#14b8a6',
+juniper:'#0f373b',
+pearl:'#f8f9fa'
+}
+}
+}
+}
+</script>
+
+<style>
+body { font-family: 'Inter', sans-serif; }
+</style>
+
+</head>
+
+<body class="bg-pearl dark:bg-gray-900 min-h-screen flex flex-col text-gray-800 dark:text-gray-100">
+
+<!-- ✅ NAVBAR (same as home) -->
+<header class="bg-juniper text-white px-6 py-4 flex justify-between items-center shadow">
+<a href="home.html" class="flex items-center gap-2">
+<img src="logo/logo.png" class="h-10">
+<span class="text-xl font-bold">Hikster</span>
+</a>
+
+<nav class="flex gap-6 items-center">
+<a href="home.html" class="hover:text-mint">Home</a>
+<a href="all-destinations.html" class="hover:text-mint">Destinations</a>
+<a href="history.html" class="hover:text-mint">History</a>
+<a href="favorites.html" class="text-mint font-bold flex items-center gap-2">
+<i class="fas fa-heart"></i> Favorites
+</a>
+<a href="quiz.html" class="bg-mint px-4 py-2 rounded-full text-juniper font-bold">
+Take Quiz
+</a>
+</nav>
+</header>
+
+<!-- ✅ HERO SECTION -->
+<section class="bg-white dark:bg-gray-800 py-16 px-6 text-center border-b">
+<div class="max-w-3xl mx-auto">
+<h1 class="text-4xl font-extrabold text-juniper dark:text-white mb-4">
+Your Favorite Treks ❤️
+</h1>
+<p class="text-gray-500 dark:text-gray-400">
+All the treks you've saved for your next adventure.
+</p>
+</div>
+</section>
+
+<!-- ✅ FAVORITES GRID -->
+<section class="py-16 px-6 flex-1">
+<div class="max-w-7xl mx-auto">
+
+<div id="favorites-container" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+
+</div>
+</section>
+
+<!-- ✅ FOOTER -->
+<footer class="bg-juniper text-center py-6 text-gray-400">
+© 2026 Hikster • Explore Beyond Limits
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+const favs = JSON.parse(localStorage.getItem("favorites")) || [];
+const container = document.getElementById("favorites-container");
+
+if(favs.length === 0){
+container.innerHTML = `
+<div class="col-span-3 text-center py-20">
+<h2 class="text-3xl font-bold mb-4">No Favorites Yet ❤️</h2>
+<p class="text-gray-500 mb-6">Start exploring and save your favorite treks.</p>
+<a href="all-destinations.html" class="px-6 py-3 bg-mint rounded-full font-bold text-juniper">
+Explore Treks
+</a>
+</div>
+`;
+}
+
+// Load favorites
+const favDest = destinations.filter(d => favs.includes(d.name));
+container.innerHTML = favDest.map(d => buildCardHTML(d)).join('');
+</script>
+
+</body>
+</html>
