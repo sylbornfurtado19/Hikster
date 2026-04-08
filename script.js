@@ -456,3 +456,13 @@ function saveFavorite(name){
         alert("Already in favorites!");
     }
 }
+
+function removeFavorite(name){
+    let favs = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    favs = favs.filter(f => f !== name);
+
+    localStorage.setItem("favorites", JSON.stringify(favs));
+
+    location.reload();
+}
