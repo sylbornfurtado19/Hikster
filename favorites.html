@@ -99,7 +99,17 @@ Explore Treks
 
 // Load favorites
 const favDest = destinations.filter(d => favs.includes(d.name));
-container.innerHTML = favDest.map(d => buildCardHTML(d)).join('');
+container.innerHTML = favDest.map(d => `
+<div class="relative">
+    ${buildCardHTML(d)}
+
+    <!-- REMOVE BUTTON -->
+    <button onclick="removeFavorite('${d.name}')" 
+        class="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow hover:bg-red-600">
+        ❌ Remove
+    </button>
+</div>
+`).join('');
 </script>
 
 </body>
