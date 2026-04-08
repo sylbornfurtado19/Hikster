@@ -71,8 +71,10 @@ const params = new URLSearchParams(window.location.search);
 const destId = params.get('id');
 const contentDiv = document.getElementById('destination-content');
 
-const destination = destinations.find(
-d => d.id === destId || d.name.toLowerCase().replace(/\s+/g,"-") === destId
+const destination = destinations.find(d => 
+    d.id === destId || 
+    d.name === destId ||
+    d.name.toLowerCase().replace(/\s+/g,"-") === destId
 );
 
 if(destination){
