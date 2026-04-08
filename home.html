@@ -53,14 +53,9 @@
         <span>History</span>
     </a>
 
-    <a href="favorites.html" class="hover:text-mint transition-colors flex items-center gap-2">
-        <i class="fas fa-heart text-lg"></i>
-        <span>Favorites</span>
-    </a>
-
-    <a href="index.html" class="px-5 py-2 border border-mint text-mint rounded-full font-bold hover:bg-mint hover:text-juniper transition-all">
-        Login
-    </a>
+<span id="auth-section">
+    <a href="index.html">Login</a>
+</span>
 
     <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-700 transition-colors">
         <i class="fas fa-moon text-xl" id="theme-icon"></i>
@@ -225,9 +220,7 @@
             }
         });
     }
-</script>
 
-<script>
     function handleSubscribe(e) {
         e.preventDefault();
         const email = document.getElementById('newsletter-email').value;
@@ -239,7 +232,26 @@
             }, 4000);
         }
     }
+
+    // ================= LOGIN STATE (ADDED) =================
+    const authSection = document.getElementById("auth-section");
+    const user = JSON.parse(localStorage.getItem("hiksterUser"));
+
+    if(user && authSection){
+        authSection.innerHTML = `
+            <div class="flex items-center gap-3">
+                <span class="text-mint font-bold">${user.name}</span>
+                <button onclick="logout()" class="px-4 py-2 bg-red-500 text-white rounded-full text-sm">
+                    Logout
+                </button>
+            </div>
+        `;
+    }
+
+    function logout(){
+        localStorage.removeItem("hiksterUser");
+        location.reload();
+    }
 </script>
-    
 </body>
 </html>
