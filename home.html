@@ -154,6 +154,37 @@
     </div>
 </section>
 
+<!-- Newsletter Strip -->
+<section class="bg-juniper text-white py-16 px-6 border-t border-teal/20">
+    <div class="max-w-3xl mx-auto text-center">
+        <div class="w-14 h-14 bg-mint/20 text-mint rounded-full flex items-center justify-center mx-auto mb-5 text-2xl">
+            <i class="fas fa-envelope"></i>
+        </div>
+        <h2 class="text-3xl font-bold mb-3">Get Trail Updates in Your Inbox</h2>
+        <p class="text-gray-300 mb-8 text-lg leading-relaxed">New destinations, seasonal guides, and packing tips — delivered monthly. No spam, ever.</p>
+
+        <form onsubmit="handleSubscribe(event)" class="flex flex-col sm:flex-row gap-3 justify-center items-center max-w-xl mx-auto">
+            <input
+                type="email"
+                id="newsletter-email"
+                placeholder="your@email.com"
+                required
+                class="w-full sm:flex-1 px-5 py-3 rounded-full bg-white/10 border border-teal/30 text-white placeholder-gray-400 focus:outline-none focus:border-mint transition-colors"
+            />
+            <button
+                type="submit"
+                class="w-full sm:w-auto px-8 py-3 bg-mint hover:bg-teal text-juniper font-bold rounded-full transition-all shadow-lg hover:-translate-y-0.5 whitespace-nowrap"
+            >
+                Subscribe <i class="fas fa-arrow-right ml-1"></i>
+            </button>
+        </form>
+
+        <p id="newsletter-msg" class="mt-4 text-sm text-mint hidden">
+            <i class="fas fa-check-circle mr-1"></i> You're in! Welcome to the Hikster trail community.
+        </p>
+    </div>
+</section>
+    
 <footer class="bg-juniper text-center py-8 border-t border-teal/20 mt-auto">
     <p class="text-gray-400 text-sm">&copy; 2026 Hikster • Fueling wanderlust for dreamers and explorers worldwide.</p>
 </footer>
@@ -187,5 +218,19 @@
     }
 </script>
 
+<script>
+    function handleSubscribe(e) {
+        e.preventDefault();
+        const email = document.getElementById('newsletter-email').value;
+        if (email) {
+            document.getElementById('newsletter-email').value = '';
+            document.getElementById('newsletter-msg').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('newsletter-msg').classList.add('hidden');
+            }, 4000);
+        }
+    }
+</script>
+    
 </body>
 </html>
