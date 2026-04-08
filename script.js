@@ -322,21 +322,6 @@ cost:"₹50,000+",
 season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"peak",May:"peak",Jun:"peak",Jul:"peak",Aug:"peak",Sep:"peak",Oct:"peak",Nov:"avoid",Dec:"avoid"}
 },
 
-{
-id:"overland-track",
-name:"Overland Track",
-region:"Australia",
-location:"Tasmania, Australia",
-image:"images1/OVERLAND.jpg",
-desc:"Tasmania wilderness trek.",
-difficulty:"moderate", terrain:"forest", altitude:"medium",
-duration:6, experience:"intermediate", budget:"high",
-bestTime:"Dec - March",
-startPoint:"Cradle Mountain",
-fitness:"Moderate",
-cost:"₹80,000+",
-season:{Jan:"peak",Feb:"peak",Mar:"peak",Apr:"avoid",May:"avoid",Jun:"avoid",Jul:"avoid",Aug:"avoid",Sep:"avoid",Oct:"peak",Nov:"peak",Dec:"peak"}
-},
 
 {
 id:"trolltunga",
