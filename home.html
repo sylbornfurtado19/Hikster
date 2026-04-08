@@ -54,7 +54,9 @@
     </a>
 
 <span id="auth-section">
-    <a href="index.html">Login</a>
+    <a href="index.html" class="px-5 py-2 border border-mint text-mint rounded-full font-bold">
+        Login
+    </a>
 </span>
 
     <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-700 transition-colors">
@@ -233,24 +235,17 @@
         }
     }
 
-    // ================= LOGIN STATE (ADDED) =================
+    // ================= PROFILE BUTTON LOGIC =================
     const authSection = document.getElementById("auth-section");
     const user = JSON.parse(localStorage.getItem("hiksterUser"));
 
     if(user && authSection){
         authSection.innerHTML = `
-            <div class="flex items-center gap-3">
-                <span class="text-mint font-bold">${user.name}</span>
-                <button onclick="logout()" class="px-4 py-2 bg-red-500 text-white rounded-full text-sm">
-                    Logout
-                </button>
-            </div>
+            <a href="profile.html" class="flex items-center gap-2 px-5 py-2 bg-mint text-juniper rounded-full font-bold hover:bg-teal transition-all">
+                <i class="fas fa-user"></i>
+                Profile
+            </a>
         `;
-    }
-
-    function logout(){
-        localStorage.removeItem("hiksterUser");
-        location.reload();
     }
 </script>
 </body>
