@@ -55,6 +55,11 @@ background: #ccfbf1;
 <section class="flex-1 flex items-center justify-center px-4 py-10">
 <div class="w-full max-w-3xl bg-white rounded-3xl shadow-xl p-10 border">
 
+<!-- ✅ PROGRESS BAR -->
+<div class="w-full bg-gray-200 h-2 rounded mb-6 overflow-hidden">
+    <div id="progress" class="bg-mint h-2 rounded transition-all duration-300"></div>
+</div>
+  
 <form action="recommendation.html" method="get">
 
 <!-- Q1 -->
@@ -211,9 +216,13 @@ let current = 0;
 
 function showStep(i){
 steps.forEach((s,index)=>s.classList.toggle('hidden', index!==i));
-prev.style.display = i===0?'none':'block';
-next.style.display = i===steps.length-1?'none':'block';
-submit.style.display = i===steps.length-1?'block':'none';
+    prev.style.display = i===0?'none':'block';
+    next.style.display = i===steps.length-1?'none':'block';
+    submit.style.display = i===steps.length-1?'block':'none';
+
+    // ✅ UPDATE PROGRESS BAR
+    const progress = document.getElementById("progress");
+    progress.style.width = ((i+1)/steps.length)*100 + "%";
 }
 showStep(0);
 
