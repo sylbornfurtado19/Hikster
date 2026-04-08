@@ -71,14 +71,14 @@ const changeBtn = document.getElementById("change-btn");
 //  Populate dropdown
 destinations.forEach(dest => {
     const option = document.createElement("option");
-    option.value = dest.id;
+    option.value = dest.name;
     option.textContent = dest.name;
     select.appendChild(option);
 });
 
 //  CASE 1: FROM DESTINATION PAGE
 if(trekId){
-    const trek = destinations.find(d => d.id === trekId);
+    const trek = destinations.find(d => d.name === trekId);
 
     input.value = trek.name;
     input.classList.remove("hidden");
