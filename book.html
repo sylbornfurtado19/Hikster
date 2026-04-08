@@ -18,8 +18,21 @@
 
 <form id="booking-form" class="space-y-5">
 
-<input id="trek-name" type="text" placeholder="Trek Name"
-class="w-full p-3 border rounded" readonly>
+<!-- TREK SELECT / PREFILL -->
+
+<div id="trek-container">
+
+<select id="trek-select" class="w-full p-3 border rounded">
+<option value="">Select Trek</option>
+</select>
+
+<input id="trek-name" type="text" class="w-full p-3 border rounded hidden">
+
+</div>
+
+<button type="button" id="change-btn"
+class="hidden text-sm text-mint font-bold">
+Change Trek </button>
 
 <input type="text" placeholder="Full Name" required
 class="w-full p-3 border rounded">
@@ -45,14 +58,43 @@ Booking Successful!
 
 </div>
 
+<script src="script.js"></script>
+
 <script>
 const params = new URLSearchParams(window.location.search);
 const trekId = params.get("trek");
 
+const select = document.getElementById("trek-select");
+const input = document.getElementById("trek-name");
+const changeBtn = document.getElementById("change-btn");
+
+//  Populate dropdown
+destinations.forEach(dest => {
+    const option = document.createElement("option");
+    option.value = dest.id;
+    option.textContent = dest.name;
+    select.appendChild(option);
+});
+
+//  CASE 1: FROM DESTINATION PAGE
 if(trekId){
-    document.getElementById("trek-name").value = trekId.replace(/-/g," ");
+    const trek = destinations.find(d => d.id === trekId);
+
+    input.value = trek.name;
+    input.classList.remove("hidden");
+
+    select.classList.add("hidden");
+    changeBtn.classList.remove("hidden");
 }
 
+//  CHANGE TREK BUTTON
+changeBtn.addEventListener("click", () => {
+    input.classList.add("hidden");
+    select.classList.remove("hidden");
+    changeBtn.classList.add("hidden");
+});
+
+//  FORM SUBMIT
 document.getElementById("booking-form").addEventListener("submit", function(e){
     e.preventDefault();
     document.getElementById("success-msg").classList.remove("hidden");
