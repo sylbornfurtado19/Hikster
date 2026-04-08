@@ -437,3 +437,15 @@ container.innerHTML = destinations.map(d=>buildCardHTML(d)).join("");
 }
 
 });
+
+function saveFavorite(name){
+    let favs = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    if(!favs.includes(name)){
+        favs.push(name);
+        localStorage.setItem("favorites", JSON.stringify(favs));
+        alert("Added to favorites!");
+    } else {
+        alert("Already in favorites!");
+    }
+}
