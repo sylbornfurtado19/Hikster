@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Trek • Hikster</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+<div class="bg-white p-10 rounded-2xl shadow-lg w-full max-w-lg">
+
+<h2 class="text-2xl font-bold mb-6 text-center">Book Your Trek</h2>
+
+<form id="booking-form" class="space-y-5">
+
+<input id="trek-name" type="text" placeholder="Trek Name"
+class="w-full p-3 border rounded" readonly>
+
+<input type="text" placeholder="Full Name" required
+class="w-full p-3 border rounded">
+
+<input type="email" placeholder="Email" required
+class="w-full p-3 border rounded">
+
+<input type="number" placeholder="Number of People" required
+class="w-full p-3 border rounded">
+
+<input type="date" required
+class="w-full p-3 border rounded">
+
+<button type="submit"
+class="w-full py-3 bg-mint text-juniper font-bold rounded">
+Confirm Booking </button>
+
+</form>
+
+<p id="success-msg" class="hidden text-green-600 text-center mt-4">
+Booking Successful!
+</p>
+
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const trekId = params.get("trek");
+
+if(trekId){
+    document.getElementById("trek-name").value = trekId.replace(/-/g," ");
+}
+
+document.getElementById("booking-form").addEventListener("submit", function(e){
+    e.preventDefault();
+    document.getElementById("success-msg").classList.remove("hidden");
+});
+</script>
+
+</body>
+</html>
