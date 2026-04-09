@@ -45,10 +45,20 @@
     <i class="fas fa-moon text-xl" id="theme-icon"></i>
 </button>
 
-<div class="text-center mb-8 mt-4">
-    <img src="logo/logo.png" alt="Hikster Logo" class="h-20 mx-auto mb-4 object-contain">
-    <h2 class="text-3xl font-extrabold text-juniper dark:text-white tracking-tight">Welcome Back</h2>
-    <p class="text-gray-500 dark:text-gray-400 mt-2">Sign in to plan your next adventure.</p>
+<div class="text-center mb-8 mt-16 relative">
+    
+    <img src="logo/logo.png" 
+         alt="Hikster Logo" 
+         class="h-32 object-contain absolute left-1/2 -translate-x-1/2 -top-28">
+
+    <h2 class="text-3xl font-extrabold text-juniper dark:text-white tracking-tight mt-24">
+        Welcome Back
+    </h2>
+
+    <p class="text-gray-500 dark:text-gray-400 mt-2">
+        Sign in to plan your next adventure.
+    </p>
+
 </div>
 
 <form onsubmit="handleLogin(event)" class="space-y-6">
@@ -93,7 +103,6 @@
 </div>
 
 <script>
-    // ================= THEME TOGGLE =================
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
 
@@ -121,7 +130,6 @@
         });
     }
 
-    // ================= LOGIN FUNCTION (FIXED) =================
     function handleLogin(e){
         e.preventDefault();
 
