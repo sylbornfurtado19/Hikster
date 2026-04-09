@@ -34,24 +34,15 @@ body { font-family: 'Inter', sans-serif; }
 <body class="bg-pearl dark:bg-gray-900 min-h-screen flex flex-col text-gray-800 dark:text-gray-100">
 
 <!-- ✅ NAVBAR (same as home) -->
-<header class="bg-juniper text-white px-6 py-4 flex justify-between items-center shadow">
-<a href="home.html" class="flex items-center gap-2">
-<img src="logo/logo.png" class="h-10">
-<span class="text-xl font-bold">Hikster</span>
-</a>
+<div id="navbar"></div>
 
-<nav class="flex gap-6 items-center">
-<a href="home.html" class="hover:text-mint">Home</a>
-<a href="all-destinations.html" class="hover:text-mint">Destinations</a>
-<a href="history.html" class="hover:text-mint">History</a>
-<a href="favorites.html" class="text-mint font-bold flex items-center gap-2">
-<i class="fas fa-heart"></i> Favorites
-</a>
-<a href="quiz.html" class="bg-mint px-4 py-2 rounded-full text-juniper font-bold">
-Take Quiz
-</a>
-</nav>
-</header>
+<script>
+fetch("navbar.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("navbar").innerHTML = data;
+  });
+</script>
 
 <!-- ✅ HERO SECTION -->
 <section class="bg-white dark:bg-gray-800 py-16 px-6 text-center border-b">
