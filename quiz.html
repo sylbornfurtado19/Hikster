@@ -45,15 +45,12 @@ background: #ccfbf1;
 
 <body class="bg-pearl min-h-screen flex flex-col">
 
-<div id="navbar"></div>
-
-<script>
-fetch("navbar.html")
-  .then(res => res.text())
-  .then(data => {
-    document.getElementById("navbar").innerHTML = data;
-  });
-</script>
+<header class="bg-juniper text-white px-6 py-4 flex justify-between">
+<a href="home.html" class="flex items-center gap-2">
+<img src="logo/logo.png" class="h-10">
+<span class="text-xl font-bold">Hikster</span>
+</a>
+</header>
 
 <section class="flex-1 flex items-center justify-center px-4 py-10">
 <div class="w-full max-w-3xl bg-white rounded-3xl shadow-xl p-10 border">
