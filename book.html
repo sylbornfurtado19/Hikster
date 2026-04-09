@@ -59,7 +59,6 @@ Booking Successful!
 </div>
 
 <script src="script.js"></script>
-
 <script>
 const params = new URLSearchParams(window.location.search);
 const trekId = params.get("trek");
@@ -71,27 +70,52 @@ const changeBtn = document.getElementById("change-btn");
 //  Populate dropdown
 destinations.forEach(dest => {
     const option = document.createElement("option");
-    option.value = dest.name;
+    option.value = dest.id;
     option.textContent = dest.name;
     select.appendChild(option);
 });
 
-//  CASE 1: FROM DESTINATION PAGE
+//  DEFAULT STATE (Navbar flow)
+input.classList.add("hidden");
+select.classList.remove("hidden");
+changeBtn.classList.add("hidden");
+
+//  IF COMING FROM DESTINATION PAGE
 if(trekId){
-    const trek = destinations.find(d => d.name === trekId);
+    const trek = destinations.find(d => d.id === trekId);
 
-    input.value = trek.name;
-    input.classList.remove("hidden");
+    if(trek){
+        input.value = trek.name;
 
-    select.classList.add("hidden");
-    changeBtn.classList.remove("hidden");
+        input.classList.remove("hidden");
+        select.classList.add("hidden");
+        changeBtn.classList.remove("hidden");
+    }
 }
 
-//  CHANGE TREK BUTTON
+//  CHANGE TREK BUTTON (FIXED)
 changeBtn.addEventListener("click", () => {
+
+    // reset dropdown
+    select.value = "";
+
+    // switch UI
     input.classList.add("hidden");
     select.classList.remove("hidden");
     changeBtn.classList.add("hidden");
+});
+
+//  OPTIONAL: when user selects new trek → update input
+select.addEventListener("change", () => {
+    if(select.value){
+        const trek = destinations.find(d => d.id === select.value);
+
+        input.value = trek.name;
+
+        input.classList.remove("hidden");
+        select.classList.add("hidden");
+        changeBtn.classList.remove("hidden");
+    }
 });
 
 //  FORM SUBMIT
@@ -99,7 +123,6 @@ document.getElementById("booking-form").addEventListener("submit", function(e){
     e.preventDefault();
     document.getElementById("success-msg").classList.remove("hidden");
 });
-</script>
-
+    </script>
 </body>
 </html>
