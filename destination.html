@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trek Details • Hikster</title>
+<title>Favorites • Hikster</title>
 
 <link rel="icon" href="logo/logo.png">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -16,10 +15,10 @@ darkMode: 'class',
 theme: {
 extend: {
 colors: {
-mint: '#2dd4bf',
-teal: '#14b8a6',
-juniper: '#0f373b',
-pearl: '#f8f9fa'
+mint:'#2dd4bf',
+teal:'#14b8a6',
+juniper:'#0f373b',
+pearl:'#f8f9fa'
 }
 }
 }
@@ -27,148 +26,90 @@ pearl: '#f8f9fa'
 </script>
 
 <style>
-body { font-family: 'Inter', system-ui, sans-serif; }
-html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; }
 </style>
 
 </head>
 
 <body class="bg-pearl dark:bg-gray-900 min-h-screen flex flex-col text-gray-800 dark:text-gray-100">
 
-<div id="navbar"></div>
+<!-- ✅ NAVBAR (same as home) -->
+<header class="bg-juniper text-white px-6 py-4 flex justify-between items-center shadow">
+<a href="home.html" class="flex items-center gap-2">
+<img src="logo/logo.png" class="h-10">
+<span class="text-xl font-bold">Hikster</span>
+</a>
 
-<script>
-fetch("navbar.html")
-  .then(res => res.text())
-  .then(data => {
-    document.getElementById("navbar").innerHTML = data;
-  });
-</script>
+<nav class="flex gap-6 items-center">
+<a href="home.html" class="hover:text-mint">Home</a>
+<a href="all-destinations.html" class="hover:text-mint">Destinations</a>
+<a href="history.html" class="hover:text-mint">History</a>
+<a href="favorites.html" class="text-mint font-bold flex items-center gap-2">
+<i class="fas fa-heart"></i> Favorites
+</a>
+<a href="quiz.html" class="bg-mint px-4 py-2 rounded-full text-juniper font-bold">
+Take Quiz
+</a>
+</nav>
+</header>
 
-<main id="destination-content" class="flex-1 flex flex-col">
-
-<div class="flex-1 flex items-center justify-center py-32 text-gray-500">
-<h2 class="text-3xl font-bold">Loading Trek Profile...</h2>
+<!-- ✅ HERO SECTION -->
+<section class="bg-white dark:bg-gray-800 py-16 px-6 text-center border-b">
+<div class="max-w-3xl mx-auto">
+<h1 class="text-4xl font-extrabold text-juniper dark:text-white mb-4">
+Your Favorite Treks ❤️
+</h1>
+<p class="text-gray-500 dark:text-gray-400">
+All the treks you've saved for your next adventure.
+</p>
 </div>
+</section>
 
-</main>
+<!-- ✅ FAVORITES GRID -->
+<section class="py-16 px-6 flex-1">
+<div class="max-w-7xl mx-auto">
 
-<footer class="bg-juniper text-center py-8 text-gray-400">
+<div id="favorites-container" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+
+</div>
+</section>
+
+<!-- ✅ FOOTER -->
+<footer class="bg-juniper text-center py-6 text-gray-400">
 © 2026 Hikster • Explore Beyond Limits
 </footer>
 
 <script src="script.js"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+const favs = JSON.parse(localStorage.getItem("favorites")) || [];
+const container = document.getElementById("favorites-container");
 
-const params = new URLSearchParams(window.location.search);
-const destId = params.get('id');
-const contentDiv = document.getElementById('destination-content');
-
-const destination = destinations.find(d => 
-    d.id === destId || 
-    d.name === destId ||
-    d.name.toLowerCase().replace(/\s+/g,"-") === destId
-);
-
-if(destination){
-
-const months = Object.entries(destination.season || {});
-const seasonHTML = months.length ? `
-<section class="mt-10">
-<h2 class="text-3xl font-bold text-juniper dark:text-mint mb-6">Best Time to Visit</h2>
-
-<div class="grid grid-cols-4 md:grid-cols-12 gap-2">
-${months.map(([month, type]) => {
-const styles = {
-peak:'bg-emerald-100 text-emerald-800',
-avoid:'bg-gray-100 text-gray-400',
-monsoon:'bg-blue-100 text-blue-800'
-};
-return `<div class="rounded-xl py-3 text-center ${styles[type]}">
-<span class="text-xs font-bold">${month}</span>
-</div>`;
-}).join('')}
-</div>
-</section>` : '';
-
-contentDiv.innerHTML = `
-
-<!-- HERO -->
-<div class="relative h-[60vh] bg-cover bg-center flex items-end"
-style="background-image: url('${destination.image}')">
-
-<div class="absolute inset-0 bg-gradient-to-t from-juniper"></div>
-
-<div class="relative z-10 px-6 pb-12">
-<h1 class="text-5xl font-bold text-white">${destination.name}</h1>
-<p class="text-mint mt-2">${destination.location}</p>
-</div>
-</div>
-
-<!-- CONTENT -->
-<div class="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-3 gap-12">
-
-<div class="lg:col-span-2 space-y-10">
-
-<section>
-<h2 class="text-3xl font-bold mb-4">Overview</h2>
-<p>${destination.desc}</p>
-</section>
-
-${seasonHTML}
-
-<section>
-<h2 class="text-3xl font-bold mb-4">Highlights</h2>
-<ul class="list-disc pl-6 space-y-2">
-<li>Ideal for ${destination.experience} trekkers</li>
-<li>Beautiful ${destination.terrain} landscapes</li>
-<li>Best visited in ${destination.bestTime}</li>
-<li>Located in ${destination.location}</li>
-</ul>
-</section>
-
-<div class="mt-8 flex gap-4">
-<a href="book.html?trek=${destination.name}"
-class="px-6 py-3 bg-juniper text-white rounded">
-Book Trek
+if(favs.length === 0){
+container.innerHTML = `
+<div class="col-span-3 text-center py-20">
+<h2 class="text-3xl font-bold mb-4">No Favorites Yet ❤️</h2>
+<p class="text-gray-500 mb-6">Start exploring and save your favorite treks.</p>
+<a href="all-destinations.html" class="px-6 py-3 bg-mint rounded-full font-bold text-juniper">
+Explore Treks
 </a>
-<a href="all-destinations.html" class="px-6 py-3 border rounded">Go Back</a>
-</div>
-
-</div>
-
-<!-- SIDEBAR -->
-<aside>
-<div class="bg-white dark:bg-gray-800 p-6 rounded shadow">
-
-<h3 class="text-xl font-bold mb-4">Details</h3>
-
-<div class="space-y-3 text-sm">
-
-<p>Difficulty: <b>${destination.difficulty}</b></p>
-<p>Duration: <b>${destination.duration} days</b></p>
-<p>Altitude: <b>${destination.altitude}</b></p>
-<p>Experience: <b>${destination.experience}</b></p>
-
-<p>Start Point: <b>${destination.startPoint || "N/A"}</b></p>
-<p>Best Time: <b>${destination.bestTime || "N/A"}</b></p>
-<p>Cost: <b>${destination.cost || "N/A"}</b></p>
-
-</div>
-
-</div>
-</aside>
-
 </div>
 `;
-
-}else{
-contentDiv.innerHTML = "<h1>Not Found</h1>";
 }
 
-});
+// Load favorites
+const favDest = destinations.filter(d => favs.includes(d.name));
+container.innerHTML = favDest.map(d => `
+<div class="relative">
+    ${buildCardHTML(d)}
+
+    <!-- REMOVE BUTTON -->
+    <button onclick="removeFavorite('${d.name}')" 
+        class="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow hover:bg-red-600">
+        ❌ Remove
+    </button>
+</div>
+`).join('');
 </script>
 
 </body>
