@@ -1,65 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Favorites • Hikster</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorites • Hikster</title>
 
-<link rel="icon" href="logo/logo.png">
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" href="logo/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<script>
-tailwind.config = {
-darkMode: 'class',
-theme: {
-extend: {
-colors: {
-mint:'#2dd4bf',
-teal:'#14b8a6',
-juniper:'#0f373b',
-pearl:'#f8f9fa'
-}
-}
-}
-}
-</script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        mint: '#2dd4bf',
+                        teal: '#14b8a6',
+                        juniper: '#0f373b',
+                        pearl: '#f8f9fa'
+                    }
+                }
+            }
+        }
+    </script>
 
-<style>
-body { font-family: 'Inter', sans-serif; }
-</style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-<script src="navbar.js" defer></script>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background:
+                radial-gradient(circle at 14% 20%, rgba(45, 212, 191, 0.18), transparent 30%),
+                radial-gradient(circle at 84% 78%, rgba(20, 184, 166, 0.15), transparent 32%),
+                #f8f9fa;
+        }
 
+        html.dark body {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(45, 212, 191, 0.08), transparent 35%),
+                radial-gradient(circle at 82% 75%, rgba(13, 95, 102, 0.2), transparent 35%),
+                #0b1117;
+        }
+    </style>
+
+    <script src="navbar.js" defer></script>
 </head>
 
-<body class="bg-pearl dark:bg-gray-900 min-h-screen flex flex-col text-gray-800 dark:text-gray-100">
-
-<!-- ✅ NAVBAR (same as home) -->
-<!-- ✅ HERO SECTION -->
-<section class="bg-white dark:bg-gray-800 py-16 px-6 text-center border-b">
-<div class="max-w-3xl mx-auto">
-<h1 class="text-4xl font-extrabold text-juniper dark:text-white mb-4">
-Your Favorite Treks ❤️
-</h1>
-<p class="text-gray-500 dark:text-gray-400">
-All the treks you've saved for your next adventure.
-</p>
-</div>
+<body class="min-h-screen flex flex-col text-gray-800 dark:text-gray-100">
+<section class="pt-28 pb-14 px-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="rounded-3xl overflow-hidden border border-white/60 dark:border-mint/20 shadow-2xl">
+            <div class="bg-gradient-to-r from-juniper via-teal to-juniper text-white px-8 py-12 md:px-12">
+                <p class="uppercase tracking-[0.25em] text-xs text-mint font-bold">Saved Collection</p>
+                <h1 class="text-4xl md:text-5xl font-extrabold mt-3">Favorite Treks</h1>
+                <p class="text-teal-100 mt-4 max-w-2xl">Everything you have saved in one place. Revisit routes, compare options, and jump straight to details when you are ready to book.</p>
+            </div>
+        </div>
+    </div>
 </section>
 
-<!-- ✅ FAVORITES GRID -->
-<section class="py-16 px-6 flex-1">
-<div class="max-w-7xl mx-auto">
-
-<div id="favorites-container" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
-
-</div>
+<section class="px-6 pb-16 flex-1">
+    <div class="max-w-7xl mx-auto">
+        <div id="favorites-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"></div>
+    </div>
 </section>
 
-<!-- ✅ FOOTER -->
-<footer class="bg-juniper text-center py-6 text-gray-400">
-© 2026 Hikster • Explore Beyond Limits
+<footer class="bg-juniper text-center py-7 text-gray-300 border-t border-teal/20">
+    © 2026 Hikster • Explore Beyond Limits
 </footer>
 
 <script src="script.js"></script>
@@ -68,31 +76,30 @@ All the treks you've saved for your next adventure.
 const favs = JSON.parse(localStorage.getItem("favorites")) || [];
 const container = document.getElementById("favorites-container");
 
-if(favs.length === 0){
-container.innerHTML = `
-<div class="col-span-3 text-center py-20">
-<h2 class="text-3xl font-bold mb-4">No Favorites Yet ❤️</h2>
-<p class="text-gray-500 mb-6">Start exploring and save your favorite treks.</p>
-<a href="all-destinations.html" class="px-6 py-3 bg-mint rounded-full font-bold text-juniper">
-Explore Treks
-</a>
-</div>
-`;
+if (favs.length === 0) {
+    container.innerHTML = `
+        <div class="md:col-span-2 xl:col-span-3 text-center py-16 px-8 rounded-2xl bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 shadow-lg">
+            <div class="h-16 w-16 mx-auto rounded-full bg-mint/20 text-mint flex items-center justify-center text-2xl mb-4">
+                <i class="fas fa-heart"></i>
+            </div>
+            <h2 class="text-3xl font-bold mb-3 text-juniper dark:text-white">No Favorites Yet</h2>
+            <p class="text-gray-600 dark:text-gray-300 mb-7">Start exploring and save your favorite treks for quick access.</p>
+            <a href="all-destinations.html" class="inline-flex items-center gap-2 px-7 py-3 bg-juniper hover:bg-teal text-white rounded-full font-bold transition-colors">
+                Explore Treks <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    `;
+} else {
+    const favDest = destinations.filter(d => favs.includes(d.name));
+    container.innerHTML = favDest.map(d => `
+        <div class="relative group">
+            ${buildCardHTML(d)}
+            <button onclick="removeFavorite('${d.name}')" class="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow hover:bg-red-600 transition-colors">
+                <i class="fas fa-times mr-1"></i> Remove
+            </button>
+        </div>
+    `).join('');
 }
-
-// Load favorites
-const favDest = destinations.filter(d => favs.includes(d.name));
-container.innerHTML = favDest.map(d => `
-<div class="relative">
-    ${buildCardHTML(d)}
-
-    <!-- REMOVE BUTTON -->
-    <button onclick="removeFavorite('${d.name}')" 
-        class="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow hover:bg-red-600">
-        ❌ Remove
-    </button>
-</div>
-`).join('');
 </script>
 
 </body>
