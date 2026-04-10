@@ -27,6 +27,71 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     body { font-family: 'Inter', system-ui, sans-serif; }
+
+    .nav-pill {
+        background: rgba(8, 45, 48, 0.78);
+        border: 1px solid rgba(125, 242, 228, 0.28);
+        backdrop-filter: blur(14px) saturate(145%);
+        -webkit-backdrop-filter: blur(14px) saturate(145%);
+    }
+
+    .nav-link {
+        position: relative;
+        color: #f3fffd;
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+        transition: color 220ms ease;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 100%;
+        height: 2px;
+        transform: scaleX(0);
+        transform-origin: left;
+        background: linear-gradient(90deg, #2dd4bf, #7df2e4);
+        transition: transform 220ms ease;
+    }
+
+    .nav-link:hover,
+    .nav-link[aria-current='page'] {
+        color: #ffffff;
+    }
+
+    .nav-link:hover::after,
+    .nav-link[aria-current='page']::after {
+        transform: scaleX(1);
+    }
+
+    .icon-action {
+        width: 2.6rem;
+        height: 2.6rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9999px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        color: #eafffb;
+        transition: all 220ms ease;
+    }
+
+    .icon-action:hover {
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+    .mobile-menu-panel {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 260ms ease;
+    }
+
+    .mobile-menu-panel.open {
+        max-height: 520px;
+    }
     
     .hero-bg {
         background: linear-gradient(rgba(15, 55, 59, 0.7), rgba(15, 55, 59, 0.8)), url('images1/SWISS ALPS.jpg');
@@ -38,46 +103,87 @@
 </head>
 <body class="bg-pearl dark:bg-gray-900 min-h-screen flex flex-col text-gray-800 dark:text-gray-100 transition-colors duration-300">
 
-<header class="bg-juniper text-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="home.html" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
-            <img src="logo/logo.png" alt="Hikster Logo" style="height: 75px; margin-right: 5px; object-fit: contain;">
-            <div class="text-3xl font-bold tracking-tight">Hikster</div>
-        </a>
-        <nav class="hidden md:flex items-center gap-x-6 font-medium">
-    <a href="home.html" class="text-mint font-bold transition-colors">Home</a>
-    <a href="all-destinations.html" class="hover:text-mint transition-colors">Destinations</a>
-    
-    <a href="history.html" class="hover:text-mint transition-colors flex items-center gap-2">
-        <i class="fas fa-history text-lg"></i>
-        <span>History</span>
-    </a>
-    <a href="favorites.html" class="hover:text-mint transition-colors flex items-center gap-2">
-    <i class="fas fa-heart text-lg"></i>
-    <span>Favorites</span>
-    </a>
+<header class="text-white fixed top-0 inset-x-0 z-50 px-4 sm:px-6 pt-3">
+    <div class="max-w-7xl mx-auto nav-pill rounded-2xl px-3 sm:px-4 py-2.5 flex items-center justify-between gap-3">
+            <a href="home.html" class="flex items-center gap-2.5 min-w-0">
+                <img src="logo/logo.png" class="h-9 sm:h-10 object-contain" alt="Hikster logo">
+                <span class="text-2xl font-extrabold tracking-tight leading-none">Hikster</span>
+            </a>
 
-<span id="auth-section">
-    <a href="index.html" class="px-5 py-2 border border-mint text-mint rounded-full font-bold">
-        Login
-    </a>
-</span>
+            <nav class="hidden lg:flex items-center gap-6 font-semibold text-[15px]">
+                <a href="home.html" data-nav-link class="nav-link">Home</a>
+                <a href="all-destinations.html" data-nav-link class="nav-link">Destinations</a>
+            </nav>
 
-    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-700 transition-colors">
-        <i class="fas fa-moon text-xl" id="theme-icon"></i>
-    </button>
+            <div class="hidden md:flex items-center gap-2">
+                <a href="history.html" data-nav-link class="icon-action" aria-label="History" title="History">
+                    <i class="fas fa-history text-sm"></i>
+                </a>
 
-    <a href="quiz.html" class="px-6 py-2.5 bg-mint hover:bg-teal text-juniper rounded-full font-bold transition-all shadow-lg">
-        Take Quiz
-    </a>
-            <a href="book.html" class="px-5 py-2 bg-mint text-juniper rounded-full font-bold">
-    Book Now
-</a>
-</nav>
-    </div>
+                <a href="favorites.html" data-nav-link class="icon-action" aria-label="Favorites" title="Favorites">
+                    <i class="fas fa-heart text-sm"></i>
+                </a>
+
+                <a href="book.html" class="px-4 py-2 bg-white text-juniper rounded-full font-bold hover:bg-gray-200 transition inline-flex items-center gap-2">
+                    <i class="fas fa-calendar-check text-sm"></i>
+                    Book Now
+                </a>
+
+                <span id="auth-section">
+                    <a href="index.html" class="icon-action" aria-label="Login" title="Login">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </span>
+
+                <button id="theme-toggle" class="icon-action" aria-label="Toggle theme" title="Toggle theme">
+                    <i class="fas fa-moon text-sm" id="theme-icon"></i>
+                </button>
+            </div>
+
+            <div class="flex md:hidden items-center gap-2">
+                <button id="theme-toggle-mobile" class="w-10 h-10 rounded-full border border-white/20 hover:bg-white/10 transition" aria-label="Toggle theme">
+                    <i class="fas fa-moon text-sm" id="theme-icon-mobile"></i>
+                </button>
+                <button id="nav-menu-toggle" class="w-10 h-10 rounded-full border border-white/20 hover:bg-white/10 transition" aria-label="Open menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu-panel md:hidden">
+            <div class="mt-3 nav-pill rounded-2xl px-4 py-4 space-y-4">
+                <nav class="grid grid-cols-1 gap-3 font-semibold">
+                    <a href="home.html" data-nav-link class="nav-link">Home</a>
+                    <a href="all-destinations.html" data-nav-link class="nav-link">Destinations</a>
+                    <a href="history.html" data-nav-link class="nav-link flex items-center gap-2">
+                        <i class="fas fa-history text-xs"></i>
+                        History
+                    </a>
+                    <a href="favorites.html" data-nav-link class="nav-link flex items-center gap-2">
+                        <i class="fas fa-heart text-xs"></i>
+                        Favorites
+                    </a>
+                </nav>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <a href="book.html" class="text-center px-4 py-2 bg-white text-juniper rounded-full font-bold hover:bg-gray-200 transition">
+                        Book Now
+                    </a>
+                    <a href="quiz.html" class="text-center px-4 py-2 bg-mint text-juniper rounded-full font-bold hover:bg-teal transition">
+                        Quiz
+                    </a>
+                </div>
+
+                <div id="auth-section-mobile">
+                    <a href="index.html" class="w-full inline-flex justify-center px-4 py-2.5 border border-mint text-mint rounded-full font-semibold hover:bg-mint hover:text-juniper transition">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </div>
 </header>
 
-<section class="hero-bg text-white py-32 px-6 text-center">
+<section class="hero-bg text-white pt-44 pb-32 px-6 text-center">
     <div class="max-w-3xl mx-auto">
         <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-6">Discover Your Ideal Adventure</h1>
         <p class="text-xl text-gray-200 mb-10 leading-relaxed">Answer a few quick questions to unlock personalized travel recommendations from around the globe, powered by your unique vibe.</p>
@@ -204,31 +310,55 @@
 
 <script>
     const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleMobile = document.getElementById('theme-toggle-mobile');
     const themeIcon = document.getElementById('theme-icon');
+    const themeIconMobile = document.getElementById('theme-icon-mobile');
+    const menuToggle = document.getElementById('nav-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    function setThemeIcons(isDark) {
+        [themeIcon, themeIconMobile].forEach((icon) => {
+            if (!icon) return;
+            icon.classList.toggle('fa-moon', !isDark);
+            icon.classList.toggle('fa-sun', isDark);
+        });
+    }
+
+    function toggleTheme() {
+        document.documentElement.classList.toggle('dark');
+        const isDark = document.documentElement.classList.contains('dark');
+        localStorage.setItem('tripfit-theme', isDark ? 'dark' : 'light');
+        setThemeIcons(isDark);
+    }
 
     if (localStorage.getItem('tripfit-theme') === 'dark') {
         document.documentElement.classList.add('dark');
-        if (themeIcon) {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        }
+        setThemeIcons(true);
     }
 
     if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            
-            if (document.documentElement.classList.contains('dark')) {
-                localStorage.setItem('tripfit-theme', 'dark');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            } else {
-                localStorage.setItem('tripfit-theme', 'light');
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            }
+        themeToggle.addEventListener('click', toggleTheme);
+    }
+
+    if (themeToggleMobile) {
+        themeToggleMobile.addEventListener('click', toggleTheme);
+    }
+
+    if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('open');
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+            menuToggle.innerHTML = isOpen ? '<i class="fas fa-xmark"></i>' : '<i class="fas fa-bars"></i>';
         });
     }
+
+    const currentPath = window.location.pathname.split('/').pop() || 'home.html';
+    document.querySelectorAll('[data-nav-link]').forEach((link) => {
+        const href = link.getAttribute('href');
+        if (href === currentPath) {
+            link.setAttribute('aria-current', 'page');
+        }
+    });
 
     function handleSubscribe(e) {
         e.preventDefault();
@@ -244,15 +374,30 @@
 
     // ================= PROFILE BUTTON LOGIC =================
     const authSection = document.getElementById("auth-section");
+    const authSectionMobile = document.getElementById("auth-section-mobile");
     const user = JSON.parse(localStorage.getItem("hiksterUser"));
 
-    if(user && authSection){
-        authSection.innerHTML = `
-            <a href="profile.html" class="flex items-center gap-2 px-5 py-2 bg-mint text-juniper rounded-full font-bold hover:bg-teal transition-all">
+    if(user){
+        const desktopProfileMarkup = `
+            <a href="profile.html" class="icon-action bg-mint/90 text-juniper border-mint/70 hover:bg-teal" aria-label="Profile" title="Profile">
+                <i class="fas fa-user"></i>
+            </a>
+        `;
+
+        const mobileProfileMarkup = `
+            <a href="profile.html" class="w-full inline-flex justify-center items-center gap-2 px-4 py-2.5 bg-mint text-juniper rounded-full font-bold hover:bg-teal transition-all">
                 <i class="fas fa-user"></i>
                 Profile
             </a>
         `;
+
+        if (authSection) {
+            authSection.innerHTML = desktopProfileMarkup;
+        }
+
+        if (authSectionMobile) {
+            authSectionMobile.innerHTML = mobileProfileMarkup;
+        }
     }
 </script>
 </body>
