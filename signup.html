@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account • Hikster</title>
+    <link rel="icon" href="logo/logo.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script>
@@ -13,12 +14,15 @@
         }
     </script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
         body { 
-            font-family: 'Inter', sans-serif; 
+            font-family: 'Inter', system-ui, sans-serif; 
             background-image: linear-gradient(rgba(15, 55, 59, 0.8), rgba(15, 55, 59, 0.8)), url('images1/SWISS ALPS.jpg'); 
             background-size: cover; background-position: center; 
         }
     </style>
+    <script src="navbar.js" defer></script>
 </head>
 <body class="min-h-screen flex items-center justify-center p-6">
 
@@ -56,10 +60,14 @@
     </div>
 
     <script>
+        function getStoredUsers() {
+            return JSON.parse(localStorage.getItem("hiksterUsers")) || [];
+        }
+
         function handleSignup(e) {
             e.preventDefault();
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
             const pass = document.getElementById('signup-pass').value;
 
             if (pass.length < 8) {
@@ -67,11 +75,19 @@
                 return;
             }
 
-            // Save user data to localStorage
-            const newUser = { name: name, email: email };
-            localStorage.setItem("hiksterUser", JSON.stringify(newUser));
+            const users = getStoredUsers();
+            const exists = users.some(user => user.email === email);
 
-            // Redirect to home
+            if (exists) {
+                alert("Email already exists. Please login instead.");
+                return;
+            }
+
+            const newUser = { name: name, email: email, password: pass };
+            users.push(newUser);
+            localStorage.setItem("hiksterUsers", JSON.stringify(users));
+
+            localStorage.setItem("hiksterUser", JSON.stringify({ name: name, email: email }));
             window.location.href = "home.html";
         }
     </script>
