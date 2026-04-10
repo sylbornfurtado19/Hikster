@@ -1,147 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hikster · Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hikster · Profile</title>
+    <link rel="icon" href="logo/logo.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        mint: '#2dd4bf',
+                        juniper: '#0f373b',
+                        sea: '#0d5f66',
+                        pearl: '#f8f9fa'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="navbar.js" defer></script>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background:
+                radial-gradient(circle at 14% 20%, rgba(45, 212, 191, 0.18), transparent 30%),
+                radial-gradient(circle at 84% 78%, rgba(20, 184, 166, 0.13), transparent 30%),
+                #f8f9fa;
+        }
 
+        html.dark body {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(45, 212, 191, 0.08), transparent 35%),
+                radial-gradient(circle at 82% 75%, rgba(13, 95, 102, 0.18), transparent 35%),
+                #0b1117;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        html.dark .panel {
+            background: rgba(31, 41, 55, 0.86);
+            border-color: rgba(45, 212, 191, 0.2);
+        }
+    </style>
+    <script src="navbar.js" defer></script>
 </head>
 
-<body class="bg-gray-100 font-sans">
+<body class="min-h-screen text-gray-800 dark:text-gray-100">
+<main class="max-w-6xl mx-auto px-4 py-28 md:px-6">
+    <section class="panel rounded-3xl shadow-2xl p-6 md:p-8">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div class="flex items-center gap-4">
+                <div class="h-16 w-16 bg-gradient-to-br from-mint to-sea rounded-2xl flex items-center justify-center text-2xl font-bold text-white shadow-lg">
+                    <span id="avatar">U</span>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 font-semibold">Traveler Profile</p>
+                    <h2 id="username" class="text-2xl font-extrabold text-juniper dark:text-mint">User</h2>
+                    <p id="email" class="text-gray-600 dark:text-gray-300 text-sm">user@email.com</p>
+                </div>
+            </div>
 
-<!-- NAVBAR -->
-<div class="max-w-5xl mx-auto p-6">
+            <button onclick="logout()" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-red-500 hover:bg-red-600 text-white font-semibold transition-colors shadow">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </section>
 
-<!-- PROFILE -->
-<div class="bg-white rounded-xl shadow p-6 flex gap-4 items-center">
-    <div class="h-16 w-16 bg-teal-400 rounded-full flex items-center justify-center text-xl font-bold text-white">
-        <span id="avatar">U</span>
-    </div>
-    <div>
-        <h2 id="username" class="text-xl font-bold">User</h2>
-        <p id="email" class="text-gray-500 text-sm">user@email.com</p>
-    </div>
-</div>
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+        <article class="panel rounded-2xl p-4 text-center shadow-lg">
+            <p id="stat-favs" class="text-2xl font-extrabold text-juniper dark:text-mint">0</p>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Favorites</p>
+        </article>
+        <article class="panel rounded-2xl p-4 text-center shadow-lg">
+            <p id="stat-history" class="text-2xl font-extrabold text-juniper dark:text-mint">0</p>
+            <p class="text-sm text-gray-600 dark:text-gray-300">History Sets</p>
+        </article>
+        <article class="panel rounded-2xl p-4 text-center shadow-lg">
+            <p id="stat-bookings" class="text-2xl font-extrabold text-juniper dark:text-mint">0</p>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Bookings</p>
+        </article>
+        <article class="panel rounded-2xl p-4 text-center shadow-lg">
+            <p id="stat-last" class="text-2xl font-extrabold text-juniper dark:text-mint">-</p>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Last Activity</p>
+        </article>
+    </section>
 
-<!-- STATS -->
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-    <div class="bg-white p-4 rounded-xl shadow text-center">
-        <p class="text-xl font-bold">34</p>
-        <p class="text-sm text-gray-500">Trips</p>
-    </div>
-    <div class="bg-white p-4 rounded-xl shadow text-center">
-        <p class="text-xl font-bold">₹42K</p>
-        <p class="text-sm text-gray-500">Spent</p>
-    </div>
-    <div class="bg-white p-4 rounded-xl shadow text-center">
-        <p class="text-xl font-bold">3</p>
-        <p class="text-sm text-gray-500">Upcoming</p>
-    </div>
-    <div class="bg-white p-4 rounded-xl shadow text-center">
-        <p class="text-xl font-bold">8</p>
-        <p class="text-sm text-gray-500">Countries</p>
-    </div>
-</div>
+    <section class="grid md:grid-cols-2 gap-6 mt-6">
+        <article class="panel rounded-2xl p-5 md:p-6 shadow-lg">
+            <h3 class="font-bold text-lg text-juniper dark:text-mint mb-4">Quick Actions</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <a href="favorites.html" class="px-4 py-3 rounded-xl bg-juniper text-white font-semibold text-center hover:bg-sea transition-colors">View Favorites</a>
+                <a href="history.html" class="px-4 py-3 rounded-xl bg-mint text-juniper font-semibold text-center hover:bg-teal transition-colors">Open History</a>
+                <a href="quiz.html" class="px-4 py-3 rounded-xl bg-white/90 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 font-semibold text-center hover:border-mint transition-colors">Retake Quiz</a>
+                <a href="all-destinations.html" class="px-4 py-3 rounded-xl bg-white/90 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 font-semibold text-center hover:border-mint transition-colors">Explore Treks</a>
+            </div>
+        </article>
 
-<!-- GRID -->
-<div class="grid md:grid-cols-2 gap-6 mt-6">
+        <article class="panel rounded-2xl p-5 md:p-6 shadow-lg">
+            <h3 class="font-bold text-lg text-juniper dark:text-mint mb-4">Preference Highlights</h3>
+            <div id="preference-list" class="flex flex-wrap gap-2 text-sm">
+                <span class="px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700">No quiz data yet</span>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mt-4">Hints are generated from your most recent recommendation history.</p>
+        </article>
+    </section>
 
-<!-- LEFT -->
-<div class="space-y-6">
-
-<!-- WALLET -->
-<div class="bg-[#0f373b] text-white p-5 rounded-xl">
-    <p class="text-sm opacity-70">Balance</p>
-    <h3 class="text-2xl font-bold">₹1,250</h3>
-
-    <div class="flex gap-2 mt-4">
-        <button onclick="location.href='wallet.html'" class="bg-white text-black px-3 py-1 rounded">
-            Add
-        </button>
-        <button onclick="location.href='wallet.html'" class="bg-white text-black px-3 py-1 rounded">
-            Redeem
-        </button>
-    </div>
-</div>
-
-<!-- PREFERENCES -->
-<div class="bg-white p-5 rounded-xl shadow">
-    <h3 class="font-bold mb-3">Preferences</h3>
-
-    <div class="flex justify-between py-2">
-        <span>Adventure</span>
-        <input type="checkbox" checked>
-    </div>
-
-    <div class="flex justify-between py-2">
-        <span>Hotels</span>
-        <input type="checkbox" checked>
-    </div>
-
-    <div class="flex justify-between py-2">
-        <span>Flights</span>
-        <input type="checkbox">
-    </div>
-</div>
-
-</div>
-
-<!-- RIGHT -->
-<div class="space-y-6">
-
-<!-- BOOKINGS -->
-<div class="bg-white p-5 rounded-xl shadow">
-    <h3 class="font-bold mb-3">Upcoming Trips</h3>
-
-    <div onclick="location.href='booking-details.html'" class="flex justify-between py-2 cursor-pointer hover:text-teal-600">
-        <span>Manali Trek</span>
-        <span class="font-semibold">₹6,800</span>
-    </div>
-
-    <div onclick="location.href='booking-details.html'" class="flex justify-between py-2 cursor-pointer hover:text-teal-600">
-        <span>Goa Retreat</span>
-        <span class="font-semibold">₹14,200</span>
-    </div>
-</div>
-
-<!-- ACTIVITY -->
-<div class="bg-white p-5 rounded-xl shadow">
-    <h3 class="font-bold mb-3">Activity</h3>
-
-    <p class="text-sm text-gray-600 py-1">✔ Booking confirmed</p>
-    <p class="text-sm text-gray-600 py-1">⭐ Review added</p>
-    <p class="text-sm text-gray-600 py-1">💰 Refund processed</p>
-</div>
-
-</div>
-
-</div>
-
-</div>
+    <section class="panel rounded-2xl p-5 md:p-6 shadow-lg mt-6">
+        <h3 class="font-bold text-lg text-juniper dark:text-mint mb-4">Recent Booking Activity</h3>
+        <div id="booking-activity" class="space-y-3 text-sm">
+            <p class="text-gray-600 dark:text-gray-300">No bookings yet. Your next checkout confirmation will appear here.</p>
+        </div>
+    </section>
+</main>
 
 <!-- SCRIPT -->
 <script>
-
-if(!localStorage.getItem("hiksterUser")){
+if (!localStorage.getItem("hiksterUser")) {
     window.location.href = "index.html";
 }
 
 const user = JSON.parse(localStorage.getItem("hiksterUser"));
+const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+const history = JSON.parse(localStorage.getItem("hiksterHistory")) || [];
+const bookings = JSON.parse(localStorage.getItem("hiksterBookings")) || [];
 
-if(user){
+if (user) {
     document.getElementById("username").innerText = user.name || "User";
     document.getElementById("email").innerText = user.email || "user@email.com";
     document.getElementById("avatar").innerText = user.name ? user.name.charAt(0).toUpperCase() : "U";
 }
 
-function logout(){
+document.getElementById("stat-favs").innerText = favorites.length;
+document.getElementById("stat-history").innerText = history.length;
+document.getElementById("stat-bookings").innerText = bookings.length;
+
+const lastHistory = history.length > 0 ? history[history.length - 1] : null;
+const lastBooking = bookings.length > 0 ? bookings[bookings.length - 1] : null;
+
+if (lastBooking && (!lastHistory || new Date(lastBooking.createdAt || Date.now()) >= new Date(lastHistory.date || 0))) {
+    document.getElementById("stat-last").innerText = (lastBooking.date || "Recent").split(',')[0];
+} else if (lastHistory) {
+    document.getElementById("stat-last").innerText = (lastHistory.date || "Recent").split(',')[0];
+}
+
+if (history.length > 0) {
+    const last = history[history.length - 1];
+    const prefs = last.preferences || {};
+    const items = [prefs.difficulty, prefs.terrain, prefs.altitude, prefs.budget].filter(Boolean);
+    const prefContainer = document.getElementById("preference-list");
+    prefContainer.innerHTML = items.length > 0
+        ? items.map(item => `<span class="px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700">${item}</span>`).join('')
+        : '<span class="px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700">No quiz data yet</span>';
+}
+
+const bookingActivity = document.getElementById("booking-activity");
+if (bookings.length > 0) {
+    bookingActivity.innerHTML = bookings.slice(-3).reverse().map(item => `
+        <div class="p-3 rounded-xl bg-gray-100/90 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+            <div>
+                <p class="font-semibold text-juniper dark:text-mint">${item.trekName}</p>
+                <p class="text-gray-600 dark:text-gray-300">${item.travellers} traveller${item.travellers > 1 ? 's' : ''} · ${item.paymentMethod ? item.paymentMethod.toUpperCase() : 'PAYMENT'}</p>
+            </div>
+            <div class="text-left md:text-right">
+                <p class="font-bold">INR ${Number(item.amount || 0).toLocaleString('en-IN')}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">${item.reference || 'HTK-NA'} · ${item.date || 'Recent'}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+function logout() {
     localStorage.removeItem("hiksterUser");
     window.location.href = "index.html";
 }
-
 </script>
 
 </body>
