@@ -31,6 +31,8 @@ body { font-family: 'Inter', sans-serif; }
 .option-card {
 transition: all 0.3s ease;
 border: 2px solid #e5e7eb;
+background: #ffffff;
+color: #0f172a;
 }
 .option-card:hover {
 transform: translateY(-4px);
@@ -38,6 +40,19 @@ transform: translateY(-4px);
 .peer:checked + .option-card {
 border-color: #2dd4bf;
 background: #ccfbf1;
+color: #134e4a;
+}
+
+.dark .option-card {
+border-color: #374151;
+background: #111827;
+color: #e5e7eb;
+}
+
+.dark .peer:checked + .option-card {
+border-color: #2dd4bf;
+background: #134e4a;
+color: #ccfbf1;
 }
 </style>
 
