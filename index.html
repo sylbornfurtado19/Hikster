@@ -36,14 +36,12 @@
     }
 </style>
 
+<script src="navbar.js" defer></script>
+
 </head>
 <body class="min-h-screen flex items-center justify-center p-4 transition-colors duration-300">
 
 <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-10 transform transition-all hover:scale-105 duration-500 border border-gray-100 dark:border-gray-700 relative">
-
-<button id="theme-toggle" class="absolute top-6 right-6 p-2 rounded-full text-gray-400 hover:text-juniper dark:hover:text-mint transition-colors">
-    <i class="fas fa-moon text-xl" id="theme-icon"></i>
-</button>
 
 <div class="text-center mb-8 mt-16 relative">
     
@@ -97,86 +95,25 @@
 </form>
 
 <p class="text-center text-sm text-gray-500 dark:text-gray-400 mt-8">
-    Don't have an account? <a href="signup.html" class="font-bold text-mint hover:underline">Sign up for free</a>
+    Don't have an account? <a href="#" class="font-bold text-mint hover:underline">Sign up for free</a>
 </p>
 
 </div>
 
 <script>
-    const themeToggle = document.getElementById('theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
+    function handleLogin(e){
+        e.preventDefault();
 
-    if (localStorage.getItem('tripfit-theme') === 'dark') {
-        document.documentElement.classList.add('dark');
-        if (themeIcon) {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        }
-    }
-
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            
-            if (document.documentElement.classList.contains('dark')) {
-                localStorage.setItem('tripfit-theme', 'dark');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            } else {
-                localStorage.setItem('tripfit-theme', 'light');
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            }
-        });
-    }
-
-    function handleLogin(e) {
-    e.preventDefault(); // Stop page from refreshing
-
-    // 1. Grab the input elements
-    const emailInput = document.querySelector('input[type="email"]');
-    const passwordInput = document.querySelector('input[type="password"]');
-    
-    let isValid = true;
-
-    // 2. Validate Email
-    if (!emailInput.value.includes('@') || emailInput.value.length < 5) {
-        showError(emailInput, "Please enter a valid email address.");
-        isValid = false;
-    } else {
-        removeError(emailInput);
-    }
-
-    // 3. Validate Password
-    if (passwordInput.value.length < 8) {
-        showError(passwordInput, "Password must be at least 8 characters.");
-        isValid = false;
-    } else {
-        removeError(passwordInput);
-    }
-
-    // 4. Final Check
-    if (isValid) {
         const user = {
-            name: "Explorer", // In a real app, you'd fetch the actual name
-            email: emailInput.value
+            name: "Explorer"
         };
 
         localStorage.setItem("hiksterUser", JSON.stringify(user));
+
         window.location.href = "home.html";
     }
-}
-
-// Helper function to show errors
-function showError(input, message) {
-    input.classList.add('border-red-500', 'ring-1', 'ring-red-500');
-    // Optional: Add a small error text below the input if you wish
-}
-
-// Helper function to clear errors
-function removeError(input) {
-    input.classList.remove('border-red-500', 'ring-1', 'ring-red-500');
-}
 </script>
 </body>
 </html>
+
+
