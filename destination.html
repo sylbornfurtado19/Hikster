@@ -120,6 +120,7 @@ return 'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-300';
 document.addEventListener('DOMContentLoaded', () => {
 const params = new URLSearchParams(window.location.search);
 const trekId = params.get('id');
+const loggedInUser = JSON.parse(localStorage.getItem('hiksterUser'));
 
 let trek = destinations.find((d) => d.id === trekId);
 if (!trek && trekId) {
@@ -148,7 +149,10 @@ document.getElementById('detail-duration').textContent = `${trek.duration} days`
 document.getElementById('detail-cost').textContent = trek.cost;
 document.getElementById('detail-best-time').textContent = trek.bestTime;
 document.getElementById('detail-start-point').textContent = trek.startPoint;
-document.getElementById('book-now-link').setAttribute('href', `book.html?trek=${encodeURIComponent(trek.id)}`);
+
+const bookingUrl = `book.html?trek=${encodeURIComponent(trek.id)}`;
+const loginRedirectUrl = `index.html?redirect=${encodeURIComponent(bookingUrl)}`;
+document.getElementById('book-now-link').setAttribute('href', loggedInUser ? bookingUrl : loginRedirectUrl);
 
 const seasonGrid = document.getElementById('season-grid');
 const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
