@@ -1,117 +1,157 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>History • Hikster</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>History • Hikster</title>
 
-<link rel="icon" href="logo/logo.png">
-<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="icon" href="logo/logo.png">
+	<script src="https://cdn.tailwindcss.com"></script>
 
-<script>
-tailwind.config = {
-darkMode: 'class',
-theme: {
-extend: {
-colors: {
-mint:'#2dd4bf',
-teal:'#14b8a6',
-juniper:'#0f373b',
-pearl:'#f8f9fa'
-}
-}
-}
-}
-</script>
+	<script>
+		tailwind.config = {
+			darkMode: 'class',
+			theme: {
+				extend: {
+					colors: {
+						mint: '#2dd4bf',
+						teal: '#14b8a6',
+						juniper: '#0f373b',
+						pearl: '#f8f9fa'
+					}
+				}
+			}
+		}
+	</script>
 
-<style>
-body { font-family: 'Inter', sans-serif; }
-</style>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-<script src="navbar.js" defer></script>
+		body {
+			font-family: 'Inter', system-ui, sans-serif;
+			background:
+				radial-gradient(circle at 16% 18%, rgba(45, 212, 191, 0.16), transparent 30%),
+				radial-gradient(circle at 84% 75%, rgba(20, 184, 166, 0.14), transparent 30%),
+				#f8f9fa;
+		}
 
+		html.dark body {
+			background:
+				radial-gradient(circle at 20% 20%, rgba(45, 212, 191, 0.08), transparent 35%),
+				radial-gradient(circle at 83% 78%, rgba(13, 95, 102, 0.2), transparent 35%),
+				#0b1117;
+		}
+	</style>
+
+	<script src="navbar.js" defer></script>
 </head>
 
-<body class="bg-pearl min-h-screen flex flex-col">
-
-<!-- HEADER -->
-
-<!-- TITLE -->
-
-<section class="py-12 text-center">
-<h1 class="text-4xl font-extrabold text-juniper mb-2">Your Trek History</h1>
-<p class="text-gray-500">Review your past trekking recommendations</p>
+<body class="min-h-screen flex flex-col text-gray-800 dark:text-gray-100">
+<section class="pt-28 pb-12 px-6">
+	<div class="max-w-7xl mx-auto">
+		<div class="rounded-3xl border border-white/60 dark:border-mint/20 shadow-2xl overflow-hidden">
+			<div class="bg-gradient-to-r from-juniper via-teal to-juniper px-8 py-11 md:px-12 text-white">
+				<p class="uppercase tracking-[0.2em] text-xs text-mint font-bold">Journey Timeline</p>
+				<h1 class="text-4xl md:text-5xl font-extrabold mt-3">Trek History</h1>
+				<p class="text-teal-100 mt-4 max-w-2xl">Review your earlier recommendations, compare preference snapshots, and pick up where you left off.</p>
+			</div>
+		</div>
+	</div>
 </section>
-
-<!-- HISTORY -->
 
 <section class="px-6 pb-16 flex-1">
-<div id="history-container" class="max-w-6xl mx-auto space-y-10"></div>
+	<div id="history-container" class="max-w-6xl mx-auto space-y-8"></div>
 
-<div class="text-center mt-10">
-<button onclick="clearHistory()" class="px-6 py-3 bg-red-500 text-white rounded-full font-bold hover:bg-red-600">
-Clear History
-</button>
-</div>
+	<div id="history-actions" class="text-center mt-10 hidden">
+		<button onclick="clearHistory()" class="px-7 py-3 bg-red-500 text-white rounded-full font-bold hover:bg-red-600 transition-colors shadow-lg">
+			Clear History
+		</button>
+	</div>
 </section>
 
-<footer class="bg-juniper text-center py-6 text-gray-400">
-© 2026 Hikster
+<footer class="bg-juniper text-center py-7 text-gray-300 border-t border-teal/20">
+	© 2026 Hikster
 </footer>
 
 <script src="script.js"></script>
 
 <script>
 const history = JSON.parse(localStorage.getItem("hiksterHistory")) || [];
+const bookings = JSON.parse(localStorage.getItem("hiksterBookings")) || [];
 const container = document.getElementById("history-container");
+const actions = document.getElementById("history-actions");
 
-// IF EMPTY
-if(history.length === 0){
-container.innerHTML = `
-<div class="text-center py-20 text-gray-500">
-<h2 class="text-2xl font-bold mb-3">No History Found</h2>
-<a href="quiz.html" class="px-6 py-3 bg-mint text-juniper rounded-full font-bold">
-Take Quiz
-</a>
-</div>
-`;
+if (history.length === 0 && bookings.length === 0) {
+	container.innerHTML = `
+		<div class="text-center py-16 px-8 rounded-2xl bg-white/85 dark:bg-gray-800/85 border border-gray-200 dark:border-gray-700 shadow-lg">
+			<div class="h-16 w-16 mx-auto rounded-full bg-mint/20 text-mint flex items-center justify-center text-2xl mb-4">
+				<i class="fas fa-clock-rotate-left"></i>
+			</div>
+			<h2 class="text-3xl font-bold mb-3 text-juniper dark:text-white">No History Found</h2>
+			<p class="text-gray-600 dark:text-gray-300 mb-7">Take the quiz and generate your first personalized recommendation set.</p>
+			<a href="quiz.html" class="inline-flex items-center gap-2 px-7 py-3 bg-juniper hover:bg-teal text-white rounded-full font-bold transition-colors">
+				Take Quiz <i class="fas fa-arrow-right"></i>
+			</a>
+		</div>
+	`;
+} else {
+	actions.classList.remove("hidden");
+
+	if (bookings.length > 0) {
+		const bookingRows = bookings.slice().reverse().map(item => `
+			<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 p-4 rounded-xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-700">
+				<div>
+					<p class="font-semibold text-juniper dark:text-mint">${item.trekName}</p>
+					<p class="text-sm text-gray-500 dark:text-gray-400">${item.region || "Region unavailable"} · ${item.travellers} traveller${item.travellers > 1 ? "s" : ""}</p>
+				</div>
+				<div class="text-left md:text-right">
+					<p class="text-sm text-gray-500 dark:text-gray-400">${item.date || "Recent"}</p>
+					<p class="font-bold text-juniper dark:text-mint">INR ${Number(item.amount || 0).toLocaleString("en-IN")}</p>
+					<p class="text-xs text-gray-500 dark:text-gray-400">Ref: ${item.reference || "HTK-NA"}</p>
+				</div>
+			</div>
+		`).join('');
+
+		container.innerHTML += `
+			<article class="bg-white/90 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl p-6 md:p-7">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+					<p class="text-sm text-gray-500 dark:text-gray-400">Latest checkout activity</p>
+					<span class="text-xs uppercase tracking-wider font-semibold text-mint bg-mint/10 px-3 py-1 rounded-full">Bookings</span>
+				</div>
+				<div class="space-y-3">${bookingRows}</div>
+			</article>
+		`;
+	}
+
+	history.forEach(item => {
+		let cards = item.results.map(dest => buildCardHTML(dest)).join('');
+
+		container.innerHTML += `
+			<article class="bg-white/90 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl p-6 md:p-7">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+					<p class="text-sm text-gray-500 dark:text-gray-400">${item.date}</p>
+					<span class="text-xs uppercase tracking-wider font-semibold text-mint bg-mint/10 px-3 py-1 rounded-full">Recommendation Snapshot</span>
+				</div>
+
+				<div class="flex flex-wrap gap-2 mb-6">
+					<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">${item.preferences.difficulty}</span>
+					<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">${item.preferences.terrain}</span>
+					<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">${item.preferences.altitude}</span>
+					<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">${item.preferences.budget}</span>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+					${cards}
+				</div>
+			</article>
+		`;
+	});
 }
 
-// LOAD HISTORY
-history.forEach(item => {
-
-let cards = item.results.map(dest => buildCardHTML(dest)).join('');
-
-container.innerHTML += `
-<div class="bg-white rounded-2xl shadow-lg p-6">
-
-<!-- DATE -->
-<div class="text-sm text-gray-400 mb-4">
-${item.date}
-</div>
-
-<!-- PREFS -->
-<div class="flex flex-wrap gap-2 mb-4">
-<span class="px-2 py-1 bg-gray-100 rounded text-xs">${item.preferences.difficulty}</span>
-<span class="px-2 py-1 bg-gray-100 rounded text-xs">${item.preferences.terrain}</span>
-<span class="px-2 py-1 bg-gray-100 rounded text-xs">${item.preferences.altitude}</span>
-<span class="px-2 py-1 bg-gray-100 rounded text-xs">${item.preferences.budget}</span>
-</div>
-
-<!-- CARDS -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-${cards}
-</div>
-
-</div>
-`;
-});
-
-// CLEAR FUNCTION
-function clearHistory(){
-localStorage.removeItem("hiksterHistory");
-location.reload();
+function clearHistory() {
+	localStorage.removeItem("hiksterHistory");
+	localStorage.removeItem("hiksterBookings");
+	location.reload();
 }
 </script>
 
