@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Favorites • Hikster</title>
+<title>Trek Details • Hikster</title>
 
-<link rel="icon" href="logo/logo.png">
+<link rel="icon" href="logo/logo.png" type="image/png">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -26,91 +26,138 @@ pearl:'#f8f9fa'
 </script>
 
 <style>
-body { font-family: 'Inter', sans-serif; }
+body { font-family: 'Inter', system-ui, sans-serif; }
 </style>
 
+<script src="navbar.js" defer></script>
 </head>
 
 <body class="bg-pearl dark:bg-gray-900 min-h-screen flex flex-col text-gray-800 dark:text-gray-100">
+<section id="detail-hero" class="relative py-20 px-6 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+<div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
+<div>
+<p id="detail-region" class="inline-block px-3 py-1 bg-mint/15 text-mint text-xs font-bold rounded-full uppercase tracking-wider mb-4">Trek</p>
+<h1 id="detail-name" class="text-4xl md:text-5xl font-extrabold text-juniper dark:text-white mb-4">Loading trek...</h1>
+<p id="detail-desc" class="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-8">Please wait while we fetch details.</p>
 
-<!-- ✅ NAVBAR (same as home) -->
-<header class="bg-juniper text-white px-6 py-4 flex justify-between items-center shadow">
-<a href="home.html" class="flex items-center gap-2">
-<img src="logo/logo.png" class="h-10">
-<span class="text-xl font-bold">Hikster</span>
-</a>
+<div class="flex flex-wrap gap-3">
+<a id="book-now-link" href="book.html" class="px-6 py-3 bg-mint text-juniper rounded-full font-bold hover:bg-teal transition">Book This Trek</a>
+<a href="all-destinations.html" class="px-6 py-3 border border-juniper dark:border-gray-400 rounded-full font-bold text-juniper dark:text-gray-100 hover:bg-juniper hover:text-white dark:hover:bg-gray-700 transition">Back to Destinations</a>
+</div>
+</div>
 
-<nav class="flex gap-6 items-center">
-<a href="home.html" class="hover:text-mint">Home</a>
-<a href="all-destinations.html" class="hover:text-mint">Destinations</a>
-<a href="history.html" class="hover:text-mint">History</a>
-<a href="favorites.html" class="text-mint font-bold flex items-center gap-2">
-<i class="fas fa-heart"></i> Favorites
-</a>
-<a href="quiz.html" class="bg-mint px-4 py-2 rounded-full text-juniper font-bold">
-Take Quiz
-</a>
-</nav>
-</header>
-
-<!-- ✅ HERO SECTION -->
-<section class="bg-white dark:bg-gray-800 py-16 px-6 text-center border-b">
-<div class="max-w-3xl mx-auto">
-<h1 class="text-4xl font-extrabold text-juniper dark:text-white mb-4">
-Your Favorite Treks ❤️
-</h1>
-<p class="text-gray-500 dark:text-gray-400">
-All the treks you've saved for your next adventure.
-</p>
+<div class="rounded-3xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700">
+<img id="detail-image" src="images1/SWISS ALPS.jpg" alt="Trek image" class="w-full h-[380px] object-cover">
+</div>
 </div>
 </section>
 
-<!-- ✅ FAVORITES GRID -->
-<section class="py-16 px-6 flex-1">
-<div class="max-w-7xl mx-auto">
+<section class="py-14 px-6 flex-1">
+<div class="max-w-7xl mx-auto grid lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm">
+<h2 class="text-2xl font-bold text-juniper dark:text-white mb-6">Trek Highlights</h2>
 
-<div id="favorites-container" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+<div class="grid sm:grid-cols-2 gap-4 text-sm">
+<div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700">
+<p class="text-gray-500 dark:text-gray-400">Location</p>
+<p id="detail-location" class="font-bold text-juniper dark:text-white mt-1">-</p>
+</div>
+<div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700">
+<p class="text-gray-500 dark:text-gray-400">Difficulty</p>
+<p id="detail-difficulty" class="font-bold text-juniper dark:text-white mt-1">-</p>
+</div>
+<div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700">
+<p class="text-gray-500 dark:text-gray-400">Terrain</p>
+<p id="detail-terrain" class="font-bold text-juniper dark:text-white mt-1">-</p>
+</div>
+<div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700">
+<p class="text-gray-500 dark:text-gray-400">Altitude</p>
+<p id="detail-altitude" class="font-bold text-juniper dark:text-white mt-1">-</p>
+</div>
+<div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700">
+<p class="text-gray-500 dark:text-gray-400">Duration</p>
+<p id="detail-duration" class="font-bold text-juniper dark:text-white mt-1">-</p>
+</div>
+<div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700">
+<p class="text-gray-500 dark:text-gray-400">Approx. Cost</p>
+<p id="detail-cost" class="font-bold text-juniper dark:text-white mt-1">-</p>
+</div>
+<div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700">
+<p class="text-gray-500 dark:text-gray-400">Best Time</p>
+<p id="detail-best-time" class="font-bold text-juniper dark:text-white mt-1">-</p>
+</div>
+<div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700">
+<p class="text-gray-500 dark:text-gray-400">Start Point</p>
+<p id="detail-start-point" class="font-bold text-juniper dark:text-white mt-1">-</p>
+</div>
+</div>
+</div>
 
+<div class="bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm">
+<h3 class="text-xl font-bold text-juniper dark:text-white mb-4">Season Guide</h3>
+<div id="season-grid" class="grid grid-cols-3 gap-2 text-xs"></div>
+</div>
 </div>
 </section>
 
-<!-- ✅ FOOTER -->
 <footer class="bg-juniper text-center py-6 text-gray-400">
 © 2026 Hikster • Explore Beyond Limits
 </footer>
 
 <script src="script.js"></script>
-
 <script>
-const favs = JSON.parse(localStorage.getItem("favorites")) || [];
-const container = document.getElementById("favorites-container");
-
-if(favs.length === 0){
-container.innerHTML = `
-<div class="col-span-3 text-center py-20">
-<h2 class="text-3xl font-bold mb-4">No Favorites Yet ❤️</h2>
-<p class="text-gray-500 mb-6">Start exploring and save your favorite treks.</p>
-<a href="all-destinations.html" class="px-6 py-3 bg-mint rounded-full font-bold text-juniper">
-Explore Treks
-</a>
-</div>
-`;
+function titleCase(value) {
+if (!value) return '-';
+return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-// Load favorites
-const favDest = destinations.filter(d => favs.includes(d.name));
-container.innerHTML = favDest.map(d => `
-<div class="relative">
-    ${buildCardHTML(d)}
+function getSeasonClass(status) {
+if (status === 'peak') return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300';
+if (status === 'monsoon') return 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300';
+return 'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-300';
+}
 
-    <!-- REMOVE BUTTON -->
-    <button onclick="removeFavorite('${d.name}')" 
-        class="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow hover:bg-red-600">
-        ❌ Remove
-    </button>
-</div>
-`).join('');
+document.addEventListener('DOMContentLoaded', () => {
+const params = new URLSearchParams(window.location.search);
+const trekId = params.get('id');
+
+let trek = destinations.find((d) => d.id === trekId);
+if (!trek && trekId) {
+trek = destinations.find((d) => d.name === trekId);
+}
+
+if (!trek) {
+document.getElementById('detail-name').textContent = 'Trek not found';
+document.getElementById('detail-desc').textContent = 'This trek does not exist or the link is invalid.';
+document.getElementById('book-now-link').setAttribute('href', 'all-destinations.html');
+document.getElementById('book-now-link').textContent = 'Browse Treks';
+return;
+}
+
+document.title = `${trek.name} • Hikster`;
+document.getElementById('detail-region').textContent = trek.region;
+document.getElementById('detail-name').textContent = trek.name;
+document.getElementById('detail-desc').textContent = trek.desc;
+document.getElementById('detail-image').src = trek.image;
+document.getElementById('detail-image').alt = trek.name;
+document.getElementById('detail-location').textContent = trek.location;
+document.getElementById('detail-difficulty').textContent = titleCase(trek.difficulty);
+document.getElementById('detail-terrain').textContent = titleCase(trek.terrain);
+document.getElementById('detail-altitude').textContent = titleCase(trek.altitude);
+document.getElementById('detail-duration').textContent = `${trek.duration} days`;
+document.getElementById('detail-cost').textContent = trek.cost;
+document.getElementById('detail-best-time').textContent = trek.bestTime;
+document.getElementById('detail-start-point').textContent = trek.startPoint;
+document.getElementById('book-now-link').setAttribute('href', `book.html?trek=${encodeURIComponent(trek.id)}`);
+
+const seasonGrid = document.getElementById('season-grid');
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+seasonGrid.innerHTML = months.map((month) => {
+const status = trek.season[month] || 'avoid';
+const label = status === 'peak' ? 'Peak' : status === 'monsoon' ? 'Monsoon' : 'Avoid';
+return `<div class="rounded-lg px-2 py-2 text-center ${getSeasonClass(status)}"><p class="font-bold">${month}</p><p>${label}</p></div>`;
+}).join('');
+});
 </script>
-
 </body>
 </html>
