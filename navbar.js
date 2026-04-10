@@ -351,8 +351,8 @@ html.dark body.hk-theme-fallback [class*="border"] {
         if (!desktop || !mobile) return;
 
         if (user) {
-            desktop.innerHTML = `<a href="proflie.html" class="hk-icon-btn" aria-label="Profile" title="Profile">${ICONS.user}</a>`;
-            mobile.innerHTML = '<a href="proflie.html" class="hk-auth-profile">Profile</a>';
+            desktop.innerHTML = `<a href="profile.html" class="hk-icon-btn" aria-label="Profile" title="Profile">${ICONS.user}</a>`;
+            mobile.innerHTML = '<a href="profile.html" class="hk-auth-profile">Profile</a>';
             return;
         }
 
