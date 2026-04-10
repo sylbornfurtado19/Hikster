@@ -67,7 +67,7 @@
             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <i class="fas fa-envelope text-gray-400"></i>
             </div>
-            <input type="email" required class="block w-full pl-11 pr-4 py-3 bg-transparent border-2 border-gray-200 dark:border-gray-600 rounded-xl text-sm dark:text-white focus:border-mint dark:focus:border-mint focus:ring-0 outline-none transition-colors" placeholder="explorer@hikster.com">
+            <input id="login-email" type="email" required class="block w-full pl-11 pr-4 py-3 bg-transparent border-2 border-gray-200 dark:border-gray-600 rounded-xl text-sm dark:text-white focus:border-mint dark:focus:border-mint focus:ring-0 outline-none transition-colors" placeholder="explorer@hikster.com">
         </div>
     </div>
 
@@ -77,7 +77,7 @@
             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <i class="fas fa-lock text-gray-400"></i>
             </div>
-            <input type="password" required class="block w-full pl-11 pr-4 py-3 bg-transparent border-2 border-gray-200 dark:border-gray-600 rounded-xl text-sm dark:text-white focus:border-mint dark:focus:border-mint focus:ring-0 outline-none transition-colors" placeholder="••••••••">
+            <input id="login-pass" type="password" required class="block w-full pl-11 pr-4 py-3 bg-transparent border-2 border-gray-200 dark:border-gray-600 rounded-xl text-sm dark:text-white focus:border-mint dark:focus:border-mint focus:ring-0 outline-none transition-colors" placeholder="••••••••">
         </div>
     </div>
 
@@ -95,22 +95,43 @@
 </form>
 
 <p class="text-center text-sm text-gray-500 dark:text-gray-400 mt-8">
-    Don't have an account? <a href="#" class="font-bold text-mint hover:underline">Sign up for free</a>
+    Don't have an account? <a href="signup.html" class="font-bold text-mint hover:underline">Sign up for free</a>
 </p>
 
 </div>
 
 <script>
+    function getStoredUsers() {
+        return JSON.parse(localStorage.getItem("hiksterUsers")) || [];
+    }
+
+    function getPostLoginRedirect() {
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get("redirect");
+        return redirect ? decodeURIComponent(redirect) : "home.html";
+    }
+
     function handleLogin(e){
         e.preventDefault();
 
-        const user = {
-            name: "Explorer"
+        const email = document.getElementById("login-email").value.trim();
+        const password = document.getElementById("login-pass").value;
+
+        const users = getStoredUsers();
+        const matchedUser = users.find(user => user.email === email && user.password === password);
+
+        if (!matchedUser) {
+            alert("Invalid email or password.");
+            return;
+        }
+
+        const activeUser = {
+            name: matchedUser.name,
+            email: matchedUser.email
         };
 
-        localStorage.setItem("hiksterUser", JSON.stringify(user));
-
-        window.location.href = "home.html";
+        localStorage.setItem("hiksterUser", JSON.stringify(activeUser));
+        window.location.href = getPostLoginRedirect();
     }
 </script>
 </body>
