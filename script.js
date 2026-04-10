@@ -386,9 +386,18 @@ return scored.slice(0,3);
 
 // ================= CARD GENERATOR =================
 
+function toSentenceCase(value) {
+    if (!value) return "";
+    return value
+        .split(" ")
+        .filter(Boolean)
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(" ");
+}
+
 function buildCardHTML(dest, isMatch=false){
-    let tags = `<span class="px-2 py-1 bg-mint/10 text-mint text-xs font-bold rounded-md uppercase tracking-wider">${dest.difficulty}</span> 
-                <span class="px-2 py-1 bg-mint/10 text-mint text-xs font-bold rounded-md uppercase tracking-wider">${dest.terrain}</span>`;
+    let tags = `<span class="px-2 py-1 bg-mint/10 text-mint text-xs font-bold rounded-md tracking-wide">${toSentenceCase(dest.difficulty)}</span> 
+                <span class="px-2 py-1 bg-mint/10 text-mint text-xs font-bold rounded-md tracking-wide">${toSentenceCase(dest.terrain)}</span>`;
 
     let matchBadge = "";
     if(isMatch){
