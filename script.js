@@ -419,7 +419,7 @@ function buildCardHTML(dest, isMatch=false){
         </p>
 
         <div class="flex gap-2 mt-auto">
-<a href="destination.html?id=${encodeURIComponent(dest.name)}"
+    <a href="destination.html?id=${encodeURIComponent(dest.id)}"
 class="flex-1 bg-mint text-juniper py-2 text-center rounded font-bold">
 View Trek
 </a>
