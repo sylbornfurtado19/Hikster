@@ -32,7 +32,18 @@
         font-family: 'Inter', system-ui, sans-serif; 
         background-image: linear-gradient(rgba(15, 55, 59, 0.8), rgba(15, 55, 59, 0.8)), url('images1/SWISS ALPS.jpg'); 
         background-size: cover; 
-        background-position: center; 
+        background-position: center;
+        transition: background-image 0.3s ease;
+    }
+
+    /* Light mode - lighter overlay */
+    body:not(.dark) { 
+        background-image: linear-gradient(rgba(15, 55, 59, 0.3), rgba(15, 55, 59, 0.3)), url('images1/SWISS ALPS.jpg'); 
+    }
+
+    /* Dark mode - darker overlay */
+    body.dark { 
+        background-image: linear-gradient(rgba(15, 55, 59, 0.8), rgba(15, 55, 59, 0.8)), url('images1/SWISS ALPS.jpg'); 
     }
 </style>
 
@@ -77,7 +88,10 @@
             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <i class="fas fa-lock text-gray-400"></i>
             </div>
-            <input id="login-pass" type="password" required class="block w-full pl-11 pr-4 py-3 bg-transparent border-2 border-gray-200 dark:border-gray-600 rounded-xl text-sm dark:text-white focus:border-mint dark:focus:border-mint focus:ring-0 outline-none transition-colors" placeholder="••••••••">
+            <input id="login-pass" type="password" required class="block w-full pl-11 pr-11 py-3 bg-transparent border-2 border-gray-200 dark:border-gray-600 rounded-xl text-sm dark:text-white focus:border-mint dark:focus:border-mint focus:ring-0 outline-none transition-colors" placeholder="••••••••">
+            <button type="button" onclick="toggleLoginPassword()" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                <i id="login-pass-icon" class="fas fa-eye"></i>
+            </button>
         </div>
     </div>
 
@@ -101,6 +115,21 @@
 </div>
 
 <script>
+    function toggleLoginPassword() {
+        const field = document.getElementById('login-pass');
+        const icon = document.getElementById('login-pass-icon');
+        
+        if (field.type === 'password') {
+            field.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            field.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
     function getStoredUsers() {
         return JSON.parse(localStorage.getItem("hiksterUsers")) || [];
     }
