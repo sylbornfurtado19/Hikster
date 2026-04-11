@@ -442,7 +442,9 @@
             color: #14a896;
         }
     </style>
+    <link rel="stylesheet" href="itinerary-modal.css">
     <script src="navbar.js" defer></script>
+    <script src="itinerary-modal.js" defer></script>
 </head>
 <body>
 
@@ -481,6 +483,21 @@
                         <span class="badge b-amber" id="badge-duration">-- days</span>
                         <span class="badge b-blue" id="badge-terrain">--</span>
                     </div>
+                </div>
+            </div>
+
+            <!-- Short Trek Summary -->
+            <div id="trek-summary" style="display:none; margin-top:1.5rem; padding:1.2rem; background:rgba(45,212,184,0.1); border-left:4px solid #2dd4b8; border-radius:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                    <h4 style="margin:0; color:#2dd4b8; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px;">Trek Highlights</h4>
+                    <button id="viewFullItinBtn" onclick="showTrekItinerary()" style="background:rgba(45,212,184,0.2); border:1px solid #2dd4b8; color:#2dd4b8; padding:0.4rem 0.8rem; border-radius:8px; cursor:pointer; font-size:0.85rem; font-weight:600;"><i class="fas fa-expand"></i> View Full Details</button>
+                </div>
+                <div id="trek-highlights-list" style="display:grid; grid-template-columns:repeat(2,1fr); gap:0.8rem; font-size:0.9rem;"></div>
+                <div id="trek-quick-facts" style="display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; margin-top:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.1);">
+                    <div><span style="color:rgba(255,255,255,0.6);">Starting Point:</span> <strong id="trek-start">--</strong></div>
+                    <div><span style="color:rgba(255,255,255,0.6);">Best Season:</span> <strong id="trek-season">--</strong></div>
+                    <div><span style="color:rgba(255,255,255,0.6);">Fitness Required:</span> <strong id="trek-fitness">--</strong></div>
+                    <div><span style="color:rgba(255,255,255,0.6);">Est. Price:</span> <strong style="color:#2dd4b8;" id="trek-price">--</strong></div>
                 </div>
             </div>
 
@@ -740,7 +757,32 @@
         document.getElementById("meta-price").textContent = formatInr(basePrice);
 
         toItineraryBtn.disabled = false;
+        showTrekSummary(dest);
         updateEstimate();
+    }
+
+    function showTrekSummary(dest) {
+        const itin = getTrekItinerary(dest.name);
+        if (!itin) return;
+
+        document.getElementById("trek-summary").style.display = "block";
+        
+        // Highlights
+        const highlightsHTML = itin.overview.highlights
+            .map(h => `<div style="display:flex; align-items:center; gap:0.4rem;"><i class="fas fa-check" style="color:#2dd4b8;"></i> ${h}</div>`)
+            .join('');
+        document.getElementById("trek-highlights-list").innerHTML = highlightsHTML;
+
+        // Quick facts
+        document.getElementById("trek-start").textContent = itin.logistics.startPoint;
+        document.getElementById("trek-season").textContent = itin.overview.bestSeason;
+        document.getElementById("trek-fitness").textContent = dest.fitness || "Moderate";
+        document.getElementById("trek-price").textContent = formatInr(basePrice);
+    }
+
+    function showTrekItinerary() {
+        if (!selectedTrek) return;
+        openItineraryModal(selectedTrek.name);
     }
 
     function buildItinerary(dest) {
