@@ -451,6 +451,281 @@ if (!localStorage.getItem('hiksterReviews')) {
     localStorage.setItem('hiksterReviews', JSON.stringify(defaultReviews));
 }
 
+// ================= COMPREHENSIVE ITINERARY DATABASE =================
+
+const trekItineraries = {
+    "Hampta Pass Trek": {
+        overview: {
+            name: "Hampta Pass Trek",
+            location: "Himachal Pradesh, India",
+            duration: 5,
+            difficulty: "Moderate",
+            altitude: "3,270m",
+            distance: "52 km",
+            bestSeason: "May - September",
+            highlights: ["Green Valley to Cold Desert", "Alpine Meadows", "Spiti Valley Views", "Adventure Crossing"]
+        },
+        dayByDay: [
+            { day: 1, title: "Arrival at Manali", distance: "0 km", altitude: "2,050m", activities: "Arrive at Manali. Meet guide and team. Orientation & safety briefing.", meals: "Welcome dinner", accommodation: "Hotel (3-star)", duration: "Acclimatization" },
+            { day: 2, title: "Manali to Prini", distance: "8 km", altitude: "2,100m", activities: "Trek through lush green forests. Visit apple orchards. Local village exploration.", meals: "Packed lunch, Dinner at guesthouse", accommodation: "Guesthouse", duration: "4-5 hours" },
+            { day: 3, title: "Prini to Lamadugh", distance: "12 km", altitude: "2,900m", activities: "Climb through dense forests. Cross mountain streams. Scenic valley views.", meals: "Packed lunch, Hot dinner", accommodation: "Tent camp (alpine meadow)", duration: "6-7 hours" },
+            { day: 4, title: "Lamadugh to Hampta Pass", distance: "10 km", altitude: "3,270m", activities: "Early morning start. Trek to famous pass. Experience transition from green to desert. Summit views of Spiti Valley.", meals: "Early breakfast, Packed lunch, Special dinner", accommodation: "Tent camp at pass", duration: "7-8 hours" },
+            { day: 5, title: "Descent & Departure", distance: "12 km", altitude: "2,000m", activities: "Descend to Chatargarh. Vehicle pickup. Farewell dinner with guides.", meals: "Breakfast, Packed lunch, Farewell dinner", accommodation: "Hotel in Manali", duration: "6 hours trek + drive" }
+        ],
+        packing: {
+            clothing: ["Thermal layers (2-3)", "Wool sweater", "Fleece jacket", "Rain jacket", "Trekking pants (2)", "Warm hat & gloves", "Thermal socks (4-5)"],
+            footwear: ["Trekking boots", "Sandals for camp", "Wool socks"],
+            gear: ["50L+ backpack", "Sleeping bag (-5°C)", "Sleeping mat", "Trekking poles", "Headlamp (batteries)", "Sunscreen SPF 50+", "Sunglasses"],
+            essentials: ["2-3L water bottle", "Energy snacks", "Personal toiletries", "First aid kit", "Medications", "ID & documents"]
+        },
+        costBreakdown: {
+            basePrice: 8499,
+            gst: "5%",
+            insurance: 299,
+            inclusions: ["Accommodation (hotel & tent)", "All meals", "Expert trek guide", "Porter support", "Entry permits", "Basic safety kit"],
+            exclusions: ["Travel to Manali", "Personal gear", "Alcoholic beverages", "Tips & gratuities"]
+        },
+        safetyGuidelines: [
+            "Inform guides of any medical conditions",
+            "Stay hydrated - drink 3-4L water daily",
+            "Acclimatize properly at each camp",
+            "Never trek alone - always in buddy system",
+            "Bring altitude sickness medication (Diamox)",
+            "Follow guide instructions strictly",
+            "Check weather updates daily"
+        ],
+        logistics: {
+            howToReach: "Delhi to Manali by bus (12-14 hrs) or flight to Kullu then taxi (1 hr)",
+            startPoint: "Manali (2,050m)",
+            endPoint: "Manali",
+            nearestAirport: "Kullu Manali Airport (45 km)"
+        },
+        faqs: [
+            { q: "Is this trek beginners friendly?", a: "Yes! Hampta Pass is perfect for beginners. Moderate difficulty with good acclimatization opportunities." },
+            { q: "What's the best time to visit?", a: "May-June and September for clear skies. July-August has lower visibility due to monsoon." },
+            { q: "Do I need mountaineering experience?", a: "No technical climbing required. Basic fitness and trekking experience recommended." },
+            { q: "Can I cancel or postpone?", a: "Flexible cancellation options available up to 7 days before trek start." }
+        ]
+    },
+    "Everest Base Camp Trek": {
+        overview: {
+            name: "Everest Base Camp Trek",
+            location: "Solukhumbu, Nepal",
+            duration: 12,
+            difficulty: "Hard",
+            altitude: "5,364m",
+            distance: "130 km",
+            bestSeason: "April-May, September-October",
+            highlights: ["World's Highest Mountain", "Sherpa Culture", "Khumbu Icefall", "Prayer Flags & Monasteries"]
+        },
+        dayByDay: [
+            { day: 1, title: "Fly to Lukla, Trek to Phakding", distance: "11 km", altitude: "2,610m", activities: "Scenic flight to Lukla. Meet porters. Trek through villages & suspension bridges.", meals: "Lunch, Dinner at teahouse", accommodation: "Teahouse", duration: "4-5 hours" },
+            { day: 2, title: "Phakding to Namche Bazaar", distance: "19 km", altitude: "3,440m", activities: "Cross rivers via suspension bridges. Climb to vibrant market town of Namche.", meals: "Breakfast, Packed lunch, Dinner", accommodation: "Teahouse", duration: "5-6 hours" },
+            { day: 3, title: "Namche Rest & Acclimatization", distance: "0 km", altitude: "3,440m", activities: "Rest day. Optional visit to Sherpa museum, Sagarmatha National Park, local market.", meals: "All meals at teahouse", accommodation: "Teahouse", duration: "Rest day" },
+            { day: 4, title: "Namche to Tengboche", distance: "15 km", altitude: "3,867m", activities: "Trek through rhododendron forests. Visit ancient Tengboche Monastery. Everest views!", meals: "All meals provided", accommodation: "Teahouse", duration: "5-6 hours" },
+            { day: 5, title: "Tengboche to Dingboche", distance: "18 km", altitude: "4,410m", activities: "Visit local villages. Optional hike to Island Peak viewpoint. Everest, Ama Dablam views.", meals: "All meals", accommodation: "Teahouse", duration: "6-7 hours" },
+            { day: 6, title: "Dingboche Acclimatization", distance: "0 km", altitude: "4,410m", activities: "Acclimatization hike to Nagarjuna Hill. Panoramic mountain views. Rest.", meals: "All meals", accommodation: "Teahouse", duration: "Acclimatization hike" },
+            { day: 7, title: "Dingboche to Lobuche East", distance: "11 km", altitude: "4,910m", activities: "Trek through high altitude terrain. Prayer flags & meditation spots.", meals: "All meals", accommodation: "Teahouse", duration: "4-5 hours" },
+            { day: 8, title: "Lobuche to Everest Base Camp", distance: "21 km", altitude: "5,364m", activities: "Early start. Trek to famous EBC! Visit stone stupa & prayer flags. Celebrate achievement!", meals: "Early breakfast, Packed lunch, Dinner", accommodation: "Teahouse at Gorak Shep", duration: "7-8 hours" },
+            { day: 9, title: "EBC to Pheriche", distance: "21 km", altitude: "4,371m", activities: "Descend and recover. Visit Sherpa cultural centers.", meals: "All meals", accommodation: "Teahouse", duration: "6-7 hours descent" },
+            { day: 10, title: "Pheriche to Namche", distance: "26 km", altitude: "3,440m", activities: "Trek back to Namche. Enjoy descent. Last shopping at market.", meals: "All meals", accommodation: "Teahouse", duration: "5-6 hours" },
+            { day: 11, title: "Namche to Lukla", distance: "19 km", altitude: "2,860m", activities: "Final trek back to Lukla. Relax before flight.", meals: "All meals", accommodation: "Teahouse", duration: "5-6 hours" },
+            { day: 12, title: "Fly to Kathmandu", distance: "Flight", altitude: "1,300m", activities: "Early morning flight to Kathmandu. Celebration dinner with team.", meals: "Breakfast, Lunch, Celebration dinner", accommodation: "Hotel in Kathmandu", duration: "Flight + evening" }
+        ],
+        packing: {
+            clothing: ["Thermal layers (3-4)", "Wool sweater", "Insulated jacket", "Heavy down jacket (-15°C)", "Trekking pants (2)", "Rain jacket", "Wool hat & gloves", "Thermal socks (8+)"],
+            footwear: ["Mountaineering boots", "Gaiters", "Camp shoes", "Wool liner socks"],
+            gear: ["60L+ backpack", "Sleeping bag (-15°C)", "Sleeping mat", "Trekking poles", "Crampons", "Microspikes", "Headlamp + batteries"],
+            essentials: ["Water bottle & thermos", "High-calorie snacks", "Altitude medication (Diamox)", "Sunscreen SPF 50+", "First aid kit", "Passport (2 photos)"]
+        },
+        costBreakdown: {
+            basePrice: 120000,
+            gst: "5%",
+            insurance: 299,
+            inclusions: ["All accommodation (teahouse)", "All meals (breakfast, lunch, dinner)", "Expert guide (Sherpa)", "Porter support (1:2 ratio)", "Flights (Kathmandu-Lukla)", "Park permits", "First aid & rescue"],
+            exclusions: ["International flights", "Visa fees", "Personal gear", "Tipsguidance"]
+        },
+        safetyGuidelines: [
+            "Acute Mountain Sickness (AMS) can occur - acclimatization essential",
+            "Take Diamox prescription before trek",
+            "Report symptoms immediately: headache, nausea, dizziness",
+            "Drink 4-5L water daily",
+            "Never push beyond comfort - pace yourself",
+            "Follow guide's instructions strictly",
+            "Rescue helicopter available in emergencies"
+        ],
+        logistics: {
+            howToReach: "Fly to Kathmandu, then scenic flight to Lukla (scenic 1 hr flight)",
+            startPoint: "Kathmandu (required 2 days before trek)",
+            endPoint: "Kathmandu (after trek completion)",
+            nearestAirport: "Tribhuvan International Airport, Kathmandu"
+        },
+        faqs: [
+            { q: "Will I get altitude sickness?", a: "Many people experience mild AMS. Acclimatization days & medication help. Go slow, hydrate, rest." },
+            { q: "Is this suitable for beginners?", a: "Not recommended for complete beginners. Should have previous trekking experience." },
+            { q: "What's the success rate?", a: "~85% reach base camp. Some turn back due to altitude. It's a personal journey." },
+            { q: "How fit do I need to be?", a: "Advanced fitness. Do cardio & strength training 3 months before trek." }
+        ]
+    },
+    "Kedarkantha Trek": {
+        overview: {
+            name: "Kedarkantha Trek",
+            location: "Uttarakhand, India",
+            duration: 4,
+            difficulty: "Easy",
+            altitude: "3,810m",
+            distance: "28 km",
+            bestSeason: "December - April",
+            highlights: ["Perfect Snow Trek", "Summit Views", "Beginner-Friendly", "Winter Wonderland"]
+        },
+        dayByDay: [
+            { day: 1, title: "Delhi to Sankri", distance: "Travel", altitude: "1,920m", activities: "Drive from Delhi (8-9 hours). Arrive at Sankri village. Guide orientation. Briefing on snow trek.", meals: "Breakfast in car, Dinner at guesthouse", accommodation: "Guesthouse", duration: "Drive day" },
+            { day: 2, title: "Sankri to Khad", distance: "8 km", altitude: "2,200m", activities: "Trek through oak & pine forests. First snow encounter. Mountain streams. Village views.", meals: "Packed breakfast, Lunch, Dinner", accommodation: "Tent camp", duration: "4-5 hours" },
+            { day: 3, title: "Khad to Kedarkantha Summit", distance: "9 km", altitude: "3,810m", activities: "Trek through snow meadows. Early start. Trek to summit (3,810m). 360° mountain views! Celebrate!", meals: "Early breakfast, Packed lunch at summit, Special dinner", accommodation: "Tent camp", duration: "6-7 hours" },
+            { day: 4, title: "Descent & Return", distance: "8 km", altitude: "1,900m", activities: "Optional sunrise hike (if weather permits). Descend back to Sankri. Celebration with guides & team.", meals: "Breakfast, Packed lunch, Celebration dinner", accommodation: "Guesthouse", duration: "5 hours trek + 2 hrs drive" }
+        ],
+        packing: {
+            clothing: ["Thermal layers (2-3)", "Wool sweater", "Fleece jacket", "Insulated jacket", "Rain jacket", "Wool hat & gloves", "Thermal socks (4-5)"],
+            footwear: ["Insulated trekking boots", "Gaiters", "Microspikes/crampons", "Camp sandals"],
+            gear: ["40L backpack", "Sleeping bag (-10°C)", "Sleeping mat", "Trekking poles", "Crampons", "Headlamp + batteries"],
+            essentials: ["Water bottle", "High-energy snacks", "Sunscreen SPF 50+", "First aid kit", "Medications", "Toiletries"]
+        },
+        costBreakdown: {
+            basePrice: 6799,
+            gst: "5%",
+            insurance: 299,
+            inclusions: ["Accommodation (tent & guesthouse)", "All meals", "Expert trek guide", "Porter support", "Safety equipment", "Tea & snacks"],
+            exclusions: ["Travel to Sankri", "Personal gear rental", "Extra activities", "Gratuities"]
+        },
+        safetyGuidelines: [
+            "Snow trek requires caution - follow guide instructions strictly",
+            "Learn basic crampons & ice techniques on Day 1",
+            "Stay together - buddy system always",
+            "Watch for avalanche zones - guide will advise",
+            "Bring altitude sickness medication",
+            "Check weather forecast daily",
+            "Report any discomfort immediately"
+        ],
+        logistics: {
+            howToReach: "Delhi to Sankri by car (8-9 hours, or overnight bus + taxi)",
+            startPoint: "Sankri Village (1,920m)",
+            endPoint: "Sankri Village",
+            nearestAirport: "Delhi (250 km)"
+        },
+        faqs: [
+            { q: "Is this the best first snow trek?", a: "Yes! Perfect beginner snow trek. No technical climbing. Great for building confidence." },
+            { q: "What if there's no snow?", a: "Trek still happens. Routes adjust based on snow conditions. Guide advises on the ground." },
+            { q: "Can families with kids join?", a: "Kids 10+ with good fitness can join. Slower pace & more rest breaks needed." },
+            { q: "What's the weather like?", a: "January-February coldest (-15°C night, -5°C day). March warmer. April has melting snow." }
+        ]
+    }
+};
+
+function getTrekItinerary(trekName) {
+    if (trekItineraries[trekName]) {
+        return trekItineraries[trekName];
+    }
+
+    const trek = destinations.find(dest => dest.name === trekName);
+    if (!trek) {
+        return null;
+    }
+
+    const basePrice = getPriceForDifficulty(trek.difficulty);
+    const duration = Number(trek.duration) || 4;
+    const dayCount = Math.max(3, Math.min(12, duration));
+    const progressLabels = ["Arrival & briefing", "Acclimatization", "Trail ascent", "Summit / high point", "Descent & departure"];
+    const dayByDay = Array.from({ length: dayCount }, (_, index) => {
+        const dayNumber = index + 1;
+        const isFirst = dayNumber === 1;
+        const isLast = dayNumber === dayCount;
+        const middleTitle = progressLabels[Math.min(progressLabels.length - 1, Math.floor(index / Math.max(1, dayCount / progressLabels.length)))];
+
+        return {
+            day: dayNumber,
+            title: isFirst ? "Arrival and trek briefing" : isLast ? "Return and wrap-up" : middleTitle,
+            distance: isFirst ? "Travel / arrival" : `${Math.max(4, Math.round((dayCount * 6) / dayCount))} km`,
+            altitude: trek.altitude === "high" ? "High altitude" : trek.altitude === "medium" ? "Mid altitude" : "Lower altitude",
+            activities: isFirst
+                ? `Arrive at ${trek.startPoint || trek.location}. Meet the guide, complete check-in, and review the route, weather, and safety plan.`
+                : isLast
+                    ? "Descend or travel back, complete check-out, and share a farewell meal with the team."
+                    : `Trek through ${trek.terrain} terrain with guide-led breaks, photo stops, and pace adjustments based on the group.`,
+            meals: isFirst
+                ? "Welcome dinner"
+                : isLast
+                    ? "Breakfast, lunch, farewell dinner"
+                    : "Breakfast, packed lunch, hot dinner",
+            accommodation: isLast
+                ? "Hotel / return stay"
+                : trek.difficulty === "hard"
+                    ? "Teahouse / alpine camp"
+                    : "Guesthouse / campsite",
+            duration: isFirst
+                ? "Arrival day"
+                : isLast
+                    ? "Departure day"
+                    : `${Math.max(4, Math.min(8, 4 + Math.floor(index / 2)))} hours`
+        };
+    });
+
+    return {
+        overview: {
+            name: trek.name,
+            location: trek.location || trek.region,
+            duration: trek.duration,
+            difficulty: toSentenceCase(trek.difficulty),
+            altitude: trek.altitude === "high" ? "High altitude" : trek.altitude === "medium" ? "Medium altitude" : "Low altitude",
+            distance: `${Math.max(10, duration * 6)} km`,
+            bestSeason: trek.bestTime || "Best season varies",
+            highlights: [
+                trek.desc,
+                `${toSentenceCase(trek.difficulty)} difficulty`,
+                `${toSentenceCase(trek.terrain)} terrain`,
+                trek.bestTime || "Seasonal windows apply"
+            ]
+        },
+        dayByDay,
+        packing: {
+            clothing: ["Moisture-wicking layers", "Warm outer layer", "Rain protection", "Extra socks"],
+            footwear: ["Trekking boots", "Camp footwear", "Wool socks"],
+            gear: ["Backpack", "Water bottle", "Headlamp", "Trekking poles"],
+            essentials: ["ID documents", "Personal medications", "Snacks", "Sunscreen"]
+        },
+        costBreakdown: {
+            basePrice,
+            gst: "5%",
+            insurance: 299,
+            inclusions: ["Accommodation", "Meals", "Guide support", "Basic safety assistance"],
+            exclusions: ["Travel to start point", "Personal expenses", "Tips", "Optional rentals"]
+        },
+        safetyGuidelines: [
+            "Follow the guide's instructions at all times",
+            "Stay hydrated and pace yourself",
+            "Carry weather-appropriate layers",
+            "Report altitude discomfort early",
+            "Do not trek alone or break the group"
+        ],
+        logistics: {
+            howToReach: `Reach ${trek.startPoint || trek.location} by train, flight, or road depending on the destination.`,
+            startPoint: trek.startPoint || trek.location,
+            endPoint: trek.startPoint || trek.location,
+            nearestAirport: trek.location || trek.region
+        },
+        faqs: [
+            { q: "Is this trek suitable for me?", a: `This trek is marked ${toSentenceCase(trek.difficulty)} and is best suited to trekkers with matching fitness levels.` },
+            { q: "What is included in the package?", a: "Accommodation, meals, guide support, and basic safety assistance are included by default." },
+            { q: "What should I pack?", a: "Bring layered clothing, trekking footwear, hydration, and personal essentials listed in the packing section." },
+            { q: "When should I book?", a: `Book during the recommended window: ${trek.bestTime || "the best seasonal window"}.` }
+        ]
+    };
+}
+
+function getPriceForDifficulty(difficulty) {
+    const priceMap = { hard: 10499, moderate: 8499, easy: 6799 };
+    return priceMap[difficulty?.toLowerCase()] || 6799;
+}
+
 // ================= MATCHING LOGIC =================
 
 function gradeDestinations(userPrefs){
@@ -516,7 +791,11 @@ function buildCardHTML(dest, isMatch=false){
     }
 
     return `
-    <div class="destination-card group relative bg-white dark:bg-gray-800 rounded-3xl shadow-md overflow-hidden transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_50px_rgba(45,212,191,0.25)] border border-transparent hover:border-mint/30 flex flex-col h-full" 
+    <div class="destination-card group relative bg-white dark:bg-gray-800 rounded-3xl shadow-md overflow-hidden transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_50px_rgba(45,212,191,0.25)] border border-transparent hover:border-mint/30 flex flex-col h-full cursor-pointer" 
+     onclick="openTrekCardItinerary('${dest.id}')"
+     onkeydown="if(event.key==='Enter' || event.key===' '){event.preventDefault(); openTrekCardItinerary('${dest.id}');}"
+     role="button"
+     tabindex="0"
      data-type="${dest.difficulty} ${dest.terrain} ${dest.altitude}">
     
     ${matchBadge}
@@ -538,16 +817,17 @@ function buildCardHTML(dest, isMatch=false){
         </p>
 
         <div class="flex gap-2 mt-auto">
-    <a href="destination.html?id=${encodeURIComponent(dest.id)}"
+    <a href="destination.html?id=${encodeURIComponent(dest.id)}" onclick="event.stopPropagation()"
 class="flex-1 bg-mint text-juniper py-2 text-center rounded font-bold">
 View Trek
 </a>
 
-<button onclick="saveFavorite('${dest.name}')"
+<button onclick="event.stopPropagation(); saveFavorite('${dest.name}')"
 class="px-3 bg-red-100 text-red-500 rounded">
 ❤️
 </button>
 </div>
+        <p class="mt-3 text-xs text-gray-500 dark:text-gray-400">Click card for full itinerary</p>
     </div>
 </div>
 `;
