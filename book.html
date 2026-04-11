@@ -298,6 +298,149 @@
             .trip-meta { flex-wrap: wrap; gap: 8px; }
             .meta-sep { display: none; }
         }
+
+        /* ========== LIGHT MODE STYLES ========== */
+        html:not(.dark) body {
+            background: linear-gradient(135deg, #f5faf9 0%, #eef6f5 35%, #e8ede9 65%, #dfe8e5 100%);
+            color: #2c3e38;
+            transition: background 0.3s ease;
+        }
+
+        html:not(.dark) .pg-label {
+            color: rgba(15, 55, 59, 0.65);
+        }
+
+        html:not(.dark) .pg-title {
+            color: #0f373b;
+        }
+
+        html:not(.dark) .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(15, 55, 59, 0.12);
+            color: #2c3e38;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        html:not(.dark) .step-bubble {
+            border-color: rgba(15, 55, 59, 0.18);
+            background: rgba(255, 255, 255, 0.7);
+            color: rgba(15, 55, 59, 0.65);
+        }
+
+        html:not(.dark) .step-bubble.active {
+            background: #14a896;
+            border-color: #14a896;
+            color: #fff;
+            box-shadow: 0 0 0 5px rgba(20, 168, 150, 0.15);
+        }
+
+        html:not(.dark) .step-label {
+            color: rgba(15, 55, 59, 0.6);
+        }
+
+        html:not(.dark) .step-line {
+            background: rgba(15, 55, 59, 0.12);
+        }
+
+        html:not(.dark) .trip-location {
+            color: rgba(15, 55, 59, 0.72);
+        }
+
+        html:not(.dark) .itinerary-item {
+            color: rgba(15, 55, 59, 0.82);
+        }
+
+        html:not(.dark) .inc {
+            color: rgba(15, 55, 59, 0.78);
+        }
+
+        html:not(.dark) .meta-v .lbl {
+            color: rgba(15, 55, 59, 0.65);
+        }
+
+        html:not(.dark) .est-row {
+            color: rgba(15, 55, 59, 0.75);
+            border-bottom-color: rgba(15, 55, 59, 0.08);
+        }
+
+        html:not(.dark) .counter {
+            background: rgba(15, 55, 59, 0.06);
+            border-color: rgba(15, 55, 59, 0.12);
+            color: #0f373b;
+        }
+
+        html:not(.dark) .f-input {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(15, 55, 59, 0.15);
+            color: #2c3e38;
+        }
+
+        html:not(.dark) .f-input::placeholder {
+            color: rgba(15, 55, 59, 0.45);
+        }
+
+        html:not(.dark) .f-input:focus {
+            border-color: #14a896;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        html:not(.dark) .f-input option {
+            background: #fff;
+            color: #2c3e38;
+        }
+
+        html:not(.dark) .btn-main {
+            background: linear-gradient(135deg, #14a896 0%, #0f8a7c 100%) !important;
+            color: #fff !important;
+            box-shadow: 0 4px 12px rgba(20, 168, 150, 0.2);
+        }
+
+        html:not(.dark) .btn-back {
+            background: rgba(15, 55, 59, 0.08);
+            border-color: rgba(15, 55, 59, 0.15);
+            color: rgba(15, 55, 59, 0.8);
+        }
+
+        html:not(.dark) .payHint {
+            color: rgba(15, 55, 59, 0.7);
+        }
+
+        html:not(.dark) .pay-card {
+            background: rgba(20, 168, 150, 0.06);
+            border-color: rgba(20, 168, 150, 0.15);
+            color: #2c3e38;
+        }
+
+        html:not(.dark) .pay-card.selected {
+            background: rgba(20, 168, 150, 0.15);
+            border-color: #14a896;
+        }
+
+        html:not(.dark) .pay-form {
+            background: rgba(15, 55, 59, 0.05);
+            border-color: rgba(15, 55, 59, 0.12);
+        }
+
+        html:not(.dark) .pay-form-title {
+            color: rgba(15, 55, 59, 0.7);
+        }
+
+        html:not(.dark) .divider-h {
+            background: rgba(15, 55, 59, 0.08);
+        }
+
+        html:not(.dark) .est-amount {
+            color: #14a896;
+        }
+
+        html:not(.dark) .ref-box {
+            background: rgba(20, 168, 150, 0.08);
+            border-color: rgba(20, 168, 150, 0.2);
+        }
+
+        html:not(.dark) .ref-num {
+            color: #14a896;
+        }
     </style>
     <script src="navbar.js" defer></script>
 </head>
