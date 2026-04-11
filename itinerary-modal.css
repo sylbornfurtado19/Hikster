@@ -1,0 +1,669 @@
+/* ================= ITINERARY MODAL STYLES ================= */
+
+#itineraryModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+#itineraryModal.active {
+    display: flex;
+}
+
+.itinerary-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+}
+
+.itinerary-modal-content {
+    position: relative;
+    background: #fff;
+    width: 95%;
+    max-width: 1000px;
+    max-height: 90vh;
+    margin: auto;
+    border-radius: 20px;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.itinerary-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 10000;
+    transition: all 0.2s;
+}
+
+.itinerary-modal-close:hover {
+    background: rgba(0, 0, 0, 0.2);
+    transform: rotate(90deg);
+}
+
+/* Header */
+.itinerary-header {
+    background: linear-gradient(135deg, #0a7a6e 0%, #2dd4b8 100%);
+    color: #fff;
+    padding: 2rem;
+    border-radius: 20px 20px 0 0;
+}
+
+.itinerary-header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.itinerary-meta-info {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.itinerary-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.highlight-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    backdrop-filter: blur(10px);
+}
+
+/* Tabs */
+.itinerary-tabs {
+    display: flex;
+    background: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    overflow-x: auto;
+    padding: 0 2rem;
+}
+
+.itinerary-tab-btn {
+    padding: 1rem 1.5rem;
+    background: none;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+}
+
+.itinerary-tab-btn.active {
+    color: #0a7a6e;
+    border-bottom-color: #2dd4b8;
+}
+
+.itinerary-tab-btn:hover {
+    color: #0a7a6e;
+}
+
+/* Tab Content */
+.itinerary-content {
+    padding: 2rem;
+}
+
+.itinerary-tab-content {
+    display: none;
+}
+
+.itinerary-tab-content.active {
+    display: block;
+}
+
+.itinerary-section h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #0a7a6e;
+}
+
+/* Overview Grid */
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.overview-item {
+    background: #f9f9f9;
+    padding: 1.2rem;
+    border-radius: 12px;
+    border-left: 4px solid #2dd4b8;
+}
+
+.overview-item label {
+    font-weight: 700;
+    color: #0a7a6e;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.overview-item p {
+    color: #666;
+}
+
+/* Day by Day */
+.day-accordion {
+    background: #f5f5f5;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.day-header {
+    padding: 1.2rem;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.3s;
+    user-select: none;
+}
+
+.day-header:hover {
+    background: #f0f0f0;
+}
+
+.day-header h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #0a7a6e;
+}
+
+.day-meta {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.day-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.day-details {
+    display: none;
+    padding: 1.5rem;
+    background: #f9f9f9;
+    border-top: 1px solid #e0e0e0;
+}
+
+.day-accordion.active .day-details {
+    display: block;
+}
+
+.detail-section {
+    margin-bottom: 1rem;
+}
+
+.detail-section h5 {
+    color: #0a7a6e;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.detail-section p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Packing List */
+.packing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.packing-category {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-top: 3px solid #2dd4b8;
+}
+
+.packing-category h4 {
+    color: #0a7a6e;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.packing-category ul {
+    list-style: none;
+}
+
+.packing-category li {
+    padding: 0.4rem 0;
+    color: #666;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.packing-category i {
+    color: #2dd4b8;
+    font-size: 0.8rem;
+}
+
+/* Cost Breakdown */
+.cost-breakdown {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.cost-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 0.95rem;
+}
+
+.cost-row.total {
+    border-bottom: 2px solid #0a7a6e;
+    border-top: 2px solid #0a7a6e;
+    padding: 1rem 0;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #0a7a6e;
+    margin-top: 0.5rem;
+}
+
+.cost-note {
+    font-size: 0.85rem;
+    color: #999;
+    margin-top: 1rem;
+    font-style: italic;
+}
+
+.cost-inclusions,
+.cost-exclusions {
+    margin-bottom: 2rem;
+}
+
+.cost-inclusions h4,
+.cost-exclusions h4 {
+    color: #0a7a6e;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.cost-inclusions ul,
+.cost-exclusions ul {
+    list-style: none;
+}
+
+.cost-inclusions li,
+.cost-exclusions li {
+    padding: 0.6rem 0;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cost-inclusions li:before {
+    content: "✓";
+    color: #2dd4b8;
+    font-weight: bold;
+}
+
+.cost-exclusions li:before {
+    content: "✗";
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+/* Safety Guidelines */
+.safety-list {
+    list-style: none;
+}
+
+.safety-list li {
+    padding: 0.8rem 0;
+    padding-left: 2rem;
+    color: #666;
+    position: relative;
+}
+
+.safety-list li:before {
+    content: "◆";
+    position: absolute;
+    left: 0;
+    color: #2dd4b8;
+    font-size: 0.8rem;
+}
+
+/* FAQs */
+.faq-item {
+    background: #f9f9f9;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.faq-question {
+    padding: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+    user-select: none;
+}
+
+.faq-question:hover {
+    background: #f0f0f0;
+}
+
+.faq-question h5 {
+    color: #0a7a6e;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.faq-question i {
+    transition: transform 0.3s;
+    color: #2dd4b8;
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    display: none;
+    padding: 1.5rem;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    color: #666;
+    line-height: 1.6;
+}
+
+.faq-item.active .faq-answer {
+    display: block;
+}
+
+/* CTA Buttons */
+.itinerary-cta {
+    display: flex;
+    gap: 1rem;
+    padding: 2rem;
+    background: #f5f5f5;
+    border-top: 1px solid #ddd;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-book-now,
+.btn-download-pdf,
+.btn-contact {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.btn-book-now {
+    background: linear-gradient(135deg, #2dd4b8 0%, #0a7a6e 100%);
+    color: #fff;
+    flex: 1;
+    min-width: 200px;
+}
+
+.btn-book-now:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(45, 212, 184, 0.3);
+}
+
+.btn-download-pdf,
+.btn-contact {
+    background: rgba(10, 122, 110, 0.1);
+    color: #0a7a6e;
+    border: 2px solid #0a7a6e;
+}
+
+.btn-download-pdf:hover,
+.btn-contact:hover {
+    background: rgba(10, 122, 110, 0.15);
+}
+
+/* Dark Mode */
+html.dark .itinerary-modal-content {
+    background: #1a1a1a;
+    color: #e0e0e0;
+}
+
+html.dark .itinerary-tab-btn {
+    color: #999;
+}
+
+html.dark .itinerary-tab-btn.active {
+    color: #2dd4b8;
+}
+
+html.dark .itinerary-section h3 {
+    color: #2dd4b8;
+}
+
+html.dark .overview-item {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e0e0e0;
+}
+
+html.dark .overview-item label {
+    color: #2dd4b8;
+}
+
+html.dark .overview-item p {
+    color: #999;
+}
+
+html.dark .day-header {
+    background: #252525;
+}
+
+html.dark .day-header:hover {
+    background: #2a2a2a;
+}
+
+html.dark .day-header h4 {
+    color: #2dd4b8;
+}
+
+html.dark .day-meta {
+    color: #666;
+}
+
+html.dark .day-details {
+    background: rgba(255, 255, 255, 0.05);
+    border-top-color: #333;
+}
+
+html.dark .detail-section h5 {
+    color: #2dd4b8;
+}
+
+html.dark .detail-section p {
+    color: #999;
+}
+
+html.dark .packing-category {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e0e0e0;
+}
+
+html.dark .packing-category h4 {
+    color: #2dd4b8;
+}
+
+html.dark .packing-category li {
+    color: #999;
+}
+
+html.dark .cost-breakdown {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+html.dark .cost-row {
+    color: #e0e0e0;
+    border-bottom-color: #333;
+}
+
+html.dark .cost-row.total {
+    border-color: #2dd4b8;
+    color: #2dd4b8;
+}
+
+html.dark .cost-note {
+    color: #666;
+}
+
+html.dark .cost-inclusions h4,
+html.dark .cost-exclusions h4 {
+    color: #2dd4b8;
+}
+
+html.dark .cost-inclusions li,
+html.dark .cost-exclusions li {
+    color: #999;
+}
+
+html.dark .safety-list li {
+    color: #999;
+}
+
+html.dark .faq-item {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+html.dark .faq-question {
+    background: #252525;
+}
+
+html.dark .faq-question:hover {
+    background: #2a2a2a;
+}
+
+html.dark .faq-question h5 {
+    color: #2dd4b8;
+}
+
+html.dark .faq-answer {
+    background: none;
+    color: #999;
+    border-top-color: #333;
+}
+
+html.dark .itinerary-tabs {
+    background: #252525;
+    border-bottom-color: #333;
+}
+
+html.dark .itinerary-content {
+    background: #1a1a1a;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .itinerary-modal-content {
+        width: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .itinerary-header {
+        padding: 1.5rem;
+    }
+
+    .itinerary-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .itinerary-meta-info {
+        gap: 1rem;
+        font-size: 0.85rem;
+    }
+
+    .itinerary-tabs {
+        padding: 0 1rem;
+        overflow-x: auto;
+    }
+
+    .itinerary-tab-btn {
+        padding: 0.8rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .itinerary-content {
+        padding: 1rem;
+    }
+
+    .overview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .packing-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .itinerary-cta {
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 1rem;
+    }
+
+    .btn-book-now,
+    .btn-download-pdf,
+    .btn-contact {
+        width: 100%;
+    }
+}
