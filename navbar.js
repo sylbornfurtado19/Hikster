@@ -276,6 +276,7 @@ html.dark body.hk-theme-fallback [class*="border"] {
             <nav class="hk-main-links" aria-label="Main navigation">
                 <a href="home.html" data-hk-link="home.html" class="hk-link">Home</a>
                 <a href="all-destinations.html" data-hk-link="all-destinations.html" class="hk-link">Destinations</a>
+                <a href="reviews.html" data-hk-link="reviews.html" class="hk-link">Reviews</a>
             </nav>
 
             <div class="hk-right">
@@ -300,6 +301,7 @@ html.dark body.hk-theme-fallback [class*="border"] {
                     <nav class="hk-menu-links" aria-label="Mobile navigation">
                         <a href="home.html" data-hk-link="home.html">Home</a>
                         <a href="all-destinations.html" data-hk-link="all-destinations.html">Destinations</a>
+                        <a href="reviews.html" data-hk-link="reviews.html">Reviews</a>
                         <a href="history.html" data-hk-link="history.html">History</a>
                         <a href="favorites.html" data-hk-link="favorites.html">Favorites</a>
                     </nav>
