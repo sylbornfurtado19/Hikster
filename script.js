@@ -341,6 +341,116 @@ season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"avoid",May:"avoid",Jun:"peak",J
 
 ];
 
+// ================= REVIEWS DATABASE =================
+
+const defaultReviews = [
+{
+    id: 1,
+    reviewer: "Sarah Mitchell",
+    trek: "Hampta Pass Trek",
+    rating: 5,
+    text: "Absolutely incredible! The transition from green valleys to desert is breathtaking. Our guide was knowledgeable and the accommodations were comfortable. Perfect for intermediate trekkers like me. Highly recommended!",
+    date: "Dec 15, 2024",
+    helpful: 127,
+    verified: true
+},
+{
+    id: 2,
+    reviewer: "Rajesh Kumar",
+    trek: "Everest Base Camp Trek",
+    rating: 5,
+    text: "A lifetime achievement! The view from the base camp is humbling. Yes, it's challenging with the altitude, but worth every step. Proper acclimatization and a great team made it possible.",
+    date: "Dec 10, 2024",
+    helpful: 94,
+    verified: true
+},
+{
+    id: 3,
+    reviewer: "Emma Wilson",
+    trek: "Swiss Alps Trek",
+    rating: 4,
+    text: "Stunning scenery and excellent organization. The guides were professional and caring. A bit pricey but you get what you pay for. Would definitely do another trek here!",
+    date: "Dec 8, 2024",
+    helpful: 67,
+    verified: true
+},
+{
+    id: 4,
+    reviewer: "Arjun Singh",
+    trek: "Hampta Pass Trek",
+    rating: 4,
+    text: "Great experience overall. Weather was challenging on the last day, but the guide managed it well. Beautiful landscapes, less crowded than expected. Food was simple but tasty.",
+    date: "Dec 5, 2024",
+    helpful: 45,
+    verified: true
+},
+{
+    id: 5,
+    reviewer: "Sophie Anderson",
+    trek: "Roopkund Trek",
+    rating: 5,
+    text: "Roopkund is magical! The skeleton lake is fascinating, and the alpine meadows in September are gorgeous. Perfect mix of mystery and natural beauty. Will be back!",
+    date: "Nov 28, 2024",
+    helpful: 156,
+    verified: true
+},
+{
+    id: 6,
+    reviewer: "Vikram Patel",
+    trek: "Everest Base Camp Trek",
+    rating: 4,
+    text: "Challenging but doable with proper preparation. The Sherpa team was amazing - very supportive throughout. Main complaints: food got repetitive and accommodation is extremely basic.",
+    date: "Nov 24, 2024",
+    helpful: 82,
+    verified: true
+},
+{
+    id: 7,
+    reviewer: "Jessica Chen",
+    trek: "Annapurna Circuit Trek",
+    rating: 5,
+    text: "Breathtaking views around every corner! The Thorong La pass crossing was the highlight. The little villages and warm hospitality of locals made it special. Best trek experience ever!",
+    date: "Nov 20, 2024",
+    helpful: 203,
+    verified: true
+},
+{
+    id: 8,
+    reviewer: "Aditya Nair",
+    trek: "Kedarkantha Trek",
+    rating: 4,
+    text: "Perfect beginner snow trek! Beautiful snow-covered peaks and relatively easy terrain. Good for building confidence. Recommend going in peak season for better snow views.",
+    date: "Nov 15, 2024",
+    helpful: 73,
+    verified: true
+},
+{
+    id: 9,
+    reviewer: "Lisa Thompson",
+    trek: "Inca Trail Trek",
+    rating: 5,
+    text: "An absolute classic! Camping in Machu Picchu area was surreal. The history, the porters' stories, the mountain scenery - everything was perfect. Worth every penny!",
+    date: "Nov 12, 2024",
+    helpful: 189,
+    verified: true
+},
+{
+    id: 10,
+    reviewer: "Rohan Gupta",
+    trek: "Chadar Trek",
+    rating: 5,
+    text: "Chadar is otherworldly! Trekking on a frozen river in extreme conditions was thrilling. Not for the faint-hearted, but immensely rewarding. The guides were experienced and safety-conscious.",
+    date: "Nov 8, 2024",
+    helpful: 112,
+    verified: true
+}
+];
+
+// Initialize reviews in localStorage if not present
+if (!localStorage.getItem('hiksterReviews')) {
+    localStorage.setItem('hiksterReviews', JSON.stringify(defaultReviews));
+}
+
 // ================= MATCHING LOGIC =================
 
 function gradeDestinations(userPrefs){
