@@ -9,6 +9,7 @@
 <link rel="icon" href="logo/logo.png" type="image/png">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="itinerary-modal.css">
 
 <script>
     tailwind.config = {
@@ -61,6 +62,7 @@
 </style>
 
 <script src="navbar.js" defer></script>
+<script src="itinerary-modal.js" defer></script>
 
 </head>
 
@@ -171,6 +173,12 @@ function initFilters() {
     if (searchInput) {
         searchInput.addEventListener('input', applyFilters);
     }
+}
+
+function openTrekCardItinerary(trekId) {
+    const trek = destinations.find(dest => dest.id === trekId);
+    if (!trek) return;
+    openItineraryModal(trek.name);
 }
 
 setTimeout(initFilters, 0);
