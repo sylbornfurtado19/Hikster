@@ -401,7 +401,7 @@
             color: rgba(15, 55, 59, 0.8);
         }
 
-        html:not(.dark) .payHint {
+        html:not(.dark) #payHint {
             color: rgba(15, 55, 59, 0.7);
         }
 
@@ -507,6 +507,7 @@
                         <button type="button" data-package-tier="standard" onclick="setPackageTier('standard')" style="padding:0.6rem 0.65rem; border-radius:10px; border:1px solid rgba(45,212,184,0.8); background:rgba(45,212,184,0.2); color:#7ae8d8; cursor:pointer; font-size:0.82rem; font-weight:700;">Standard</button>
                         <button type="button" data-package-tier="premium" onclick="setPackageTier('premium')" style="padding:0.6rem 0.65rem; border-radius:10px; border:1px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.08); color:#fff; cursor:pointer; font-size:0.82rem; font-weight:700;">Premium</button>
                     </div>
+                    <p class="package-tier-hint" style="display:none; margin-top:0.55rem; font-size:0.78rem; color:rgba(255,255,255,0.65);">Select a trek first to choose package tier.</p>
                 </div>
             </div>
 
@@ -578,6 +579,7 @@
                     <button type="button" data-package-tier="standard" onclick="setPackageTier('standard')" style="padding:0.6rem 0.65rem; border-radius:10px; border:1px solid rgba(45,212,184,0.8); background:rgba(45,212,184,0.2); color:#7ae8d8; cursor:pointer; font-size:0.82rem; font-weight:700;">Standard</button>
                     <button type="button" data-package-tier="premium" onclick="setPackageTier('premium')" style="padding:0.6rem 0.65rem; border-radius:10px; border:1px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.08); color:#fff; cursor:pointer; font-size:0.82rem; font-weight:700;">Premium</button>
                 </div>
+                <p class="package-tier-hint" style="display:none; margin-top:0.55rem; font-size:0.78rem; color:rgba(255,255,255,0.65);">Select a trek first to choose package tier.</p>
             </div>
 
             <div class="divider-h"></div>
@@ -689,6 +691,18 @@
                     <option value="other">Other</option>
                 </select>
                 <input id="netbanking-other" class="f-input" type="text" placeholder="Enter your bank name" style="margin-top:0.7rem; display:none;">
+            </div>
+
+            <div id="pay-form-emi" class="pay-form">
+                <div class="pay-form-title">EMI Plan</div>
+                <select id="emi-months" class="f-input">
+                    <option value="">Select EMI Tenure</option>
+                    <option value="3">3 Months</option>
+                    <option value="6">6 Months</option>
+                    <option value="9">9 Months</option>
+                    <option value="12">12 Months</option>
+                </select>
+                <input id="emi-provider" class="f-input" type="text" placeholder="Card/EMI Provider (e.g. HDFC, ICICI)" style="margin-top:0.7rem;">
             </div>
 
             <p id="payHint" style="font-size:0.86rem; color:rgba(255,255,255,0.72);">Select a payment method to continue.</p>
@@ -842,12 +856,47 @@
         });
     }
 
+    function togglePackageTierAvailability(enabled) {
+        document.querySelectorAll("[data-package-tier]").forEach(button => {
+            button.disabled = !enabled;
+            button.style.opacity = enabled ? "1" : "0.5";
+            button.style.cursor = enabled ? "pointer" : "not-allowed";
+        });
+
+        document.querySelectorAll(".package-tier-hint").forEach(hint => {
+            hint.style.display = enabled ? "none" : "block";
+        });
+    }
+
+    function clearSelectedTrekState() {
+        selectedTrek = null;
+        basePrice = 0;
+        selectedTierPrices = { budget: 0, standard: 0, premium: 0 };
+        selectedPackageTier = "standard";
+
+        toItineraryBtn.disabled = true;
+        document.getElementById("trek-summary").style.display = "none";
+        document.getElementById("trip-thumb").textContent = "TRK";
+        document.getElementById("trip-name").textContent = "Select a trek to begin";
+        document.getElementById("trip-location").textContent = "Region details will appear here";
+        document.getElementById("badge-difficulty").textContent = "--";
+        document.getElementById("badge-duration").textContent = "-- days";
+        document.getElementById("badge-terrain").textContent = "--";
+        document.getElementById("meta-altitude").textContent = "--";
+        document.getElementById("meta-duration").textContent = "--";
+        document.getElementById("meta-price").textContent = "INR --";
+
+        updatePackageButtons();
+        togglePackageTierAvailability(false);
+        updateEstimateTierRows();
+        updateEstimate();
+    }
+
     function setPackageTier(tier) {
+        if (!selectedTrek) return;
         if (!packageConfig[tier]) return;
         selectedPackageTier = tier;
         updatePackageButtons();
-
-        if (!selectedTrek) return;
 
         basePrice = selectedTierPrices[selectedPackageTier];
         document.getElementById("meta-price").textContent = `${formatInr(basePrice)} (${formatTierName(selectedPackageTier)})`;
@@ -883,6 +932,7 @@
         document.getElementById("meta-price").textContent = `${formatInr(basePrice)} (${formatTierName(selectedPackageTier)})`;
 
         toItineraryBtn.disabled = false;
+        togglePackageTierAvailability(true);
         updatePackageButtons();
         showTrekSummary(dest);
         updateEstimateTierRows();
@@ -988,6 +1038,7 @@
         if (method === "card") document.getElementById("pay-form-card").classList.add("active");
         if (method === "upi") document.getElementById("pay-form-upi").classList.add("active");
         if (method === "netbanking") document.getElementById("pay-form-netbanking").classList.add("active");
+        if (method === "emi") document.getElementById("pay-form-emi").classList.add("active");
 
         document.getElementById("payHint").textContent = "Selected: " + method.toUpperCase();
         document.getElementById("payNowBtn").disabled = false;
@@ -1039,6 +1090,20 @@
             return true;
         }
 
+        if (selectedMethod === "emi") {
+            const months = document.getElementById("emi-months").value;
+            const provider = document.getElementById("emi-provider").value.trim();
+            if (!months) {
+                alert("Select an EMI tenure.");
+                return false;
+            }
+            if (!provider) {
+                alert("Enter EMI provider/bank.");
+                return false;
+            }
+            return true;
+        }
+
         return true;
     }
 
@@ -1085,7 +1150,6 @@
     function resetAll() {
         persons = 1;
         selectedMethod = null;
-        selectedPackageTier = "standard";
         document.getElementById("personCount").textContent = "1";
         document.getElementById("minusBtn").disabled = true;
         document.getElementById("plusBtn").disabled = false;
@@ -1100,9 +1164,10 @@
         document.getElementById("netbanking-bank").value = "";
         document.getElementById("netbanking-other").value = "";
         document.getElementById("netbanking-other").style.display = "none";
-        updatePackageButtons();
-        updateEstimateTierRows();
-        updateEstimate();
+        document.getElementById("emi-months").value = "";
+        document.getElementById("emi-provider").value = "";
+        select.value = "";
+        clearSelectedTrekState();
         showPage("page1");
     }
 
@@ -1115,16 +1180,15 @@
 
     select.addEventListener("change", () => {
         if (!select.value) {
-            selectedTrek = null;
-            basePrice = 0;
-            toItineraryBtn.disabled = true;
-            updateEstimate();
+            clearSelectedTrekState();
             return;
         }
 
         const trek = findTrekByKey(select.value);
         if (trek) renderTrekDetails(trek);
     });
+
+    let hasPreloadedTrek = false;
 
     if (trekId) {
         const trek = findTrekByKey(trekId);
@@ -1134,12 +1198,13 @@
             if (tierParam && packageConfig[tierParam]) {
                 setPackageTier(tierParam);
             }
+            hasPreloadedTrek = true;
         }
     }
 
-    updatePackageButtons();
-    updateEstimateTierRows();
-    updateEstimate();
+    if (!hasPreloadedTrek) {
+        clearSelectedTrekState();
+    }
 </script>
 </body>
 </html>
