@@ -717,6 +717,7 @@
     let selectedMethod = null;
     let selectedTrek = null;
     let basePrice = 0;
+    let selectedTierPrices = { budget: 0, standard: 0, premium: 0 };
 
     const params = new URLSearchParams(window.location.search);
     const trekId = params.get("trek");
@@ -732,10 +733,16 @@
         return destinations.find(d => trekKey(d) === String(key) || d.name === String(key));
     }
 
-    function priceByDifficulty(difficulty) {
-        if (difficulty === "hard") return 10499;
-        if (difficulty === "moderate") return 8499;
-        return 6799;
+    function getTierPrices(dest) {
+        const estimate = getTrekPriceEstimate(dest);
+        if (estimate) return estimate;
+
+        const fallbackStandard = getPriceForDifficulty(dest.difficulty);
+        return {
+            budget: Math.round(fallbackStandard * 0.85),
+            standard: fallbackStandard,
+            premium: Math.round(fallbackStandard * 1.35)
+        };
     }
 
     function formatInr(value) {
@@ -744,7 +751,8 @@
 
     function renderTrekDetails(dest) {
         selectedTrek = dest;
-        basePrice = priceByDifficulty(dest.difficulty);
+        selectedTierPrices = getTierPrices(dest);
+        basePrice = selectedTierPrices.standard;
 
         document.getElementById("trip-thumb").textContent = dest.name.substring(0, 3).toUpperCase();
         document.getElementById("trip-name").textContent = dest.name;
@@ -754,7 +762,7 @@
         document.getElementById("badge-terrain").textContent = dest.terrain;
         document.getElementById("meta-altitude").textContent = dest.altitude;
         document.getElementById("meta-duration").textContent = dest.duration + " days";
-        document.getElementById("meta-price").textContent = formatInr(basePrice);
+        document.getElementById("meta-price").textContent = `${formatInr(basePrice)} (Std)`;
 
         toItineraryBtn.disabled = false;
         showTrekSummary(dest);
@@ -777,7 +785,7 @@
         document.getElementById("trek-start").textContent = itin.logistics.startPoint;
         document.getElementById("trek-season").textContent = itin.overview.bestSeason;
         document.getElementById("trek-fitness").textContent = dest.fitness || "Moderate";
-        document.getElementById("trek-price").textContent = formatInr(basePrice);
+        document.getElementById("trek-price").textContent = `B ${formatInr(selectedTierPrices.budget)} | S ${formatInr(selectedTierPrices.standard)} | P ${formatInr(selectedTierPrices.premium)}`;
     }
 
     function showTrekItinerary() {
