@@ -103,6 +103,50 @@
     backdrop-filter: blur(10px);
 }
 
+.itinerary-package-switch {
+    margin-top: 1rem;
+}
+
+.itinerary-package-label {
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    margin-bottom: 0.55rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 700;
+}
+
+.itinerary-package-buttons {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.package-tier-btn {
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.package-tier-btn.active {
+    background: #fff;
+    color: #0a7a6e;
+    border-color: #fff;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.itinerary-package-note {
+    margin-top: 0.6rem;
+    font-size: 0.83rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
 /* Tabs */
 .itinerary-tabs {
     display: flex;
@@ -608,6 +652,18 @@ html.dark .itinerary-tabs {
     border-bottom-color: #333;
 }
 
+html.dark .package-tier-btn {
+    border-color: rgba(45, 212, 184, 0.35);
+    background: rgba(255, 255, 255, 0.08);
+    color: #d6fffa;
+}
+
+html.dark .package-tier-btn.active {
+    background: #2dd4b8;
+    color: #063d37;
+    border-color: #2dd4b8;
+}
+
 html.dark .itinerary-content {
     background: #1a1a1a;
 }
@@ -631,6 +687,16 @@ html.dark .itinerary-content {
     .itinerary-meta-info {
         gap: 1rem;
         font-size: 0.85rem;
+    }
+
+    .itinerary-package-buttons {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .package-tier-btn {
+        width: 100%;
+        text-align: center;
     }
 
     .itinerary-tabs {
