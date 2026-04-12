@@ -816,18 +816,13 @@ function buildCardHTML(dest, isMatch=false){
             ${dest.desc}
         </p>
 
-        <div class="flex gap-2 mt-auto">
-    <a href="destination.html?id=${encodeURIComponent(dest.id)}" onclick="event.stopPropagation()"
-class="flex-1 bg-mint text-juniper py-2 text-center rounded font-bold">
-View Trek
-</a>
-
-<button onclick="event.stopPropagation(); saveFavorite('${dest.name}')"
-class="px-3 bg-red-100 text-red-500 rounded">
-❤️
-</button>
-</div>
-        <p class="mt-3 text-xs text-gray-500 dark:text-gray-400">Click card for full itinerary</p>
+        <div class="flex justify-end mt-auto">
+    <button onclick="event.stopPropagation(); saveFavorite('${dest.name}')"
+    class="px-3 py-2 bg-red-100 text-red-500 rounded">
+    ❤️
+    </button>
+    </div>
+        <p class="mt-3 text-xs text-gray-500 dark:text-gray-400">Click anywhere on this card to view trek details.</p>
     </div>
 </div>
 `;
