@@ -212,14 +212,32 @@ function populatePackingTab(itinerary) {
 
 function populateCostTab(itinerary, trek) {
     const costBreak = itinerary.costBreakdown;
-    const basePrice = trek ? getPriceForDifficulty(trek.difficulty) : costBreak.basePrice;
+    const estimate = trek ? getTrekPriceEstimate(trek) : null;
+    const basePrice = estimate
+        ? estimate.standard
+        : (trek ? getPriceForDifficulty(trek.difficulty) : costBreak.basePrice);
     const gstAmount = Math.round(basePrice * 0.05);
     const total = basePrice + gstAmount + costBreak.insurance;
+
+    const budgetPrice = estimate ? estimate.budget : Math.round(basePrice * 0.85);
+    const premiumPrice = estimate ? estimate.premium : Math.round(basePrice * 1.35);
 
     const html = `
         <div class="cost-breakdown">
             <div class="cost-row">
-                <span>Base Price (per person)</span>
+                <span>Budget Package</span>
+                <strong>₹${budgetPrice.toLocaleString()}</strong>
+            </div>
+            <div class="cost-row">
+                <span>Standard Package</span>
+                <strong>₹${basePrice.toLocaleString()}</strong>
+            </div>
+            <div class="cost-row">
+                <span>Premium Package</span>
+                <strong>₹${premiumPrice.toLocaleString()}</strong>
+            </div>
+            <div class="cost-row">
+                <span>Standard Base Price (per person)</span>
                 <strong>₹${basePrice.toLocaleString()}</strong>
             </div>
             <div class="cost-row">
@@ -231,7 +249,7 @@ function populateCostTab(itinerary, trek) {
                 <strong>₹${costBreak.insurance.toLocaleString()}</strong>
             </div>
             <div class="cost-row total">
-                <span>Total per Person</span>
+                <span>Total per Person (Standard)</span>
                 <strong>₹${total.toLocaleString()}</strong>
             </div>
             <div class="cost-note">Note: Prices subject to GST. Group discounts available for 10+ people.</div>
