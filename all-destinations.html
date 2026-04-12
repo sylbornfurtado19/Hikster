@@ -176,12 +176,11 @@ function initFilters() {
 }
 
 function openTrekCardItinerary(trekId) {
-    const trek = destinations.find(dest => dest.id === trekId);
-    if (!trek) return;
-    openItineraryModal(trek.name);
+    if (!trekId) return;
+    window.location.href = `destination.html?id=${encodeURIComponent(trekId)}`;
 }
 
-setTimeout(initFilters, 0);
+document.addEventListener('DOMContentLoaded', initFilters);
 </script>
 
 </body>
