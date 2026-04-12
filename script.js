@@ -341,6 +341,64 @@ season:{Jan:"avoid",Feb:"avoid",Mar:"avoid",Apr:"avoid",May:"avoid",Jun:"peak",J
 
 ];
 
+// ================= TREK PRICE ESTIMATES (INR, 2025-2026) =================
+
+const trekPriceEstimates = {
+    "hampta-pass": { budget: 9000, standard: 13000, premium: 18000 },
+    "swiss-alps": { budget: 170000, standard: 240000, premium: 340000 },
+    "everest-base-camp": { budget: 95000, standard: 135000, premium: 190000 },
+    "kedarkantha": { budget: 7000, standard: 10500, premium: 15000 },
+    "chadar": { budget: 28000, standard: 42000, premium: 62000 },
+    "roopkund": { budget: 12000, standard: 18000, premium: 26000 },
+    "valley-of-flowers": { budget: 7500, standard: 11500, premium: 17000 },
+    "rajmachi": { budget: 1200, standard: 2500, premium: 4500 },
+    "sandakphu": { budget: 14000, standard: 21000, premium: 30000 },
+    "kumara-parvatha": { budget: 2500, standard: 5000, premium: 9000 },
+    "triund": { budget: 1800, standard: 4000, premium: 7500 },
+    "tadiandamol": { budget: 2200, standard: 4800, premium: 8500 },
+    "annapurna-circuit": { budget: 60000, standard: 90000, premium: 130000 },
+    "inca-trail": { budget: 120000, standard: 175000, premium: 250000 },
+    "kilimanjaro": { budget: 185000, standard: 260000, premium: 360000 },
+    "torres-del-paine": { budget: 210000, standard: 300000, premium: 430000 },
+    "dolomites": { budget: 155000, standard: 230000, premium: 330000 },
+    "laugavegur": { budget: 180000, standard: 255000, premium: 360000 },
+    "mount-fuji": { budget: 95000, standard: 140000, premium: 210000 },
+    "appalachian": { budget: 130000, standard: 190000, premium: 280000 },
+    "trolltunga": { budget: 110000, standard: 160000, premium: 240000 }
+};
+
+function resolveTrekId(trekOrKey) {
+    if (!trekOrKey) return "";
+    if (typeof trekOrKey === "string") {
+        const byId = destinations.find(dest => dest.id === trekOrKey);
+        if (byId) return byId.id;
+
+        const byName = destinations.find(dest => dest.name === trekOrKey);
+        return byName ? byName.id : trekOrKey;
+    }
+
+    if (typeof trekOrKey === "object") {
+        if (trekOrKey.id) return trekOrKey.id;
+        if (trekOrKey.name) {
+            const byName = destinations.find(dest => dest.name === trekOrKey.name);
+            return byName ? byName.id : "";
+        }
+    }
+
+    return "";
+}
+
+function getTrekPriceEstimate(trekOrKey) {
+    const trekId = resolveTrekId(trekOrKey);
+    return trekPriceEstimates[trekId] || null;
+}
+
+function getTrekPriceByTier(trekOrKey, tier = "standard") {
+    const estimate = getTrekPriceEstimate(trekOrKey);
+    if (!estimate) return null;
+    return estimate[tier] || estimate.standard;
+}
+
 // ================= REVIEWS DATABASE =================
 
 const defaultReviews = [
@@ -631,7 +689,7 @@ function getTrekItinerary(trekName) {
         return null;
     }
 
-    const basePrice = getPriceForDifficulty(trek.difficulty);
+    const basePrice = getTrekPriceByTier(trek, "standard") || getPriceForDifficulty(trek.difficulty);
     const duration = Number(trek.duration) || 4;
     const dayCount = Math.max(3, Math.min(12, duration));
     const progressLabels = ["Arrival & briefing", "Acclimatization", "Trail ascent", "Summit / high point", "Descent & departure"];
@@ -721,7 +779,10 @@ function getTrekItinerary(trekName) {
     };
 }
 
-function getPriceForDifficulty(difficulty) {
+function getPriceForDifficulty(difficulty, trekOrKey = null) {
+    const standardPrice = getTrekPriceByTier(trekOrKey, "standard");
+    if (standardPrice) return standardPrice;
+
     const priceMap = { hard: 10499, moderate: 8499, easy: 6799 };
     return priceMap[difficulty?.toLowerCase()] || 6799;
 }
