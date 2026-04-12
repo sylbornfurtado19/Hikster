@@ -176,8 +176,9 @@ function initFilters() {
 }
 
 function openTrekCardItinerary(trekId) {
-    if (!trekId) return;
-    window.location.href = `destination.html?id=${encodeURIComponent(trekId)}`;
+    const trek = destinations.find(dest => dest.id === trekId);
+    if (!trek) return;
+    openItineraryModal(trek.name);
 }
 
 document.addEventListener('DOMContentLoaded', initFilters);
