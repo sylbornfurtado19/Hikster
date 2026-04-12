@@ -499,6 +499,15 @@
                     <div><span style="color:rgba(255,255,255,0.6);">Fitness Required:</span> <strong id="trek-fitness">--</strong></div>
                     <div><span style="color:rgba(255,255,255,0.6);">Est. Price:</span> <strong style="color:#2dd4b8;" id="trek-price">--</strong></div>
                 </div>
+
+                <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.1);">
+                    <div style="font-size:0.78rem; color:rgba(255,255,255,0.72); margin-bottom:0.55rem; text-transform:uppercase; letter-spacing:1.2px;">Choose Package</div>
+                    <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0.55rem;">
+                        <button type="button" data-package-tier="budget" onclick="setPackageTier('budget')" style="padding:0.6rem 0.65rem; border-radius:10px; border:1px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.08); color:#fff; cursor:pointer; font-size:0.82rem; font-weight:700;">Budget</button>
+                        <button type="button" data-package-tier="standard" onclick="setPackageTier('standard')" style="padding:0.6rem 0.65rem; border-radius:10px; border:1px solid rgba(45,212,184,0.8); background:rgba(45,212,184,0.2); color:#7ae8d8; cursor:pointer; font-size:0.82rem; font-weight:700;">Standard</button>
+                        <button type="button" data-package-tier="premium" onclick="setPackageTier('premium')" style="padding:0.6rem 0.65rem; border-radius:10px; border:1px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.08); color:#fff; cursor:pointer; font-size:0.82rem; font-weight:700;">Premium</button>
+                    </div>
+                </div>
             </div>
 
             <button class="btn-main" id="toItineraryBtn" onclick="goToItinerary()" disabled>Continue to Itinerary</button>
@@ -529,12 +538,7 @@
             <div class="trip-location" id="iti-trip-subtitle">--</div>
             <div class="itinerary-list" id="itinerary-list"></div>
             <div class="divider-h"></div>
-            <div class="includes-grid">
-                <div class="inc">✓ Accommodation</div>
-                <div class="inc">✓ Expert trek guide</div>
-                <div class="inc">✓ Entry permits</div>
-                <div class="inc">✓ Basic safety support</div>
-            </div>
+            <div class="includes-grid" id="package-includes-grid"></div>
             <button class="btn-main" onclick="showPage('page3')">Continue to Estimation</button>
         </div>
     </div>
@@ -718,9 +722,47 @@
     let selectedTrek = null;
     let basePrice = 0;
     let selectedTierPrices = { budget: 0, standard: 0, premium: 0 };
+    let selectedPackageTier = "standard";
+
+    const packageConfig = {
+        budget: {
+            label: "Budget",
+            shortLabel: "B",
+            includes: [
+                "Shared accommodation / camps",
+                "Group trek guide support",
+                "Standard meals during trek",
+                "Entry permits and basic safety kit"
+            ],
+            itineraryNote: "Efficient group itinerary with essential trek services."
+        },
+        standard: {
+            label: "Standard",
+            shortLabel: "S",
+            includes: [
+                "Comfort stay mix (guesthouse + camp)",
+                "Experienced guide with balanced group size",
+                "All standard meals and hydration support",
+                "Permits, logistics, and priority coordination"
+            ],
+            itineraryNote: "Balanced comfort and support for most trekkers."
+        },
+        premium: {
+            label: "Premium",
+            shortLabel: "P",
+            includes: [
+                "Premium stay where available",
+                "Smaller batch or priority guide allocation",
+                "Enhanced meals, snacks, and recovery support",
+                "Dedicated local transfers (base camp return loop)"
+            ],
+            itineraryNote: "High-comfort itinerary with upgraded trek services."
+        }
+    };
 
     const params = new URLSearchParams(window.location.search);
     const trekId = params.get("trek");
+    const tierParam = params.get("tier");
 
     const select = document.getElementById("trek-select");
     const toItineraryBtn = document.getElementById("toItineraryBtn");
@@ -749,10 +791,48 @@
         return "INR " + value.toLocaleString("en-IN");
     }
 
+    function formatTierName(tier) {
+        const cfg = packageConfig[tier] || packageConfig.standard;
+        return cfg.label;
+    }
+
+    function updatePackageButtons() {
+        document.querySelectorAll("[data-package-tier]").forEach(button => {
+            const isActive = button.getAttribute("data-package-tier") === selectedPackageTier;
+            button.style.borderColor = isActive ? "rgba(45,212,184,0.8)" : "rgba(255,255,255,0.25)";
+            button.style.background = isActive ? "rgba(45,212,184,0.2)" : "rgba(255,255,255,0.08)";
+            button.style.color = isActive ? "#7ae8d8" : "#fff";
+        });
+    }
+
+    function setPackageTier(tier) {
+        if (!packageConfig[tier]) return;
+        selectedPackageTier = tier;
+        updatePackageButtons();
+
+        if (!selectedTrek) return;
+
+        basePrice = selectedTierPrices[selectedPackageTier];
+        document.getElementById("meta-price").textContent = `${formatInr(basePrice)} (${formatTierName(selectedPackageTier)})`;
+        showTrekSummary(selectedTrek);
+        if (document.getElementById("page2").classList.contains("active")) {
+            buildItinerary(selectedTrek);
+        }
+        updateEstimate();
+    }
+
+    function renderPackageIncludes() {
+        const includes = packageConfig[selectedPackageTier]?.includes || packageConfig.standard.includes;
+        document.getElementById("package-includes-grid").innerHTML = includes
+            .map(item => `<div class="inc">✓ ${item}</div>`)
+            .join("");
+    }
+
     function renderTrekDetails(dest) {
         selectedTrek = dest;
         selectedTierPrices = getTierPrices(dest);
-        basePrice = selectedTierPrices.standard;
+        selectedPackageTier = "standard";
+        basePrice = selectedTierPrices[selectedPackageTier];
 
         document.getElementById("trip-thumb").textContent = dest.name.substring(0, 3).toUpperCase();
         document.getElementById("trip-name").textContent = dest.name;
@@ -762,9 +842,10 @@
         document.getElementById("badge-terrain").textContent = dest.terrain;
         document.getElementById("meta-altitude").textContent = dest.altitude;
         document.getElementById("meta-duration").textContent = dest.duration + " days";
-        document.getElementById("meta-price").textContent = `${formatInr(basePrice)} (Std)`;
+        document.getElementById("meta-price").textContent = `${formatInr(basePrice)} (${formatTierName(selectedPackageTier)})`;
 
         toItineraryBtn.disabled = false;
+        updatePackageButtons();
         showTrekSummary(dest);
         updateEstimate();
     }
@@ -785,7 +866,7 @@
         document.getElementById("trek-start").textContent = itin.logistics.startPoint;
         document.getElementById("trek-season").textContent = itin.overview.bestSeason;
         document.getElementById("trek-fitness").textContent = dest.fitness || "Moderate";
-        document.getElementById("trek-price").textContent = `B ${formatInr(selectedTierPrices.budget)} | S ${formatInr(selectedTierPrices.standard)} | P ${formatInr(selectedTierPrices.premium)}`;
+        document.getElementById("trek-price").textContent = `B ${formatInr(selectedTierPrices.budget)} | S ${formatInr(selectedTierPrices.standard)} | P ${formatInr(selectedTierPrices.premium)} · Selected: ${formatTierName(selectedPackageTier)}`;
     }
 
     function showTrekItinerary() {
@@ -794,12 +875,14 @@
     }
 
     function buildItinerary(dest) {
+        const packageDetails = packageConfig[selectedPackageTier] || packageConfig.standard;
         const steps = [
             "Arrival and local check-in with briefing",
             "Acclimatization and trail orientation",
             "Main trek segment through " + dest.terrain + " routes",
             "Summit or high-point day based on weather",
-            "Return transfer and checkout"
+            "Return transfer and checkout",
+            packageDetails.itineraryNote
         ];
 
         const itinerary = document.getElementById("itinerary-list");
@@ -808,7 +891,8 @@
         `).join("");
 
         document.getElementById("iti-trip-title").textContent = dest.name;
-        document.getElementById("iti-trip-subtitle").textContent = dest.region + " · " + dest.duration + " days";
+        document.getElementById("iti-trip-subtitle").textContent = dest.region + " · " + dest.duration + " days · " + packageDetails.label + " Package";
+        renderPackageIncludes();
     }
 
     function goToItinerary() {
@@ -836,7 +920,7 @@
         const tax = Math.round(base * TAX_RATE);
         const total = base + tax + INSURANCE;
 
-        document.getElementById("estDesc").textContent = formatInr(basePrice) + " x " + persons + (persons === 1 ? " person" : " persons");
+        document.getElementById("estDesc").textContent = `${formatInr(basePrice)} (${formatTierName(selectedPackageTier)}) x ${persons}${persons === 1 ? " person" : " persons"}`;
         document.getElementById("estBase").textContent = formatInr(base);
         document.getElementById("estTax").textContent = formatInr(tax);
         document.getElementById("estInsurance").textContent = formatInr(INSURANCE);
@@ -844,7 +928,7 @@
     }
 
     function goToPayment() {
-        document.getElementById("p4summary").textContent = selectedTrek.name + " · " + persons + (persons === 1 ? " person" : " persons");
+        document.getElementById("p4summary").textContent = `${selectedTrek.name} · ${formatTierName(selectedPackageTier)} Package · ${persons}${persons === 1 ? " person" : " persons"}`;
         document.getElementById("p4total").textContent = formatInr(getTotal());
         showPage("page4");
     }
@@ -933,6 +1017,7 @@
             reference: reference,
             trekName: selectedTrek.name,
             region: selectedTrek.region,
+            packageTier: selectedPackageTier,
             travellers: persons,
             amount: total,
             paymentMethod: selectedMethod,
@@ -949,7 +1034,7 @@
         const total = getTotal();
 
         document.getElementById("bookingRef").textContent = ref;
-        document.getElementById("s5trek").textContent = selectedTrek.name;
+        document.getElementById("s5trek").textContent = `${selectedTrek.name} (${formatTierName(selectedPackageTier)})`;
         document.getElementById("s5persons").textContent = persons + (persons === 1 ? " person" : " persons");
         document.getElementById("s5total").textContent = formatInr(total);
 
@@ -960,6 +1045,7 @@
     function resetAll() {
         persons = 1;
         selectedMethod = null;
+        selectedPackageTier = "standard";
         document.getElementById("personCount").textContent = "1";
         document.getElementById("minusBtn").disabled = true;
         document.getElementById("plusBtn").disabled = false;
@@ -974,6 +1060,7 @@
         document.getElementById("netbanking-bank").value = "";
         document.getElementById("netbanking-other").value = "";
         document.getElementById("netbanking-other").style.display = "none";
+        updatePackageButtons();
         updateEstimate();
         showPage("page1");
     }
@@ -1003,9 +1090,13 @@
         if (trek) {
             select.value = trekKey(trek);
             renderTrekDetails(trek);
+            if (tierParam && packageConfig[tierParam]) {
+                setPackageTier(tierParam);
+            }
         }
     }
 
+    updatePackageButtons();
     updateEstimate();
 </script>
 </body>
