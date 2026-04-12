@@ -18,6 +18,15 @@ function createItineraryModal() {
                     <div class="meta-item"><i class="fas fa-mountain"></i> <span id="itineraryAltitude">Altitude</span></div>
                 </div>
                 <div class="itinerary-highlights" id="itineraryHighlights"></div>
+                <div class="itinerary-package-switch">
+                    <p class="itinerary-package-label">Package</p>
+                    <div class="itinerary-package-buttons">
+                        <button class="package-tier-btn" data-tier="budget" onclick="setItineraryPackage('budget')">Budget</button>
+                        <button class="package-tier-btn active" data-tier="standard" onclick="setItineraryPackage('standard')">Standard</button>
+                        <button class="package-tier-btn" data-tier="premium" onclick="setItineraryPackage('premium')">Premium</button>
+                    </div>
+                    <p class="itinerary-package-note" id="itineraryPackageNote">Balanced comfort and support for most trekkers.</p>
+                </div>
             </div>
 
             <!-- Tabs Navigation -->
@@ -97,6 +106,7 @@ function openItineraryModal(trekName) {
     const trek = destinations.find(d => d.name === trekName);
     currentSelectedTrek = trek;
     currentItin = itinerary;
+    currentItineraryTier = 'standard';
 
     // Fill header
     document.getElementById('itineraryTitle').textContent = itinerary.overview.name;
@@ -110,10 +120,11 @@ function openItineraryModal(trekName) {
         .map(h => `<span class="highlight-badge"><i class="fas fa-star"></i> ${h}</span>`)
         .join('');
     document.getElementById('itineraryHighlights').innerHTML = highlightsHTML;
+    syncItineraryTierUI();
 
     // Populate all tabs
     populateOverviewTab(itinerary);
-    populateDayByDayTab(itinerary);
+    populateDayByDayTab(itinerary, trek);
     populatePackingTab(itinerary);
     populateCostTab(itinerary, trek);
     populateSafetyTab(itinerary);
@@ -167,6 +178,7 @@ function populateOverviewTab(itinerary) {
 }
 
 function populateDayByDayTab(itinerary) {
+    const tierConfig = getItineraryTierConfig(currentItineraryTier);
     const html = itinerary.dayByDay.map(day => `
         <div class="day-accordion">
             <div class="day-header" onclick="toggleDayAccordion(this)">
@@ -180,15 +192,15 @@ function populateDayByDayTab(itinerary) {
             <div class="day-details">
                 <div class="detail-section">
                     <h5><i class="fas fa-map"></i> Activities</h5>
-                    <p>${day.activities}</p>
+                    <p>${day.activities} ${tierConfig.activityNote}</p>
                 </div>
                 <div class="detail-section">
                     <h5><i class="fas fa-utensils"></i> Meals</h5>
-                    <p>${day.meals}</p>
+                    <p>${day.meals} ${tierConfig.mealNote}</p>
                 </div>
                 <div class="detail-section">
                     <h5><i class="fas fa-bed"></i> Accommodation</h5>
-                    <p>${day.accommodation}</p>
+                    <p>${day.accommodation} ${tierConfig.stayNote}</p>
                 </div>
             </div>
         </div>
@@ -211,16 +223,23 @@ function populatePackingTab(itinerary) {
 }
 
 function populateCostTab(itinerary, trek) {
+    const tierConfig = getItineraryTierConfig(currentItineraryTier);
     const costBreak = itinerary.costBreakdown;
     const estimate = trek ? getTrekPriceEstimate(trek) : null;
+    const fallbackBase = trek ? getPriceForDifficulty(trek.difficulty) : costBreak.basePrice;
     const basePrice = estimate
-        ? estimate.standard
-        : (trek ? getPriceForDifficulty(trek.difficulty) : costBreak.basePrice);
+        ? (estimate[currentItineraryTier] || estimate.standard)
+        : fallbackBase;
     const gstAmount = Math.round(basePrice * 0.05);
     const total = basePrice + gstAmount + costBreak.insurance;
 
-    const budgetPrice = estimate ? estimate.budget : Math.round(basePrice * 0.85);
-    const premiumPrice = estimate ? estimate.premium : Math.round(basePrice * 1.35);
+    const standardReference = estimate ? estimate.standard : fallbackBase;
+    const budgetPrice = estimate ? estimate.budget : Math.round(standardReference * 0.85);
+    const standardPrice = estimate ? estimate.standard : standardReference;
+    const premiumPrice = estimate ? estimate.premium : Math.round(standardReference * 1.35);
+
+    const mergedInclusions = [...costBreak.inclusions, ...tierConfig.inclusions];
+    const mergedExclusions = [...costBreak.exclusions, ...tierConfig.exclusions];
 
     const html = `
         <div class="cost-breakdown">
@@ -230,14 +249,14 @@ function populateCostTab(itinerary, trek) {
             </div>
             <div class="cost-row">
                 <span>Standard Package</span>
-                <strong>₹${basePrice.toLocaleString()}</strong>
+                <strong>₹${standardPrice.toLocaleString()}</strong>
             </div>
             <div class="cost-row">
                 <span>Premium Package</span>
                 <strong>₹${premiumPrice.toLocaleString()}</strong>
             </div>
             <div class="cost-row">
-                <span>Standard Base Price (per person)</span>
+                <span>${tierConfig.label} Base Price (per person)</span>
                 <strong>₹${basePrice.toLocaleString()}</strong>
             </div>
             <div class="cost-row">
@@ -249,21 +268,21 @@ function populateCostTab(itinerary, trek) {
                 <strong>₹${costBreak.insurance.toLocaleString()}</strong>
             </div>
             <div class="cost-row total">
-                <span>Total per Person (Standard)</span>
+                <span>Total per Person (${tierConfig.label})</span>
                 <strong>₹${total.toLocaleString()}</strong>
             </div>
             <div class="cost-note">Note: Prices subject to GST. Group discounts available for 10+ people.</div>
         </div>
         <div class="cost-inclusions">
-            <h4><i class="fas fa-check-circle"></i> Inclusions</h4>
+            <h4><i class="fas fa-check-circle"></i> Inclusions (${tierConfig.label})</h4>
             <ul>
-                ${costBreak.inclusions.map(item => `<li>${item}</li>`).join('')}
+                ${mergedInclusions.map(item => `<li>${item}</li>`).join('')}
             </ul>
         </div>
         <div class="cost-exclusions">
-            <h4><i class="fas fa-times-circle"></i> Exclusions</h4>
+            <h4><i class="fas fa-times-circle"></i> Exclusions (${tierConfig.label})</h4>
             <ul>
-                ${costBreak.exclusions.map(item => `<li>${item}</li>`).join('')}
+                ${mergedExclusions.map(item => `<li>${item}</li>`).join('')}
             </ul>
         </div>
     `;
@@ -306,10 +325,86 @@ function toggleFAQ(element) {
     element.parentElement.classList.toggle('active');
 }
 
+function getItineraryTierConfig(tier) {
+    const configs = {
+        budget: {
+            label: 'Budget',
+            activityNote: 'Group-paced support and essential route coordination.',
+            mealNote: 'Basic but nutritious trek meal plan.',
+            stayNote: 'Shared camps/guesthouses based on route availability.',
+            note: 'Efficient group itinerary with essential trek services.',
+            inclusions: [
+                'Shared transport in base camp circuit',
+                'Group support team and common logistics'
+            ],
+            exclusions: [
+                'Private porter or dedicated support crew',
+                'Premium room upgrades and concierge add-ons'
+            ]
+        },
+        standard: {
+            label: 'Standard',
+            activityNote: 'Balanced schedule with planned acclimatization support.',
+            mealNote: 'Standard meals with hydration and trail snacks.',
+            stayNote: 'Comfort-focused guesthouse/camp mix as available.',
+            note: 'Balanced comfort and support for most trekkers.',
+            inclusions: [
+                'Priority logistics coordination on trek days',
+                'Enhanced trek briefing and pace management'
+            ],
+            exclusions: [
+                'Dedicated private guide and one-to-one assistance',
+                'Luxury room guarantees across all nights'
+            ]
+        },
+        premium: {
+            label: 'Premium',
+            activityNote: 'Smaller-group prioritization with enhanced safety coordination.',
+            mealNote: 'Upgraded meal plan with additional snacks and recovery options.',
+            stayNote: 'Premium category stays where inventory is available.',
+            note: 'High-comfort itinerary with upgraded trek services.',
+            inclusions: [
+                'Dedicated local transfers for base camp circuit',
+                'Priority support team allocation where possible'
+            ],
+            exclusions: [
+                'International flight/train to trek base camp',
+                'Luxury requests outside listed itinerary services'
+            ]
+        }
+    };
+
+    return configs[tier] || configs.standard;
+}
+
+function syncItineraryTierUI() {
+    const tierConfig = getItineraryTierConfig(currentItineraryTier);
+
+    document.querySelectorAll('.package-tier-btn').forEach(button => {
+        const isActive = button.dataset.tier === currentItineraryTier;
+        button.classList.toggle('active', isActive);
+    });
+
+    const noteElement = document.getElementById('itineraryPackageNote');
+    if (noteElement) {
+        noteElement.textContent = tierConfig.note;
+    }
+}
+
+function setItineraryPackage(tier) {
+    currentItineraryTier = tier;
+    syncItineraryTierUI();
+
+    if (!currentItin || !currentSelectedTrek) return;
+
+    populateDayByDayTab(currentItin, currentSelectedTrek);
+    populateCostTab(currentItin, currentSelectedTrek);
+}
+
 function bookNowFromItinerary() {
     if (currentSelectedTrek) {
         closeItineraryModal();
-        window.location.href = `book.html?trek=${currentSelectedTrek.id || currentSelectedTrek.name}`;
+        window.location.href = `book.html?trek=${currentSelectedTrek.id || currentSelectedTrek.name}&tier=${currentItineraryTier}`;
     }
 }
 
@@ -324,3 +419,4 @@ function contactGuide() {
 // Global variables
 let currentSelectedTrek = null;
 let currentItin = null;
+let currentItineraryTier = 'standard';
