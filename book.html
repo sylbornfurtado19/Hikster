@@ -571,7 +571,31 @@
                 <div class="meta-v"><span class="val" id="meta-price">INR --</span><span class="lbl">Per Person</span></div>
             </div>
 
+            <div style="margin-top:1rem;">
+                <div style="font-size:0.78rem; color:rgba(255,255,255,0.72); margin-bottom:0.55rem; text-transform:uppercase; letter-spacing:1.2px;">Change Package In Real Time</div>
+                <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0.55rem;">
+                    <button type="button" data-package-tier="budget" onclick="setPackageTier('budget')" style="padding:0.6rem 0.65rem; border-radius:10px; border:1px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.08); color:#fff; cursor:pointer; font-size:0.82rem; font-weight:700;">Budget</button>
+                    <button type="button" data-package-tier="standard" onclick="setPackageTier('standard')" style="padding:0.6rem 0.65rem; border-radius:10px; border:1px solid rgba(45,212,184,0.8); background:rgba(45,212,184,0.2); color:#7ae8d8; cursor:pointer; font-size:0.82rem; font-weight:700;">Standard</button>
+                    <button type="button" data-package-tier="premium" onclick="setPackageTier('premium')" style="padding:0.6rem 0.65rem; border-radius:10px; border:1px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.08); color:#fff; cursor:pointer; font-size:0.82rem; font-weight:700;">Premium</button>
+                </div>
+            </div>
+
             <div class="divider-h"></div>
+
+            <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0.6rem; margin-bottom:0.8rem;">
+                <div style="padding:0.65rem; border-radius:10px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); text-align:center;">
+                    <div style="font-size:0.72rem; color:rgba(255,255,255,0.68);">Budget</div>
+                    <div id="est-tier-budget" style="font-weight:700; margin-top:0.18rem;">INR --</div>
+                </div>
+                <div style="padding:0.65rem; border-radius:10px; border:1px solid rgba(45,212,184,0.35); background:rgba(45,212,184,0.08); text-align:center;">
+                    <div style="font-size:0.72rem; color:rgba(255,255,255,0.68);">Standard</div>
+                    <div id="est-tier-standard" style="font-weight:700; margin-top:0.18rem;">INR --</div>
+                </div>
+                <div style="padding:0.65rem; border-radius:10px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); text-align:center;">
+                    <div style="font-size:0.72rem; color:rgba(255,255,255,0.68);">Premium</div>
+                    <div id="est-tier-premium" style="font-weight:700; margin-top:0.18rem;">INR --</div>
+                </div>
+            </div>
 
             <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
                 <div>
@@ -796,6 +820,19 @@
         return cfg.label;
     }
 
+    function updateEstimateTierRows() {
+        if (!selectedTierPrices || !selectedTierPrices.standard) {
+            document.getElementById("est-tier-budget").textContent = "INR --";
+            document.getElementById("est-tier-standard").textContent = "INR --";
+            document.getElementById("est-tier-premium").textContent = "INR --";
+            return;
+        }
+
+        document.getElementById("est-tier-budget").textContent = formatInr(selectedTierPrices.budget * persons);
+        document.getElementById("est-tier-standard").textContent = formatInr(selectedTierPrices.standard * persons);
+        document.getElementById("est-tier-premium").textContent = formatInr(selectedTierPrices.premium * persons);
+    }
+
     function updatePackageButtons() {
         document.querySelectorAll("[data-package-tier]").forEach(button => {
             const isActive = button.getAttribute("data-package-tier") === selectedPackageTier;
@@ -818,6 +855,7 @@
         if (document.getElementById("page2").classList.contains("active")) {
             buildItinerary(selectedTrek);
         }
+        updateEstimateTierRows();
         updateEstimate();
     }
 
@@ -847,6 +885,7 @@
         toItineraryBtn.disabled = false;
         updatePackageButtons();
         showTrekSummary(dest);
+        updateEstimateTierRows();
         updateEstimate();
     }
 
@@ -906,6 +945,7 @@
         document.getElementById("personCount").textContent = persons;
         document.getElementById("minusBtn").disabled = persons <= 1;
         document.getElementById("plusBtn").disabled = persons >= 12;
+        updateEstimateTierRows();
         updateEstimate();
     }
 
@@ -1061,6 +1101,7 @@
         document.getElementById("netbanking-other").value = "";
         document.getElementById("netbanking-other").style.display = "none";
         updatePackageButtons();
+        updateEstimateTierRows();
         updateEstimate();
         showPage("page1");
     }
@@ -1097,6 +1138,7 @@
     }
 
     updatePackageButtons();
+    updateEstimateTierRows();
     updateEstimate();
 </script>
 </body>
