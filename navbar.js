@@ -242,6 +242,7 @@ html.dark body.hk-theme-fallback [class*="border"] {
     const ICONS = {
         history: '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 3a9 9 0 1 0 8.94 10H20a7 7 0 1 1-2.05-4.95L15 11h7V4l-2.65 2.65A8.96 8.96 0 0 0 13 3zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>',
         heart: '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.35 10.55 20C5.4 15.36 2 12.28 2 8.5A5.5 5.5 0 0 1 7.5 3C9.24 3 10.91 3.81 12 5.09 13.09 3.81 14.76 3 16.5 3A5.5 5.5 0 0 1 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>',
+        reviews: '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 9.53 7.06 4 7.88l4 3.9-.94 5.52L12 14.77l4.94 2.53-.94-5.52 4-3.9-5.53-.82z"/></svg>',
         user: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-4.41 0-8 2.24-8 5v1h16v-1c0-2.76-3.59-5-8-5z"/></svg>',
         moon: '<span style="font-size:15px;line-height:1;">☾</span>',
         sun: '<span style="font-size:14px;line-height:1;">☀</span>',
@@ -276,12 +277,12 @@ html.dark body.hk-theme-fallback [class*="border"] {
             <nav class="hk-main-links" aria-label="Main navigation">
                 <a href="home.html" data-hk-link="home.html" class="hk-link">Home</a>
                 <a href="all-destinations.html" data-hk-link="all-destinations.html" class="hk-link">Destinations</a>
-                <a href="reviews.html" data-hk-link="reviews.html" class="hk-link">Reviews</a>
             </nav>
 
             <div class="hk-right">
                 <a href="history.html" data-hk-link="history.html" class="hk-icon-btn" aria-label="History" title="History">${ICONS.history}</a>
                 <a href="favorites.html" data-hk-link="favorites.html" class="hk-icon-btn" aria-label="Favorites" title="Favorites">${ICONS.heart}</a>
+                <a href="reviews.html" data-hk-link="reviews.html" class="hk-icon-btn" aria-label="Reviews" title="Reviews">${ICONS.reviews}</a>
                 <a href="book.html" data-hk-link="book.html" class="hk-cta hk-cta-book">${ICONS.book} Book Now</a>
                 <span id="hk-auth-desktop">
                     <a href="index.html" class="hk-icon-btn" aria-label="Login" title="Login">${ICONS.user}</a>
@@ -301,9 +302,9 @@ html.dark body.hk-theme-fallback [class*="border"] {
                     <nav class="hk-menu-links" aria-label="Mobile navigation">
                         <a href="home.html" data-hk-link="home.html">Home</a>
                         <a href="all-destinations.html" data-hk-link="all-destinations.html">Destinations</a>
-                        <a href="reviews.html" data-hk-link="reviews.html">Reviews</a>
                         <a href="history.html" data-hk-link="history.html">History</a>
                         <a href="favorites.html" data-hk-link="favorites.html">Favorites</a>
+                        <a href="reviews.html" data-hk-link="reviews.html">Reviews</a>
                     </nav>
 
                     <div class="hk-menu-grid">
