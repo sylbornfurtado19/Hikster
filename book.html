@@ -346,6 +346,28 @@
             color: rgba(15, 55, 59, 0.72);
         }
 
+        html:not(.dark) .badge {
+            font-weight: 700;
+        }
+
+        html:not(.dark) .b-teal {
+            background: rgba(20, 168, 150, 0.12);
+            color: #0f8a7c;
+            border-color: rgba(20, 168, 150, 0.45);
+        }
+
+        html:not(.dark) .b-amber {
+            background: rgba(217, 119, 6, 0.12);
+            color: #a16207;
+            border-color: rgba(217, 119, 6, 0.4);
+        }
+
+        html:not(.dark) .b-blue {
+            background: rgba(37, 99, 235, 0.12);
+            color: #1d4ed8;
+            border-color: rgba(37, 99, 235, 0.35);
+        }
+
         html:not(.dark) .itinerary-item {
             color: rgba(15, 55, 59, 0.82);
         }
@@ -440,6 +462,44 @@
 
         html:not(.dark) .ref-num {
             color: #14a896;
+        }
+
+        html:not(.dark) label[for="trek-select"] {
+            color: rgba(15, 55, 59, 0.72) !important;
+        }
+
+        html:not(.dark) #trek-summary {
+            background: rgba(20, 168, 150, 0.08) !important;
+            border-left-color: #14a896 !important;
+            color: #2c3e38 !important;
+        }
+
+        html:not(.dark) #trek-summary h4 {
+            color: #0f8a7c !important;
+        }
+
+        html:not(.dark) #trek-summary #viewFullItinBtn {
+            background: rgba(20, 168, 150, 0.14) !important;
+            border-color: #14a896 !important;
+            color: #0f8a7c !important;
+        }
+
+        html:not(.dark) #trek-summary #trek-highlights-list,
+        html:not(.dark) #trek-summary #trek-quick-facts,
+        html:not(.dark) #trek-summary #trek-quick-facts div,
+        html:not(.dark) #trek-summary #trek-quick-facts span,
+        html:not(.dark) #trek-summary .package-tier-hint,
+        html:not(.dark) #trek-summary > div > div {
+            color: rgba(15, 55, 59, 0.85) !important;
+        }
+
+        html:not(.dark) #trek-summary #trek-quick-facts,
+        html:not(.dark) #trek-summary #trek-quick-facts + div {
+            border-top-color: rgba(15, 55, 59, 0.12) !important;
+        }
+
+        html:not(.dark) #trek-summary #trek-price {
+            color: #0f8a7c !important;
         }
     </style>
     <link rel="stylesheet" href="itinerary-modal.css">
@@ -848,11 +908,19 @@
     }
 
     function updatePackageButtons() {
+        const isLightMode = !document.documentElement.classList.contains("dark");
+
         document.querySelectorAll("[data-package-tier]").forEach(button => {
             const isActive = button.getAttribute("data-package-tier") === selectedPackageTier;
-            button.style.borderColor = isActive ? "rgba(45,212,184,0.8)" : "rgba(255,255,255,0.25)";
-            button.style.background = isActive ? "rgba(45,212,184,0.2)" : "rgba(255,255,255,0.08)";
-            button.style.color = isActive ? "#7ae8d8" : "#fff";
+            if (isLightMode) {
+                button.style.borderColor = isActive ? "rgba(20,168,150,0.9)" : "rgba(15,55,59,0.24)";
+                button.style.background = isActive ? "rgba(20,168,150,0.14)" : "rgba(15,55,59,0.05)";
+                button.style.color = isActive ? "#0f8a7c" : "#1f3b39";
+            } else {
+                button.style.borderColor = isActive ? "rgba(45,212,184,0.8)" : "rgba(255,255,255,0.25)";
+                button.style.background = isActive ? "rgba(45,212,184,0.2)" : "rgba(255,255,255,0.08)";
+                button.style.color = isActive ? "#7ae8d8" : "#fff";
+            }
         });
     }
 
