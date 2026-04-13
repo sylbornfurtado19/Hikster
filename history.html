@@ -76,10 +76,21 @@
 <script src="script.js"></script>
 
 <script>
-const history = JSON.parse(localStorage.getItem("hiksterHistory")) || [];
-const bookings = JSON.parse(localStorage.getItem("hiksterBookings")) || [];
+function parseStoredList(key) {
+	try {
+		const value = localStorage.getItem(key);
+		const parsed = window.hkSafeParseJSON ? window.hkSafeParseJSON(value, []) : JSON.parse(value || '[]');
+		return Array.isArray(parsed) ? parsed : [];
+	} catch {
+		return [];
+	}
+}
+
+const history = parseStoredList("hiksterHistory");
+const bookings = parseStoredList("hiksterBookings");
 const container = document.getElementById("history-container");
 const actions = document.getElementById("history-actions");
+const escapeHTML = window.hkEscapeHTML || ((value) => String(value ?? ""));
 
 if (history.length === 0 && bookings.length === 0) {
 	container.innerHTML = `
@@ -101,13 +112,13 @@ if (history.length === 0 && bookings.length === 0) {
 		const bookingRows = bookings.slice().reverse().map(item => `
 			<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 p-4 rounded-xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-700">
 				<div>
-					<p class="font-semibold text-juniper dark:text-mint">${item.trekName}</p>
-					<p class="text-sm text-gray-500 dark:text-gray-400">${item.region || "Region unavailable"} · ${item.travellers} traveller${item.travellers > 1 ? "s" : ""}</p>
+					<p class="font-semibold text-juniper dark:text-mint">${escapeHTML(item.trekName)}</p>
+					<p class="text-sm text-gray-500 dark:text-gray-400">${escapeHTML(item.region || "Region unavailable")} · ${Number(item.travellers || 0)} traveller${Number(item.travellers) > 1 ? "s" : ""}</p>
 				</div>
 				<div class="text-left md:text-right">
-					<p class="text-sm text-gray-500 dark:text-gray-400">${item.date || "Recent"}</p>
+					<p class="text-sm text-gray-500 dark:text-gray-400">${escapeHTML(item.date || "Recent")}</p>
 					<p class="font-bold text-juniper dark:text-mint">INR ${Number(item.amount || 0).toLocaleString("en-IN")}</p>
-					<p class="text-xs text-gray-500 dark:text-gray-400">Ref: ${item.reference || "HTK-NA"}</p>
+					<p class="text-xs text-gray-500 dark:text-gray-400">Ref: ${escapeHTML(item.reference || "HTK-NA")}</p>
 				</div>
 			</div>
 		`).join('');
@@ -124,20 +135,22 @@ if (history.length === 0 && bookings.length === 0) {
 	}
 
 	history.forEach(item => {
-		let cards = item.results.map(dest => buildCardHTML(dest)).join('');
+		const results = Array.isArray(item.results) ? item.results : [];
+		let cards = results.map(dest => buildCardHTML(dest)).join('');
+		const prefs = item.preferences || {};
 
 		container.innerHTML += `
 			<article class="bg-white/90 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl p-6 md:p-7">
 				<div class="flex flex-wrap items-center justify-between gap-3 mb-5">
-					<p class="text-sm text-gray-500 dark:text-gray-400">${item.date}</p>
+						<p class="text-sm text-gray-500 dark:text-gray-400">${escapeHTML(item.date)}</p>
 					<span class="text-xs uppercase tracking-wider font-semibold text-mint bg-mint/10 px-3 py-1 rounded-full">Recommendation Snapshot</span>
 				</div>
 
 				<div class="flex flex-wrap gap-2 mb-6">
-					<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">${item.preferences.difficulty}</span>
-					<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">${item.preferences.terrain}</span>
-					<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">${item.preferences.altitude}</span>
-					<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">${item.preferences.budget}</span>
+						<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">${escapeHTML(prefs.difficulty || 'Any difficulty')}</span>
+						<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">${escapeHTML(prefs.terrain || 'Any terrain')}</span>
+						<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">${escapeHTML(prefs.altitude || 'Any altitude')}</span>
+						<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">${escapeHTML(prefs.budget || 'Any budget')}</span>
 				</div>
 
 				<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
