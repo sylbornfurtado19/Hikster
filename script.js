@@ -841,9 +841,29 @@ function toSentenceCase(value) {
         .join(" ");
 }
 
+function escapeHTML(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function safeParseJSON(value, fallback) {
+    try {
+        return value ? JSON.parse(value) : fallback;
+    } catch {
+        return fallback;
+    }
+}
+
+window.hkEscapeHTML = escapeHTML;
+window.hkSafeParseJSON = safeParseJSON;
+
 function buildCardHTML(dest, isMatch=false){
-    let tags = `<span class="px-2 py-1 bg-mint/10 text-mint text-xs font-bold rounded-md tracking-wide">${toSentenceCase(dest.difficulty)}</span> 
-                <span class="px-2 py-1 bg-mint/10 text-mint text-xs font-bold rounded-md tracking-wide">${toSentenceCase(dest.terrain)}</span>`;
+    let tags = `<span class="px-2 py-1 bg-mint/10 text-mint text-xs font-bold rounded-md tracking-wide">${escapeHTML(toSentenceCase(dest.difficulty))}</span> 
+                <span class="px-2 py-1 bg-mint/10 text-mint text-xs font-bold rounded-md tracking-wide">${escapeHTML(toSentenceCase(dest.terrain))}</span>`;
 
     let matchBadge = "";
     if(isMatch){
@@ -853,16 +873,15 @@ function buildCardHTML(dest, isMatch=false){
 
     return `
     <div class="destination-card group relative bg-white dark:bg-gray-800 rounded-3xl shadow-md overflow-hidden transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_50px_rgba(45,212,191,0.25)] border border-transparent hover:border-mint/30 flex flex-col h-full cursor-pointer" 
-     onclick="openTrekCardItinerary('${dest.id}')"
-     onkeydown="if(event.key==='Enter' || event.key===' '){event.preventDefault(); openTrekCardItinerary('${dest.id}');}"
      role="button"
      tabindex="0"
-     data-type="${dest.difficulty} ${dest.terrain} ${dest.altitude}">
+     data-trek-id="${escapeHTML(dest.id)}"
+     data-type="${escapeHTML([dest.difficulty, dest.terrain, dest.altitude].join(' '))}">
     
     ${matchBadge}
 
     <div class="overflow-hidden h-60 relative flex-shrink-0">
-        <img src="${dest.image}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+        <img src="${escapeHTML(dest.image)}" alt="${escapeHTML(dest.name)}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
         <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
     </div>
 
@@ -870,15 +889,15 @@ function buildCardHTML(dest, isMatch=false){
         <div class="flex gap-2 mb-4">${tags}</div>
 
         <h3 class="text-2xl font-extrabold mb-2 text-juniper dark:text-white group-hover:text-mint transition-colors duration-300">
-            ${dest.name}
+            ${escapeHTML(dest.name)}
         </h3>
 
         <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 line-clamp-3 leading-relaxed flex-grow">
-            ${dest.desc}
+            ${escapeHTML(dest.desc)}
         </p>
 
         <div class="flex justify-end mt-auto">
-    <button onclick="event.stopPropagation(); saveFavorite('${dest.name}')"
+    <button type="button" data-favorite-name="${escapeHTML(dest.name)}"
     class="px-3 py-2 bg-red-100 text-red-500 rounded">
     ❤️
     </button>
@@ -898,10 +917,44 @@ if(container){
 container.innerHTML = destinations.map(d=>buildCardHTML(d)).join("");
 }
 
+document.addEventListener("click", (event) => {
+    const favoriteButton = event.target.closest("[data-favorite-name]");
+    if (favoriteButton) {
+        event.stopPropagation();
+        saveFavorite(favoriteButton.dataset.favoriteName || "");
+        return;
+    }
+
+    const interactiveElement = event.target.closest("button, a, input, select, textarea, label");
+    if (interactiveElement && !interactiveElement.hasAttribute("data-trek-id")) {
+        return;
+    }
+
+    const card = event.target.closest("[data-trek-id]");
+    if (card) {
+        openTrekCardItinerary(card.dataset.trekId || "");
+    }
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+
+    const interactiveElement = event.target.closest("button, a, input, select, textarea, label");
+    if (interactiveElement && !interactiveElement.hasAttribute("data-trek-id")) {
+        return;
+    }
+
+    const card = event.target.closest("[data-trek-id]");
+    if (!card) return;
+
+    event.preventDefault();
+    openTrekCardItinerary(card.dataset.trekId || "");
+});
+
 });
 
 function saveFavorite(name){
-    let favs = JSON.parse(localStorage.getItem("favorites")) || [];
+    let favs = safeParseJSON(localStorage.getItem("favorites"), []);
 
     if(!favs.includes(name)){
         favs.push(name);
@@ -913,7 +966,7 @@ function saveFavorite(name){
 }
 
 function removeFavorite(name){
-    let favs = JSON.parse(localStorage.getItem("favorites")) || [];
+    let favs = safeParseJSON(localStorage.getItem("favorites"), []);
 
     favs = favs.filter(f => f !== name);
 
@@ -921,3 +974,17 @@ function removeFavorite(name){
 
     location.reload();
 }
+
+function openTrekCardItinerary(trekId) {
+    const trek = destinations.find(dest => dest.id === trekId || dest.name === trekId);
+    if (!trek) return;
+
+    if (typeof openItineraryModal === "function") {
+        openItineraryModal(trek.name);
+        return;
+    }
+
+    window.location.href = `destination.html?id=${encodeURIComponent(trek.id)}`;
+}
+
+window.openTrekCardItinerary = openTrekCardItinerary;
