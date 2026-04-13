@@ -9,8 +9,8 @@ region:"India",
 location:"Himachal Pradesh, India",
 image:"images1/HAMPTA.jpg",
 desc:"A stunning crossover trek from lush green valleys to the cold desert of Spiti.",
-difficulty:"moderate", terrain:"mountain", altitude:"medium",
-duration:5, experience:"intermediate", budget:"budget",
+difficulty:"Moderate", terrain:"Mountain", altitude:"Medium",
+duration:5, experience:"Intermediate", budget:"Budget",
 bestTime:"May - September",
 startPoint:"Manali",
 fitness:"Moderate",
@@ -25,8 +25,8 @@ region:"Europe",
 location:"Switzerland",
 image:"images1/SWISS ALPS.jpg",
 desc:"Luxury alpine trekking with breathtaking views and scenic landscapes.",
-difficulty:"moderate", terrain:"mountain", altitude:"high",
-duration:6, experience:"intermediate", budget:"high",
+difficulty:"Moderate", terrain:"Mountain", altitude:"High",
+duration:6, experience:"Intermediate", budget:"High",
 bestTime:"June - September",
 startPoint:"Interlaken",
 fitness:"Moderate",
@@ -41,8 +41,8 @@ region:"Nepal",
 location:"Nepal",
 image:"images1/EVEREST.jpg",
 desc:"The ultimate high-altitude Himalayan adventure.",
-difficulty:"hard", terrain:"mountain", altitude:"high",
-duration:12, experience:"advanced", budget:"high",
+difficulty:"Hard", terrain:"Mountain", altitude:"High",
+duration:12, experience:"Advanced", budget:"High",
 bestTime:"April - May, Sept - Oct",
 startPoint:"Lukla",
 fitness:"High",
@@ -57,8 +57,8 @@ region:"India",
 location:"Uttarakhand, India",
 image:"images1/KEDARKANTHA.jpg",
 desc:"Perfect beginner snow trek with summit views.",
-difficulty:"easy", terrain:"snow", altitude:"medium",
-duration:4, experience:"beginner", budget:"budget",
+difficulty:"Easy", terrain:"Snow", altitude:"Medium",
+duration:4, experience:"Beginner", budget:"Budget",
 bestTime:"Dec - April",
 startPoint:"Sankri",
 fitness:"Easy",
@@ -73,8 +73,8 @@ region:"India",
 location:"Ladakh, India",
 image:"images1/CHADAR.jpg",
 desc:"Frozen river trek in Ladakh winters.",
-difficulty:"hard", terrain:"snow", altitude:"high",
-duration:9, experience:"advanced", budget:"high",
+difficulty:"Hard", terrain:"Snow", altitude:"High",
+duration:9, experience:"Advanced", budget:"High",
 bestTime:"Jan - Feb",
 startPoint:"Leh",
 fitness:"High",
@@ -89,8 +89,8 @@ region:"India",
 location:"Uttarakhand, India",
 image:"images1/ROOPKUND.jpg",
 desc:"Famous skeleton lake trek in Himalayas.",
-difficulty:"moderate", terrain:"mountain", altitude:"high",
-duration:7, experience:"intermediate", budget:"budget",
+difficulty:"Moderate", terrain:"Mountain", altitude:"High",
+duration:7, experience:"Intermediate", budget:"Budget",
 bestTime:"May - June, Sept",
 startPoint:"Lohajung",
 fitness:"Moderate",
@@ -105,8 +105,8 @@ region:"India",
 location:"Uttarakhand, India",
 image:"images1/VALLEY.jpg",
 desc:"Colorful alpine meadows and scenic beauty.",
-difficulty:"easy", terrain:"forest", altitude:"medium",
-duration:5, experience:"beginner", budget:"budget",
+difficulty:"Easy", terrain:"Forest", altitude:"Medium",
+duration:5, experience:"Beginner", budget:"Budget",
 bestTime:"July - August",
 startPoint:"Govindghat",
 fitness:"Easy",
@@ -121,8 +121,8 @@ region:"India",
 location:"Maharashtra, India",
 image:"images1/RAJMACHI.jpg",
 desc:"Monsoon trek near Pune with forts.",
-difficulty:"easy", terrain:"forest", altitude:"low",
-duration:2, experience:"beginner", budget:"budget",
+difficulty:"Easy", terrain:"Forest", altitude:"Low",
+duration:2, experience:"Beginner", budget:"Budget",
 bestTime:"June - September",
 startPoint:"Lonavala",
 fitness:"Easy",
@@ -137,8 +137,8 @@ region:"India",
 location:"West Bengal, India",
 image:"images1/SANDAKPHU.jpg",
 desc:"View Everest and Kanchenjunga together.",
-difficulty:"moderate", terrain:"mountain", altitude:"high",
-duration:7, experience:"intermediate", budget:"mid",
+difficulty:"Moderate", terrain:"Mountain", altitude:"High",
+duration:7, experience:"Intermediate", budget:"Mid",
 bestTime:"April - May, Oct - Nov",
 startPoint:"Manebhanjan",
 fitness:"Moderate",
@@ -153,8 +153,8 @@ region:"India",
 location:"Karnataka, India",
 image:"images1/KUMARA.jpg",
 desc:"Challenging trek in Western Ghats.",
-difficulty:"hard", terrain:"forest", altitude:"medium",
-duration:2, experience:"advanced", budget:"budget",
+difficulty:"Hard", terrain:"Forest", altitude:"Medium",
+duration:2, experience:"Advanced", budget:"Budget",
 bestTime:"Oct - Feb",
 startPoint:"Kukke Subramanya",
 fitness:"High",
@@ -169,8 +169,8 @@ region:"India",
 location:"Himachal Pradesh, India",
 image:"images1/TRIUND.jpg",
 desc:"Short scenic trek near Dharamshala.",
-difficulty:"easy", terrain:"mountain", altitude:"low",
-duration:2, experience:"beginner", budget:"budget",
+difficulty:"Easy", terrain:"Mountain", altitude:"Low",
+duration:2, experience:"Beginner", budget:"Budget",
 bestTime:"March - June, Sept - Dec",
 startPoint:"McLeod Ganj",
 fitness:"Easy",
@@ -185,8 +185,8 @@ region:"India",
 location:"Karnataka, India",
 image:"images1/TADIANDAMOL.jpg",
 desc:"Highest peak in Coorg.",
-difficulty:"easy", terrain:"forest", altitude:"low",
-duration:2, experience:"beginner", budget:"budget",
+difficulty:"Easy", terrain:"Forest", altitude:"Low",
+duration:2, experience:"Beginner", budget:"Budget",
 bestTime:"Oct - Feb",
 startPoint:"Kakkabe",
 fitness:"Easy",
@@ -201,8 +201,8 @@ region:"Nepal",
 location:"Nepal",
 image:"images1/ANNAPURNA.jpg",
 desc:"Diverse Himalayan landscapes.",
-difficulty:"moderate", terrain:"mountain", altitude:"high",
-duration:10, experience:"intermediate", budget:"mid",
+difficulty:"Moderate", terrain:"Mountain", altitude:"High",
+duration:10, experience:"Intermediate", budget:"Mid",
 bestTime:"March - May, Sept - Nov",
 startPoint:"Besisahar",
 fitness:"Moderate",
@@ -217,8 +217,8 @@ region:"Peru",
 location:"Peru",
 image:"images1/INCA.jpg",
 desc:"Ancient trail to Machu Picchu.",
-difficulty:"moderate", terrain:"mountain", altitude:"medium",
-duration:4, experience:"intermediate", budget:"mid",
+difficulty:"Moderate", terrain:"Mountain", altitude:"Medium",
+duration:4, experience:"Intermediate", budget:"Mid",
 bestTime:"May - September",
 startPoint:"Cusco",
 fitness:"Moderate",
@@ -233,8 +233,8 @@ region:"Tanzania",
 location:"Tanzania",
 image:"images1/KILIMANJARO.jpg",
 desc:"Africa's highest peak climb.",
-difficulty:"hard", terrain:"mountain", altitude:"high",
-duration:8, experience:"advanced", budget:"high",
+difficulty:"Hard", terrain:"Mountain", altitude:"High",
+duration:8, experience:"Advanced", budget:"High",
 bestTime:"Jan - March, June - Oct",
 startPoint:"Moshi",
 fitness:"High",
@@ -249,8 +249,8 @@ region:"Chile",
 location:"Chile",
 image:"images1/PATAGONIA.jpg",
 desc:"Glaciers and rugged Patagonia views.",
-difficulty:"moderate", terrain:"mountain", altitude:"medium",
-duration:6, experience:"intermediate", budget:"high",
+difficulty:"Moderate", terrain:"Mountain", altitude:"Medium",
+duration:6, experience:"Intermediate", budget:"High",
 bestTime:"Nov - March",
 startPoint:"Puerto Natales",
 fitness:"Moderate",
@@ -265,8 +265,8 @@ region:"Italy",
 location:"Italy",
 image:"images1/DOLOMITES.jpg",
 desc:"Alpine trekking paradise.",
-difficulty:"moderate", terrain:"mountain", altitude:"medium",
-duration:5, experience:"intermediate", budget:"high",
+difficulty:"Moderate", terrain:"Mountain", altitude:"Medium",
+duration:5, experience:"Intermediate", budget:"High",
 bestTime:"June - September",
 startPoint:"Cortina",
 fitness:"Moderate",
@@ -281,8 +281,8 @@ region:"Iceland",
 location:"Iceland",
 image:"images1/ICELAND.jpg",
 desc:"Colorful Icelandic landscapes.",
-difficulty:"moderate", terrain:"mountain", altitude:"medium",
-duration:4, experience:"intermediate", budget:"high",
+difficulty:"Moderate", terrain:"Mountain", altitude:"Medium",
+duration:4, experience:"Intermediate", budget:"High",
 bestTime:"June - August",
 startPoint:"Landmannalaugar",
 fitness:"Moderate",
@@ -297,8 +297,8 @@ region:"Japan",
 location:"Japan",
 image:"images1/FUJI.jpg",
 desc:"Iconic sunrise trek in Japan.",
-difficulty:"moderate", terrain:"mountain", altitude:"high",
-duration:2, experience:"intermediate", budget:"mid",
+difficulty:"Moderate", terrain:"Mountain", altitude:"High",
+duration:2, experience:"Intermediate", budget:"Mid",
 bestTime:"July - August",
 startPoint:"Fujinomiya",
 fitness:"Moderate",
@@ -313,8 +313,8 @@ region:"USA",
 location:"United States",
 image:"images1/APPALACHIAN.jpg",
 desc:"Legendary long-distance forest trail.",
-difficulty:"hard", terrain:"forest", altitude:"medium",
-duration:14, experience:"advanced", budget:"mid",
+difficulty:"Hard", terrain:"Forest", altitude:"Medium",
+duration:14, experience:"Advanced", budget:"Mid",
 bestTime:"April - October",
 startPoint:"Georgia",
 fitness:"High",
@@ -330,8 +330,8 @@ region:"Norway",
 location:"Norway",
 image:"images1/TROLLTUNGA.jpg",
 desc:"Cliff-edge hike in Norway.",
-difficulty:"hard", terrain:"mountain", altitude:"high",
-duration:1, experience:"advanced", budget:"high",
+difficulty:"Hard", terrain:"Mountain", altitude:"High",
+duration:1, experience:"Advanced", budget:"High",
 bestTime:"June - August",
 startPoint:"Odda",
 fitness:"High",
@@ -692,6 +692,8 @@ function getTrekItinerary(trekName) {
     const basePrice = getTrekPriceByTier(trek, "standard") || getPriceForDifficulty(trek.difficulty);
     const duration = Number(trek.duration) || 4;
     const dayCount = Math.max(3, Math.min(12, duration));
+    const trekAltitude = (trek.altitude || "").toLowerCase();
+    const trekDifficulty = (trek.difficulty || "").toLowerCase();
     const progressLabels = ["Arrival & briefing", "Acclimatization", "Trail ascent", "Summit / high point", "Descent & departure"];
     const dayByDay = Array.from({ length: dayCount }, (_, index) => {
         const dayNumber = index + 1;
@@ -703,7 +705,7 @@ function getTrekItinerary(trekName) {
             day: dayNumber,
             title: isFirst ? "Arrival and trek briefing" : isLast ? "Return and wrap-up" : middleTitle,
             distance: isFirst ? "Travel / arrival" : `${Math.max(4, Math.round((dayCount * 6) / dayCount))} km`,
-            altitude: trek.altitude === "high" ? "High altitude" : trek.altitude === "medium" ? "Mid altitude" : "Lower altitude",
+            altitude: trekAltitude === "high" ? "High altitude" : trekAltitude === "medium" ? "Mid altitude" : "Lower altitude",
             activities: isFirst
                 ? `Arrive at ${trek.startPoint || trek.location}. Meet the guide, complete check-in, and review the route, weather, and safety plan.`
                 : isLast
@@ -716,7 +718,7 @@ function getTrekItinerary(trekName) {
                     : "Breakfast, packed lunch, hot dinner",
             accommodation: isLast
                 ? "Hotel / return stay"
-                : trek.difficulty === "hard"
+                : trekDifficulty === "hard"
                     ? "Teahouse / alpine camp"
                     : "Guesthouse / campsite",
             duration: isFirst
@@ -733,7 +735,7 @@ function getTrekItinerary(trekName) {
             location: trek.location || trek.region,
             duration: trek.duration,
             difficulty: toSentenceCase(trek.difficulty),
-            altitude: trek.altitude === "high" ? "High altitude" : trek.altitude === "medium" ? "Medium altitude" : "Low altitude",
+            altitude: trekAltitude === "high" ? "High altitude" : trekAltitude === "medium" ? "Medium altitude" : "Low altitude",
             distance: `${Math.max(10, duration * 6)} km`,
             bestSeason: trek.bestTime || "Best season varies",
             highlights: [
@@ -792,25 +794,30 @@ function getPriceForDifficulty(difficulty, trekOrKey = null) {
 function gradeDestinations(userPrefs){
 
 const userDays = parseInt(userPrefs.days);
+const difficultyPref = (userPrefs.difficulty || "").toLowerCase();
+const terrainPref = (userPrefs.terrain || "").toLowerCase();
+const experiencePref = (userPrefs.experience || "").toLowerCase();
+const altitudePref = (userPrefs.altitude || "").toLowerCase();
+const budgetPref = (userPrefs.budget || "").toLowerCase();
 
 let scored = destinations.map(dest =>{
 
 let score = 0;
 let matchedTags = [];
 
-if(dest.difficulty === userPrefs.difficulty){
+if((dest.difficulty || "").toLowerCase() === difficultyPref){
 score += 2; matchedTags.push("Difficulty");
 }
 
-if(dest.terrain === userPrefs.terrain){
+if((dest.terrain || "").toLowerCase() === terrainPref){
 score += 2; matchedTags.push("Terrain");
 }
 
-if(dest.experience === userPrefs.experience){
+if((dest.experience || "").toLowerCase() === experiencePref){
 score += 2; matchedTags.push("Experience");
 }
 
-if(dest.altitude === userPrefs.altitude){
+if((dest.altitude || "").toLowerCase() === altitudePref){
 score += 1; matchedTags.push("Altitude");
 }
 
@@ -818,7 +825,7 @@ if(Math.abs(dest.duration - userDays) <= 2){
 score += 1; matchedTags.push("Duration");
 }
 
-if(dest.budget === userPrefs.budget){
+if((dest.budget || "").toLowerCase() === budgetPref){
 score += 1; matchedTags.push("Budget");
 }
 
