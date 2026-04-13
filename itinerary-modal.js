@@ -404,16 +404,26 @@ function setItineraryPackage(tier) {
 function bookNowFromItinerary() {
     if (currentSelectedTrek) {
         closeItineraryModal();
-        window.location.href = `book.html?trek=${currentSelectedTrek.id || currentSelectedTrek.name}&tier=${currentItineraryTier}`;
+        const trekKey = encodeURIComponent(currentSelectedTrek.id || currentSelectedTrek.name);
+        const tierKey = encodeURIComponent(currentItineraryTier);
+        window.location.href = `book.html?trek=${trekKey}&tier=${tierKey}`;
     }
 }
 
 function downloadItineraryPDF() {
-    alert('PDF download feature coming soon!');
+    const originalTitle = document.title;
+    if (currentSelectedTrek?.name) {
+        document.title = `${currentSelectedTrek.name} itinerary - Hikster`;
+    }
+    window.print();
+    document.title = originalTitle;
 }
 
 function contactGuide() {
-    alert('Guide contact form coming soon!');
+    const trekName = encodeURIComponent(currentSelectedTrek?.name || 'your trek');
+    const subject = encodeURIComponent(`Inquiry about ${currentSelectedTrek?.name || 'Hikster trek'} itinerary`);
+    const body = encodeURIComponent(`Hello Hikster team,\n\nI would like more information about ${currentSelectedTrek?.name || 'this trek'}. Please share the next steps and availability.\n\nThanks.`);
+    window.location.href = `mailto:hello@hikster.com?subject=${subject}&body=${body}`;
 }
 
 // Global variables
