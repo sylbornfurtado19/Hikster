@@ -131,7 +131,14 @@ return;
 }
 
 // ================= SAVE HISTORY =================
-let history = JSON.parse(localStorage.getItem("hiksterHistory")) || [];
+let history;
+try {
+    const value = localStorage.getItem("hiksterHistory");
+    const parsed = window.hkSafeParseJSON ? window.hkSafeParseJSON(value, []) : JSON.parse(value || '[]');
+    history = Array.isArray(parsed) ? parsed : [];
+} catch {
+    history = [];
+}
 
 const newEntry = {
     date: new Date().toLocaleString(),
