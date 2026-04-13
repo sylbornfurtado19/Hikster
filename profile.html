@@ -128,10 +128,14 @@ if (!localStorage.getItem("hiksterUser")) {
     window.location.href = "index.html";
 }
 
-const user = JSON.parse(localStorage.getItem("hiksterUser"));
-const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-const history = JSON.parse(localStorage.getItem("hiksterHistory")) || [];
-const bookings = JSON.parse(localStorage.getItem("hiksterBookings")) || [];
+const safeParse = window.hkSafeParseJSON || ((value, fallback) => {
+    try { return value ? JSON.parse(value) : fallback; } catch { return fallback; }
+});
+const escapeHTML = window.hkEscapeHTML || ((value) => String(value ?? ""));
+const user = safeParse(localStorage.getItem("hiksterUser"), null);
+const favorites = Array.isArray(safeParse(localStorage.getItem("favorites"), [])) ? safeParse(localStorage.getItem("favorites"), []) : [];
+const history = Array.isArray(safeParse(localStorage.getItem("hiksterHistory"), [])) ? safeParse(localStorage.getItem("hiksterHistory"), []) : [];
+const bookings = Array.isArray(safeParse(localStorage.getItem("hiksterBookings"), [])) ? safeParse(localStorage.getItem("hiksterBookings"), []) : [];
 
 if (user) {
     document.getElementById("username").innerText = user.name || "User";
@@ -158,7 +162,7 @@ if (history.length > 0) {
     const items = [prefs.difficulty, prefs.terrain, prefs.altitude, prefs.budget].filter(Boolean);
     const prefContainer = document.getElementById("preference-list");
     prefContainer.innerHTML = items.length > 0
-        ? items.map(item => `<span class="px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700">${item}</span>`).join('')
+    ? items.map(item => `<span class="px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700">${escapeHTML(item)}</span>`).join('')
         : '<span class="px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700">No quiz data yet</span>';
 }
 
@@ -167,12 +171,12 @@ if (bookings.length > 0) {
     bookingActivity.innerHTML = bookings.slice(-3).reverse().map(item => `
         <div class="p-3 rounded-xl bg-gray-100/90 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
             <div>
-                <p class="font-semibold text-juniper dark:text-mint">${item.trekName}</p>
-                <p class="text-gray-600 dark:text-gray-300">${item.travellers} traveller${item.travellers > 1 ? 's' : ''} · ${item.paymentMethod ? item.paymentMethod.toUpperCase() : 'PAYMENT'}</p>
+                <p class="font-semibold text-juniper dark:text-mint">${escapeHTML(item.trekName)}</p>
+                <p class="text-gray-600 dark:text-gray-300">${Number(item.travellers || 0)} traveller${Number(item.travellers) > 1 ? 's' : ''} · ${escapeHTML(item.paymentMethod ? item.paymentMethod.toUpperCase() : 'PAYMENT')}</p>
             </div>
             <div class="text-left md:text-right">
                 <p class="font-bold">INR ${Number(item.amount || 0).toLocaleString('en-IN')}</p>
-                <p class="text-xs text-gray-500 dark:text-gray-400">${item.reference || 'HTK-NA'} · ${item.date || 'Recent'}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">${escapeHTML(item.reference || 'HTK-NA')} · ${escapeHTML(item.date || 'Recent')}</p>
             </div>
         </div>
     `).join('');
