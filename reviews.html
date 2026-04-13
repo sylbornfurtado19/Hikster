@@ -273,27 +273,83 @@ let displayedReviews = 5;
 let filteredReviews = [];
 let currentRating = 1;
 
+function escapeHTML(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function safeParseJSON(value, fallback) {
+    try {
+        return value ? JSON.parse(value) : fallback;
+    } catch {
+        return fallback;
+    }
+}
+
+function getSelectedReviewRatings() {
+    return Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+        .map((input) => parseInt(input.value, 10))
+        .filter((value) => Number.isFinite(value));
+}
+
+function getFilteredAndSortedReviews() {
+    const reviews = getReviews();
+    const trekFilter = document.getElementById('trek-filter')?.value || '';
+    const sortMode = document.getElementById('sort-select')?.value || 'recent';
+    const selectedRatings = getSelectedReviewRatings();
+
+    const filtered = reviews.filter((review) => {
+        const ratingValue = Number(review.rating || 0);
+        const ratingMatch = selectedRatings.length === 0 || selectedRatings.some((threshold) => ratingValue >= threshold);
+        const trekMatch = !trekFilter || review.trek === trekFilter;
+        return ratingMatch && trekMatch;
+    });
+
+    const sorters = {
+        recent: (a, b) => new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime(),
+        highest: (a, b) => Number(b.rating || 0) - Number(a.rating || 0),
+        lowest: (a, b) => Number(a.rating || 0) - Number(b.rating || 0),
+        helpful: (a, b) => Number(b.helpful || 0) - Number(a.helpful || 0)
+    };
+
+    filtered.sort(sorters[sortMode] || sorters.recent);
+    return filtered;
+}
+
 function renderReviews() {
     const container = document.getElementById('reviews-container');
-    const reviews = getReviews();
-    
+    const reviews = getFilteredAndSortedReviews();
+
     filteredReviews = reviews.slice(0, displayedReviews);
-    
+
+    if (filteredReviews.length === 0) {
+        container.innerHTML = `
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700 shadow-md text-center">
+                <p class="text-gray-600 dark:text-gray-300 font-semibold">No reviews match the selected filters.</p>
+            </div>
+        `;
+        return;
+    }
+
     container.innerHTML = filteredReviews.map(review => `
         <div class="review-card bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-md hover:shadow-lg transition-shadow">
             <div class="flex justify-between items-start mb-4">
                 <div class="flex-1">
                     <div class="flex items-center gap-3 mb-2">
                         <div class="w-10 h-10 rounded-full bg-gradient-to-br from-mint to-teal flex items-center justify-center text-white font-bold">
-                            ${review.reviewer.charAt(0).toUpperCase()}
+                            ${escapeHTML((review.reviewer || 'U').charAt(0).toUpperCase())}
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-900 dark:text-white">${review.reviewer}</h4>
-                            <p class="text-xs text-gray-500">${review.date}</p>
+                            <h4 class="font-bold text-gray-900 dark:text-white">${escapeHTML(review.reviewer)}</h4>
+                            <p class="text-xs text-gray-500">${escapeHTML(review.date)}</p>
                         </div>
                     </div>
                 </div>
-                <span class="text-xs bg-mint/10 text-mint font-bold px-3 py-1 rounded-full">${review.trek}</span>
+                <span class="text-xs bg-mint/10 text-mint font-bold px-3 py-1 rounded-full">${escapeHTML(review.trek || 'Trek')}</span>
             </div>
 
             <div class="flex items-center gap-3 mb-3">
@@ -302,11 +358,11 @@ function renderReviews() {
                         <i class="fas fa-star ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}"></i>
                     `).join('')}
                 </div>
-                <span class="font-bold text-gray-800 dark:text-gray-200">${review.rating}.0</span>
+                <span class="font-bold text-gray-800 dark:text-gray-200">${escapeHTML(review.rating)}.0</span>
                 ${review.verified ? '<span class="text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 px-2 py-1 rounded-full">✓ Verified Trek</span>' : ''}
             </div>
 
-            <p class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">${review.text}</p>
+            <p class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">${escapeHTML(review.text)}</p>
 
             <div class="flex items-center gap-4 text-sm text-gray-500 border-t border-gray-200 dark:border-gray-700 pt-3">
                 <button onclick="likeReview(${review.id})" class="hover:text-mint transition-colors flex items-center gap-1">
@@ -331,7 +387,7 @@ function loadMoreReviews() {
 }
 
 function openReviewModal() {
-    const user = JSON.parse(localStorage.getItem('hiksterUser'));
+    const user = safeParseJSON(localStorage.getItem('hiksterUser'), null);
     if (!user) {
         alert('Please log in to write a review.');
         window.location.href = 'index.html?redirect=reviews.html';
@@ -361,14 +417,14 @@ function setRating(value) {
 function submitReview(e) {
     e.preventDefault();
     
-    const user = JSON.parse(localStorage.getItem('hiksterUser'));
+    const user = safeParseJSON(localStorage.getItem('hiksterUser'), null);
     const trek = document.getElementById('review-trek').value;
     const rating = parseInt(document.getElementById('rating-value').value);
     const text = document.getElementById('review-text').value;
     
     const newReview = {
         id: Date.now(),
-        reviewer: user.name,
+        reviewer: user?.name || 'Anonymous',
         trek: trek,
         rating: rating,
         text: text,
@@ -409,7 +465,8 @@ function reportReview(reviewId) {
 }
 
 function getReviews() {
-    return JSON.parse(localStorage.getItem('hiksterReviews')) || [];
+    const reviews = safeParseJSON(localStorage.getItem('hiksterReviews'), []);
+    return Array.isArray(reviews) ? reviews : [];
 }
 
 // Initialize
