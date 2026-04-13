@@ -102,9 +102,19 @@
 <script src="script.js"></script>
 
 <script>
-const favs = JSON.parse(localStorage.getItem("favorites")) || [];
+const parseFavorites = () => {
+    try {
+        const value = localStorage.getItem("favorites");
+        const parsed = window.hkSafeParseJSON ? window.hkSafeParseJSON(value, []) : JSON.parse(value || "[]");
+        return Array.isArray(parsed) ? parsed : [];
+    } catch {
+        return [];
+    }
+};
+const favs = parseFavorites();
 const container = document.getElementById("favorites-container");
 const clearAllBtn = document.getElementById("clear-all-btn");
+const escapeHTML = window.hkEscapeHTML || ((value) => String(value ?? ""));
 
 // Show/hide Clear All button based on favorites count
 function updateClearButton() {
@@ -163,12 +173,20 @@ if (favs.length === 0) {
     container.innerHTML = favDest.map(d => `
         <div class="relative group">
             ${buildCardHTML(d)}
-            <button onclick="removeFavorite('${d.name}')" class="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow hover:bg-red-600 transition-colors">
+            <button type="button" data-remove-favorite="${escapeHTML(d.name)}" class="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow hover:bg-red-600 transition-colors">
                 <i class="fas fa-times mr-1"></i> Remove
             </button>
         </div>
     `).join('');
 }
+
+container.addEventListener('click', (event) => {
+    const removeButton = event.target.closest('[data-remove-favorite]');
+    if (!removeButton) return;
+
+    event.stopPropagation();
+    removeFavorite(removeButton.dataset.removeFavorite || '');
+});
 
 // Initialize clear button visibility
 updateClearButton();
