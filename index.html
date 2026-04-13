@@ -130,8 +130,16 @@
         }
     }
 
+    function safeParseJSON(value, fallback) {
+        try {
+            return value ? JSON.parse(value) : fallback;
+        } catch {
+            return fallback;
+        }
+    }
+
     function getStoredUsers() {
-        return JSON.parse(localStorage.getItem("hiksterUsers")) || [];
+        return safeParseJSON(localStorage.getItem("hiksterUsers"), []);
     }
 
     function getPostLoginRedirect() {
