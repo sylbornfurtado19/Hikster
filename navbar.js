@@ -124,14 +124,6 @@
 .hk-cta-book:hover {
     background: #e8ecee;
 }
-.hk-cta-signup {
-    background: transparent;
-    color: #eafffb;
-    border: 1px solid rgba(125, 242, 228, 0.65);
-}
-.hk-cta-signup:hover {
-    background: rgba(125, 242, 228, 0.16);
-}
 .hk-mobile-actions {
     display: flex;
     align-items: center;
@@ -179,10 +171,6 @@
 .hk-mobile-auth {
     margin-top: 10px;
 }
-.hk-mobile-auth-links {
-    display: grid;
-    gap: 8px;
-}
 .hk-mobile-auth a {
     width: 100%;
     display: inline-flex;
@@ -201,10 +189,6 @@
 .hk-auth-profile {
     background: #2dd4bf;
     color: #0f373b;
-}
-.hk-auth-signup {
-    border: 1px solid rgba(243, 255, 253, 0.42);
-    color: #f3fffd;
 }
 @media (min-width: 768px) {
     .hk-mobile-actions {
@@ -306,7 +290,6 @@ html.dark body.hk-theme-fallback [class*="border"] {
                 <a href="book.html" data-hk-link="book.html" class="hk-cta hk-cta-book">${ICONS.book} Book Now</a>
                 <span id="hk-auth-desktop">
                     <a href="index.html" class="hk-icon-btn" aria-label="Login" title="Login">${ICONS.user}</a>
-                    <a href="signup.html" class="hk-cta hk-cta-signup">Sign Up</a>
                 </span>
                 <button type="button" id="hk-theme-toggle" class="hk-icon-btn" aria-label="Toggle theme" title="Toggle theme">${ICONS.moon}</button>
             </div>
@@ -334,10 +317,7 @@ html.dark body.hk-theme-fallback [class*="border"] {
                     </div>
 
                     <div id="hk-auth-mobile" class="hk-mobile-auth">
-                        <div class="hk-mobile-auth-links">
-                            <a href="index.html" class="hk-auth-login">Login</a>
-                            <a href="signup.html" class="hk-auth-signup">Sign Up</a>
-                        </div>
+                        <a href="index.html" class="hk-auth-login">Login</a>
                     </div>
                 </div>
             </div>
@@ -391,16 +371,8 @@ html.dark body.hk-theme-fallback [class*="border"] {
             return;
         }
 
-        desktop.innerHTML = `
-            <a href="index.html" class="hk-icon-btn" aria-label="Login" title="Login">${ICONS.user}</a>
-            <a href="signup.html" class="hk-cta hk-cta-signup">Sign Up</a>
-        `;
-        mobile.innerHTML = `
-            <div class="hk-mobile-auth-links">
-                <a href="index.html" class="hk-auth-login">Login</a>
-                <a href="signup.html" class="hk-auth-signup">Sign Up</a>
-            </div>
-        `;
+        desktop.innerHTML = `<a href="index.html" class="hk-icon-btn" aria-label="Login" title="Login">${ICONS.user}</a>`;
+        mobile.innerHTML = '<a href="index.html" class="hk-auth-login">Login</a>';
     }
 
     function applyActiveLinks() {
