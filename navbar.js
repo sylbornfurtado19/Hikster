@@ -330,6 +330,14 @@ html.dark body.hk-theme-fallback [class*="border"] {
         if (mobile) mobile.innerHTML = icon;
     }
 
+    function safeParseJSON(value, fallback) {
+        try {
+            return value ? JSON.parse(value) : fallback;
+        } catch {
+            return fallback;
+        }
+    }
+
     function applyThemeState() {
         const stored = localStorage.getItem('tripfit-theme') || localStorage.getItem('hikster-theme');
         const dark = stored === 'dark';
@@ -348,7 +356,7 @@ html.dark body.hk-theme-fallback [class*="border"] {
     function applyAuthState() {
         const desktop = document.getElementById('hk-auth-desktop');
         const mobile = document.getElementById('hk-auth-mobile');
-        const user = JSON.parse(localStorage.getItem('hiksterUser'));
+        const user = safeParseJSON(localStorage.getItem('hiksterUser'), null);
 
         if (!desktop || !mobile) return;
 
