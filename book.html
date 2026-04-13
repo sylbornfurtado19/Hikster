@@ -1049,6 +1049,29 @@
         el.value = digits.replace(/(.{4})/g, "$1 ").trim();
     }
 
+    function isValidCardNumber(number) {
+        if (!/^\d{12,19}$/.test(number)) return false;
+
+        let shouldDouble = false;
+        let sum = 0;
+
+        for (let index = number.length - 1; index >= 0; index -= 1) {
+            let digit = Number(number[index]);
+
+            if (shouldDouble) {
+                digit *= 2;
+                if (digit > 9) {
+                    digit -= 9;
+                }
+            }
+
+            sum += digit;
+            shouldDouble = !shouldDouble;
+        }
+
+        return sum % 10 === 0;
+    }
+
     function toggleOtherBankField() {
         const bank = document.getElementById("netbanking-bank").value;
         const other = document.getElementById("netbanking-other");
@@ -1058,7 +1081,7 @@
     function validatePaymentDetails() {
         if (selectedMethod === "card") {
             const number = document.getElementById("card-number").value.replace(/\s/g, "");
-            if (number.length < 12) {
+            if (!isValidCardNumber(number)) {
                 alert("Enter a valid debit/credit card number.");
                 return false;
             }
@@ -1067,7 +1090,7 @@
 
         if (selectedMethod === "upi") {
             const upiId = document.getElementById("upi-id").value.trim();
-            if (!upiId || !upiId.includes("@")) {
+            if (!/^[\w.-]+@[\w.-]+$/.test(upiId)) {
                 alert("Enter a valid UPI ID.");
                 return false;
             }
@@ -1113,9 +1136,17 @@
         setTimeout(showSuccess, 550);
     }
 
+    function safeParseJSON(value, fallback) {
+        try {
+            return value ? JSON.parse(value) : fallback;
+        } catch {
+            return fallback;
+        }
+    }
+
     function saveBooking(reference, total) {
-        const bookings = JSON.parse(localStorage.getItem("hiksterBookings")) || [];
-        const user = JSON.parse(localStorage.getItem("hiksterUser")) || {};
+        const bookings = safeParseJSON(localStorage.getItem("hiksterBookings"), []);
+        const user = safeParseJSON(localStorage.getItem("hiksterUser"), {});
         const now = new Date();
 
         bookings.push({
