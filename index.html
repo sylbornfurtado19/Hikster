@@ -142,20 +142,49 @@
         return safeParseJSON(localStorage.getItem("hiksterUsers"), []);
     }
 
+    function toHex(buffer) {
+        return Array.from(new Uint8Array(buffer))
+            .map(byte => byte.toString(16).padStart(2, '0'))
+            .join('');
+    }
+
+    async function hashPassword(password) {
+        if (!window.crypto || !window.crypto.subtle || !window.TextEncoder) {
+            return btoa(password);
+        }
+
+        const encoded = new TextEncoder().encode(password);
+        const digest = await window.crypto.subtle.digest('SHA-256', encoded);
+        return toHex(digest);
+    }
+
     function getPostLoginRedirect() {
         const params = new URLSearchParams(window.location.search);
         const redirect = params.get("redirect");
         return redirect ? decodeURIComponent(redirect) : "home.html";
     }
 
-    function handleLogin(e){
+    async function handleLogin(e){
         e.preventDefault();
 
-        const email = document.getElementById("login-email").value.trim();
+        const email = document.getElementById("login-email").value.trim().toLowerCase();
         const password = document.getElementById("login-pass").value;
 
         const users = getStoredUsers();
-        const matchedUser = users.find(user => user.email === email && user.password === password);
+        const passwordHash = await hashPassword(password);
+        let matchedUser = users.find(user => String(user.email || '').toLowerCase() === email && user.passwordHash === passwordHash);
+
+        // Legacy compatibility for users created before password hashing.
+        if (!matchedUser) {
+            const legacyUser = users.find(user => String(user.email || '').toLowerCase() === email && user.password === password);
+            if (legacyUser) {
+                legacyUser.passwordHash = passwordHash;
+                legacyUser.passwordVersion = 2;
+                delete legacyUser.password;
+                localStorage.setItem("hiksterUsers", JSON.stringify(users));
+                matchedUser = legacyUser;
+            }
+        }
 
         if (!matchedUser) {
             alert("Invalid email or password.");
