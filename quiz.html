@@ -222,22 +222,27 @@ color: #ccfbf1;
 
 <script>
 const steps = document.querySelectorAll('.question');
+const prevButton = document.getElementById('prev');
+const nextButton = document.getElementById('next');
+const submitButton = document.getElementById('submit');
 let current = 0;
 
 function showStep(i){
-steps.forEach((s,index)=>s.classList.toggle('hidden', index!==i));
-    prev.style.display = i===0?'none':'block';
-    next.style.display = i===steps.length-1?'none':'block';
-    submit.style.display = i===steps.length-1?'block':'none';
+    const safeIndex = Math.max(0, Math.min(steps.length - 1, i));
+    current = safeIndex;
+    steps.forEach((s,index)=>s.classList.toggle('hidden', index!==safeIndex));
+    prevButton.style.display = safeIndex===0?'none':'block';
+    nextButton.style.display = safeIndex===steps.length-1?'none':'block';
+    submitButton.style.display = safeIndex===steps.length-1?'block':'none';
 
     // ✅ UPDATE PROGRESS BAR
     const progress = document.getElementById("progress");
-    progress.style.width = ((i+1)/steps.length)*100 + "%";
+    progress.style.width = ((safeIndex+1)/steps.length)*100 + "%";
 }
 showStep(0);
 
-next.onclick=()=>{current++; showStep(current);}
-prev.onclick=()=>{current--; showStep(current);}
+nextButton.addEventListener('click', () => showStep(current + 1));
+prevButton.addEventListener('click', () => showStep(current - 1));
 
 const slider=document.getElementById("days-slider");
 const output=document.getElementById("days-value");
