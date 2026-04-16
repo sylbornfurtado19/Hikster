@@ -27,6 +27,15 @@ function createItineraryModal() {
                     </div>
                     <p class="itinerary-package-note" id="itineraryPackageNote">Balanced comfort and support for most trekkers.</p>
                 </div>
+                <div class="itinerary-package-switch" style="margin-top: 0.75rem;">
+                    <p class="itinerary-package-label">Traveller Type</p>
+                    <div class="itinerary-package-buttons">
+                        <button class="package-tier-btn" id="travellerSoloBtn" onclick="setItineraryTravellerType('solo')">Solo</button>
+                        <button class="package-tier-btn" id="travellerCoupleBtn" onclick="setItineraryTravellerType('couple')">Couple</button>
+                        <button class="package-tier-btn" id="travellerGroupBtn" onclick="setItineraryTravellerType('group')">Group</button>
+                    </div>
+                    <p class="itinerary-package-note" id="itineraryTravellerNote">Choose traveller type before booking.</p>
+                </div>
             </div>
 
             <!-- Tabs Navigation -->
@@ -107,6 +116,7 @@ function openItineraryModal(trekName) {
     currentSelectedTrek = trek;
     currentItin = itinerary;
     currentItineraryTier = 'standard';
+    currentTravellerType = getDefaultTravellerType();
 
     // Fill header
     document.getElementById('itineraryTitle').textContent = itinerary.overview.name;
@@ -121,6 +131,7 @@ function openItineraryModal(trekName) {
         .join('');
     document.getElementById('itineraryHighlights').innerHTML = highlightsHTML;
     syncItineraryTierUI();
+    syncItineraryTravellerUI();
 
     // Populate all tabs
     populateOverviewTab(itinerary);
@@ -401,12 +412,62 @@ function setItineraryPackage(tier) {
     populateCostTab(currentItin, currentSelectedTrek);
 }
 
+function getDefaultTravellerType() {
+    const travelSelect = document.getElementById('travel-group');
+    const fromBookingUi = travelSelect ? travelSelect.value : '';
+    if (fromBookingUi === 'solo' || fromBookingUi === 'couple' || fromBookingUi === 'group') {
+        return fromBookingUi;
+    }
+
+    const groupParam = new URLSearchParams(window.location.search).get('group');
+    if (groupParam === 'solo' || groupParam === 'couple' || groupParam === 'group') {
+        return groupParam;
+    }
+
+    return 'solo';
+}
+
+function syncItineraryTravellerUI() {
+    const buttonMap = {
+        solo: document.getElementById('travellerSoloBtn'),
+        couple: document.getElementById('travellerCoupleBtn'),
+        group: document.getElementById('travellerGroupBtn')
+    };
+
+    Object.entries(buttonMap).forEach(([key, button]) => {
+        if (!button) return;
+        button.classList.toggle('active', key === currentTravellerType);
+    });
+
+    const travellerNote = document.getElementById('itineraryTravellerNote');
+    if (!travellerNote) return;
+
+    if (currentTravellerType === 'solo') {
+        travellerNote.textContent = 'Solo booking will lock traveller count to 1.';
+        return;
+    }
+    if (currentTravellerType === 'couple') {
+        travellerNote.textContent = 'Couple booking will lock traveller count to 2.';
+        return;
+    }
+    travellerNote.textContent = 'Group booking requires at least 3 travellers.';
+}
+
+function setItineraryTravellerType(type) {
+    if (type !== 'solo' && type !== 'couple' && type !== 'group') {
+        return;
+    }
+    currentTravellerType = type;
+    syncItineraryTravellerUI();
+}
+
 function bookNowFromItinerary() {
     if (currentSelectedTrek) {
         closeItineraryModal();
         const trekKey = encodeURIComponent(currentSelectedTrek.id || currentSelectedTrek.name);
         const tierKey = encodeURIComponent(currentItineraryTier);
-        window.location.href = `book.html?trek=${trekKey}&tier=${tierKey}`;
+        const travellerTypeKey = encodeURIComponent(currentTravellerType || 'solo');
+        window.location.href = `book.html?trek=${trekKey}&tier=${tierKey}&group=${travellerTypeKey}`;
     }
 }
 
@@ -430,3 +491,4 @@ function contactGuide() {
 let currentSelectedTrek = null;
 let currentItin = null;
 let currentItineraryTier = 'standard';
+let currentTravellerType = 'solo';
