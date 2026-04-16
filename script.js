@@ -986,12 +986,14 @@ function openTrekCardItinerary(trekId) {
     const trek = destinations.find(dest => dest.id === trekId || dest.name === trekId);
     if (!trek) return;
 
-    if (typeof openItineraryModal === "function") {
+    const forceDetailPageView = window.hkForceDetailPage === true;
+
+    if (typeof openItineraryModal === "function" && !forceDetailPageView) {
         openItineraryModal(trek.name);
         return;
     }
 
-    window.location.href = `destination.html?id=${encodeURIComponent(trek.id)}`;
+    window.location.href = `destination.html?id=${encodeURIComponent(trek.id)}&view=cards`;
 }
 
 window.openTrekCardItinerary = openTrekCardItinerary;
