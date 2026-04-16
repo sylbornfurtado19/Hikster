@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hikster · Book Your Trip</title>
     <link rel="icon" href="logo/logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -164,6 +165,14 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
+        .trip-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: inherit;
+            display: block;
+        }
+
         .trip-info h2 { font-size: 1.28rem; font-weight: 700; margin-bottom: 0.35rem; }
         .trip-location { font-size: 0.87rem; color: rgba(255,255,255,0.7); margin-bottom: 0.8rem; }
 
@@ -207,7 +216,13 @@
             cursor: pointer;
             font-weight: 700;
         }
-        .c-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+        .c-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            color: rgba(255,255,255,0.85);
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+        }
         .c-num { font-size: 1.6rem; font-weight: 800; min-width: 36px; text-align: center; }
 
         .est-row {
@@ -223,6 +238,41 @@
         .est-sep { height: 1px; background: rgba(255,255,255,0.18); margin: 0.5rem 0; }
         .est-total { display: flex; justify-content: space-between; align-items: center; padding-top: 0.5rem; font-size: 1rem; font-weight: 700; }
         .est-amount { font-size: 1.5rem; color: #2dd4b8; font-weight: 800; }
+
+        .est-tier-card {
+            padding: 0.65rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.16);
+            background: rgba(255,255,255,0.06);
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .est-tier-card .est-tier-label {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.78);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .est-tier-card .est-tier-value {
+            font-weight: 700;
+            margin-top: 0.18rem;
+            color: rgba(255,255,255,0.96);
+        }
+
+        .est-tier-card.active {
+            border-color: rgba(45,212,184,0.65);
+            background: rgba(45,212,184,0.14);
+            box-shadow: 0 0 0 1px rgba(45,212,184,0.28) inset;
+        }
+
+        .est-tier-card.active .est-tier-label,
+        .est-tier-card.active .est-tier-value {
+            color: #7ae8d8;
+        }
 
         .pay-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.85rem; margin-bottom: 1rem; }
         .pay-card {
@@ -380,6 +430,14 @@
             color: rgba(15, 55, 59, 0.65);
         }
 
+        html:not(.dark) #travellers-range {
+            color: rgba(15, 55, 59, 0.68) !important;
+        }
+
+        html:not(.dark) #group-rule-note {
+            color: rgba(15, 55, 59, 0.72) !important;
+        }
+
         html:not(.dark) .est-row {
             color: rgba(15, 55, 59, 0.75);
             border-bottom-color: rgba(15, 55, 59, 0.08);
@@ -389,6 +447,14 @@
             background: rgba(15, 55, 59, 0.06);
             border-color: rgba(15, 55, 59, 0.12);
             color: #0f373b;
+        }
+
+        html:not(.dark) .c-btn:disabled {
+            opacity: 1;
+            color: rgba(15,55,59,0.9);
+            background: rgba(15,55,59,0.16);
+            border: 1px solid rgba(15,55,59,0.24);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35);
         }
 
         html:not(.dark) .f-input {
@@ -453,6 +519,31 @@
 
         html:not(.dark) .est-amount {
             color: #14a896;
+        }
+
+        html:not(.dark) .est-tier-card {
+            border-color: rgba(15,55,59,0.16);
+            background: rgba(15,55,59,0.04);
+            color: #1f3b39;
+        }
+
+        html:not(.dark) .est-tier-card .est-tier-label {
+            color: rgba(15,55,59,0.72);
+        }
+
+        html:not(.dark) .est-tier-card .est-tier-value {
+            color: #1f3b39;
+        }
+
+        html:not(.dark) .est-tier-card.active {
+            border-color: rgba(20,168,150,0.72);
+            background: rgba(20,168,150,0.14);
+            box-shadow: 0 0 0 1px rgba(20,168,150,0.22) inset;
+        }
+
+        html:not(.dark) .est-tier-card.active .est-tier-label,
+        html:not(.dark) .est-tier-card.active .est-tier-value {
+            color: #0f8a7c;
         }
 
         html:not(.dark) .ref-box {
@@ -597,6 +688,34 @@
         <div class="card">
             <h2 id="iti-trip-title" style="margin-bottom:0.8rem;">--</h2>
             <div class="trip-location" id="iti-trip-subtitle">--</div>
+            <div style="display:grid; gap:0.65rem; margin:1rem 0 0.85rem;">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:0.75rem; align-items:end;">
+                    <div>
+                        <label for="trip-duration-select" style="font-size:0.78rem; color:rgba(255,255,255,0.72); text-transform:uppercase; letter-spacing:1.2px;">Trip Duration</label>
+                        <select id="trip-duration-select" class="f-input" style="margin-top:0.35rem;">
+                            <option value="3">3 Days</option>
+                            <option value="4">4 Days</option>
+                            <option value="5">5 Days</option>
+                            <option value="6">6 Days</option>
+                            <option value="7">7 Days</option>
+                            <option value="8">8 Days</option>
+                            <option value="9">9 Days</option>
+                            <option value="10">10 Days</option>
+                            <option value="11">11 Days</option>
+                            <option value="12">12 Days</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="itinerary-travel-group" style="font-size:0.78rem; color:rgba(255,255,255,0.72); text-transform:uppercase; letter-spacing:1.2px;">Itinerary Type</label>
+                        <select id="itinerary-travel-group" class="f-input" style="margin-top:0.35rem;">
+                            <option value="solo">Solo</option>
+                            <option value="couple">Couple</option>
+                            <option value="group">Group (Friends/Family)</option>
+                        </select>
+                    </div>
+                </div>
+                <p style="font-size:0.78rem; color:rgba(255,255,255,0.68);">Change itinerary type here to preview Solo, Couple, or Group plans instantly.</p>
+            </div>
             <div class="itinerary-list" id="itinerary-list"></div>
             <div class="divider-h"></div>
             <div class="includes-grid" id="package-includes-grid"></div>
@@ -645,24 +764,36 @@
             <div class="divider-h"></div>
 
             <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0.6rem; margin-bottom:0.8rem;">
-                <div style="padding:0.65rem; border-radius:10px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); text-align:center;">
-                    <div style="font-size:0.72rem; color:rgba(255,255,255,0.68);">Budget</div>
-                    <div id="est-tier-budget" style="font-weight:700; margin-top:0.18rem;">INR --</div>
+                <div class="est-tier-card" data-estimate-tier-card="budget">
+                    <div class="est-tier-label">Budget</div>
+                    <div id="est-tier-budget" class="est-tier-value">INR --</div>
                 </div>
-                <div style="padding:0.65rem; border-radius:10px; border:1px solid rgba(45,212,184,0.35); background:rgba(45,212,184,0.08); text-align:center;">
-                    <div style="font-size:0.72rem; color:rgba(255,255,255,0.68);">Standard</div>
-                    <div id="est-tier-standard" style="font-weight:700; margin-top:0.18rem;">INR --</div>
+                <div class="est-tier-card active" data-estimate-tier-card="standard">
+                    <div class="est-tier-label">Standard</div>
+                    <div id="est-tier-standard" class="est-tier-value">INR --</div>
                 </div>
-                <div style="padding:0.65rem; border-radius:10px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.06); text-align:center;">
-                    <div style="font-size:0.72rem; color:rgba(255,255,255,0.68);">Premium</div>
-                    <div id="est-tier-premium" style="font-weight:700; margin-top:0.18rem;">INR --</div>
+                <div class="est-tier-card" data-estimate-tier-card="premium">
+                    <div class="est-tier-label">Premium</div>
+                    <div id="est-tier-premium" class="est-tier-value">INR --</div>
                 </div>
+            </div>
+
+            <div style="display:grid; gap:0.8rem; margin-bottom:0.95rem;">
+                <div>
+                    <label for="travel-group" style="font-size:0.78rem; color:rgba(255,255,255,0.72); text-transform:uppercase; letter-spacing:1.2px;">Who are you traveling with?</label>
+                    <select id="travel-group" class="f-input" style="margin-top:0.35rem;">
+                        <option value="solo">Solo</option>
+                        <option value="couple">Couple</option>
+                        <option value="group">Group (Family/Friends)</option>
+                    </select>
+                </div>
+                <p id="group-rule-note" style="display:none; font-size:0.8rem; color:rgba(255,255,255,0.72);">Group bookings need at least 3 people. Recommended: 4+ for better group pricing.</p>
             </div>
 
             <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
                 <div>
                     <h3 style="font-size:1rem; margin-bottom:4px;">Travellers</h3>
-                    <p style="font-size:0.8rem; color:rgba(255,255,255,0.65);">Min 1 · Max 12</p>
+                    <p id="travellers-range" style="font-size:0.8rem; color:rgba(255,255,255,0.65);">Min 1 · Max 12</p>
                 </div>
                 <div class="counter">
                     <button class="c-btn" id="minusBtn" onclick="changePersons(-1)" disabled>-</button>
@@ -821,6 +952,7 @@
     let basePrice = 0;
     let selectedTierPrices = { budget: 0, standard: 0, premium: 0 };
     let selectedPackageTier = "standard";
+    let selectedDurationDays = 0;
 
     const packageConfig = {
         budget: {
@@ -861,9 +993,15 @@
     const params = new URLSearchParams(window.location.search);
     const trekId = params.get("trek");
     const tierParam = params.get("tier");
+    const groupParam = params.get("group");
 
     const select = document.getElementById("trek-select");
     const toItineraryBtn = document.getElementById("toItineraryBtn");
+    const durationSelect = document.getElementById("trip-duration-select");
+    const itineraryTravelGroupSelect = document.getElementById("itinerary-travel-group");
+    const travelGroupSelect = document.getElementById("travel-group");
+    const groupRuleNote = document.getElementById("group-rule-note");
+    const travellersRange = document.getElementById("travellers-range");
 
     function trekKey(dest) {
         return String(dest.id ?? dest.name);
@@ -894,17 +1032,89 @@
         return cfg.label;
     }
 
+    function getMinimumPersons() {
+        if (travelGroupSelect.value === "group") {
+            return 3;
+        }
+        if (travelGroupSelect.value === "couple") {
+            return 2;
+        }
+        return 1;
+    }
+
+    function getMaximumPersons() {
+        if (travelGroupSelect.value === "solo") {
+            return 1;
+        }
+        if (travelGroupSelect.value === "couple") {
+            return 2;
+        }
+        return 12;
+    }
+
+    function syncTravellerConstraints() {
+        const minPersons = getMinimumPersons();
+        const maxPersons = getMaximumPersons();
+        const isGroupTrip = travelGroupSelect.value === "group";
+        const isSoloTrip = travelGroupSelect.value === "solo";
+        const isCoupleTrip = travelGroupSelect.value === "couple";
+
+        if (itineraryTravelGroupSelect && itineraryTravelGroupSelect.value !== travelGroupSelect.value) {
+            itineraryTravelGroupSelect.value = travelGroupSelect.value;
+        }
+
+        if (isSoloTrip) {
+            persons = 1;
+        } else if (isCoupleTrip) {
+            persons = 2;
+        } else {
+            persons = Math.max(minPersons, Math.min(maxPersons, persons));
+        }
+
+        document.getElementById("personCount").textContent = persons;
+        document.getElementById("minusBtn").disabled = (isSoloTrip || isCoupleTrip) ? true : persons <= minPersons;
+        document.getElementById("plusBtn").disabled = (isSoloTrip || isCoupleTrip) ? true : persons >= maxPersons;
+        travellersRange.textContent = `Min ${minPersons} · Max ${maxPersons}`;
+
+        groupRuleNote.style.display = isGroupTrip ? "block" : "none";
+
+        updateEstimateTierRows();
+        updateEstimate();
+    }
+
+    function getSelectedDurationDays(dest) {
+        const requested = Number(durationSelect.value) || Number(dest?.duration) || 4;
+        return Math.max(3, Math.min(12, requested));
+    }
+
+    function syncDurationUI(durationDays) {
+        selectedDurationDays = Math.max(3, Math.min(12, Number(durationDays) || 4));
+        durationSelect.value = String(selectedDurationDays);
+        document.getElementById("badge-duration").textContent = selectedDurationDays + " days";
+        document.getElementById("meta-duration").textContent = selectedDurationDays + " days";
+    }
+
     function updateEstimateTierRows() {
         if (!selectedTierPrices || !selectedTierPrices.standard) {
             document.getElementById("est-tier-budget").textContent = "INR --";
             document.getElementById("est-tier-standard").textContent = "INR --";
             document.getElementById("est-tier-premium").textContent = "INR --";
+            syncEstimateTierCards();
             return;
         }
 
         document.getElementById("est-tier-budget").textContent = formatInr(selectedTierPrices.budget * persons);
         document.getElementById("est-tier-standard").textContent = formatInr(selectedTierPrices.standard * persons);
         document.getElementById("est-tier-premium").textContent = formatInr(selectedTierPrices.premium * persons);
+        syncEstimateTierCards();
+    }
+
+    function syncEstimateTierCards() {
+        document.querySelectorAll("[data-estimate-tier-card]").forEach(card => {
+            const tier = card.getAttribute("data-estimate-tier-card");
+            const isActive = tier === selectedPackageTier;
+            card.classList.toggle("active", isActive);
+        });
     }
 
     function updatePackageButtons() {
@@ -941,10 +1151,12 @@
         basePrice = 0;
         selectedTierPrices = { budget: 0, standard: 0, premium: 0 };
         selectedPackageTier = "standard";
+        selectedDurationDays = 0;
 
         toItineraryBtn.disabled = true;
         document.getElementById("trek-summary").style.display = "none";
         document.getElementById("trip-thumb").textContent = "TRK";
+        document.getElementById("trip-thumb").innerHTML = "TRK";
         document.getElementById("trip-name").textContent = "Select a trek to begin";
         document.getElementById("trip-location").textContent = "Region details will appear here";
         document.getElementById("badge-difficulty").textContent = "--";
@@ -953,6 +1165,11 @@
         document.getElementById("meta-altitude").textContent = "--";
         document.getElementById("meta-duration").textContent = "--";
         document.getElementById("meta-price").textContent = "INR --";
+        document.getElementById("iti-trip-title").textContent = "--";
+        document.getElementById("iti-trip-subtitle").textContent = "--";
+        document.getElementById("itinerary-list").innerHTML = "";
+        document.getElementById("package-includes-grid").innerHTML = "";
+        durationSelect.value = "4";
 
         updatePackageButtons();
         togglePackageTierAvailability(false);
@@ -988,15 +1205,14 @@
         selectedTierPrices = getTierPrices(dest);
         selectedPackageTier = "standard";
         basePrice = selectedTierPrices[selectedPackageTier];
+        syncDurationUI(dest.duration);
 
-        document.getElementById("trip-thumb").textContent = dest.name.substring(0, 3).toUpperCase();
+        document.getElementById("trip-thumb").innerHTML = `<img src="${escapeHTML(dest.image)}" alt="${escapeHTML(dest.name)}">`;
         document.getElementById("trip-name").textContent = dest.name;
         document.getElementById("trip-location").textContent = dest.region;
         document.getElementById("badge-difficulty").textContent = dest.difficulty;
-        document.getElementById("badge-duration").textContent = dest.duration + " days";
         document.getElementById("badge-terrain").textContent = dest.terrain;
         document.getElementById("meta-altitude").textContent = dest.altitude;
-        document.getElementById("meta-duration").textContent = dest.duration + " days";
         document.getElementById("meta-price").textContent = `${formatInr(basePrice)} (${formatTierName(selectedPackageTier)})`;
 
         toItineraryBtn.disabled = false;
@@ -1033,22 +1249,61 @@
 
     function buildItinerary(dest) {
         const packageDetails = packageConfig[selectedPackageTier] || packageConfig.standard;
-        const steps = [
-            "Arrival and local check-in with briefing",
-            "Acclimatization and trail orientation",
-            "Main trek segment through " + dest.terrain + " routes",
-            "Summit or high-point day based on weather",
-            "Return transfer and checkout",
-            packageDetails.itineraryNote
-        ];
+        const durationDays = getSelectedDurationDays(dest);
+        const itineraryData = getTrekItinerary(dest.name);
+        const sourceDays = Array.isArray(itineraryData?.dayByDay) ? itineraryData.dayByDay : [];
+        const travelType = travelGroupSelect.value;
+        const modeConfig = {
+            solo: {
+                label: "Solo Explorer",
+                start: "Day 1: Solo arrival, personalized safety briefing, and route setup",
+                middle: `Day {day}: Independent-paced trek through ${dest.terrain} sections with guide checkpoints`,
+                end: `Day {day}: Return transfer, solo debrief, and next-route guidance (${packageDetails.label} package support)`
+            },
+            couple: {
+                label: "Couple Escape",
+                start: "Day 1: Couple check-in, shared briefing, and scenic warm-up walk",
+                middle: `Day {day}: Pair-paced trek with curated viewpoints and coordinated partner support`,
+                end: `Day {day}: Return transfer and couple wrap-up with memory-stop recommendations (${packageDetails.label} package support)`
+            },
+            group: {
+                label: "Group Adventure",
+                start: "Day 1: Group arrival, team briefing, and role assignment for trek flow",
+                middle: `Day {day}: Group-led trek across ${dest.terrain} terrain with coordinated pace windows`,
+                end: `Day {day}: Return transfer, group checkout, and team closing session (${packageDetails.label} package support)`
+            }
+        };
+        const selectedMode = modeConfig[travelType] || modeConfig.solo;
+
+        const steps = Array.from({ length: durationDays }, (_, index) => {
+            const day = index + 1;
+            const sourceDay = sourceDays[index];
+            if (sourceDay) {
+                const modeAddon = travelType === "solo"
+                    ? "Solo focus"
+                    : travelType === "couple"
+                        ? "Couple trek"
+                        : "Group trek";
+                return `Day ${day}: ${sourceDay.title} (${sourceDay.duration}) · ${modeAddon}`;
+            }
+
+            if (index === 0) {
+                return selectedMode.start;
+            }
+            if (index === durationDays - 1) {
+                return selectedMode.end.replace("{day}", String(day));
+            }
+            return selectedMode.middle.replace("{day}", String(day));
+        });
 
         const itinerary = document.getElementById("itinerary-list");
-        itinerary.innerHTML = steps.slice(0, Math.min(steps.length, Math.max(3, dest.duration))).map(step => `
+        itinerary.innerHTML = steps.map(step => `
             <div class="itinerary-item"><span class="itinerary-dot"></span><p>${step}</p></div>
         `).join("");
 
         document.getElementById("iti-trip-title").textContent = dest.name;
-        document.getElementById("iti-trip-subtitle").textContent = dest.region + " · " + dest.duration + " days · " + packageDetails.label + " Package";
+        document.getElementById("iti-trip-subtitle").textContent = `${dest.region} · ${durationDays} days · ${packageDetails.label} Package · ${selectedMode.label}`;
+        syncDurationUI(durationDays);
         renderPackageIncludes();
     }
 
@@ -1059,10 +1314,18 @@
     }
 
     function changePersons(delta) {
-        persons = Math.max(1, Math.min(12, persons + delta));
+        const minPersons = getMinimumPersons();
+        const maxPersons = getMaximumPersons();
+        if (travelGroupSelect.value === "solo") {
+            persons = 1;
+        } else if (travelGroupSelect.value === "couple") {
+            persons = 2;
+        } else {
+            persons = Math.max(minPersons, Math.min(maxPersons, persons + delta));
+        }
         document.getElementById("personCount").textContent = persons;
-        document.getElementById("minusBtn").disabled = persons <= 1;
-        document.getElementById("plusBtn").disabled = persons >= 12;
+        document.getElementById("minusBtn").disabled = (travelGroupSelect.value === "solo" || travelGroupSelect.value === "couple") ? true : persons <= minPersons;
+        document.getElementById("plusBtn").disabled = (travelGroupSelect.value === "solo" || travelGroupSelect.value === "couple") ? true : persons >= maxPersons;
         updateEstimateTierRows();
         updateEstimate();
     }
@@ -1086,6 +1349,14 @@
     }
 
     function goToPayment() {
+        if (travelGroupSelect.value === "couple" && persons !== 2) {
+            alert("Couple bookings require exactly 2 travellers.");
+            return;
+        }
+        if (travelGroupSelect.value === "group" && persons < 3) {
+            alert("Group bookings need at least 3 travellers.");
+            return;
+        }
         document.getElementById("p4summary").textContent = `${selectedTrek.name} · ${formatTierName(selectedPackageTier)} Package · ${persons}${persons === 1 ? " person" : " persons"}`;
         document.getElementById("p4total").textContent = formatInr(getTotal());
         showPage("page4");
@@ -1249,6 +1520,7 @@
     function resetAll() {
         persons = 1;
         selectedMethod = null;
+        selectedDurationDays = 0;
         document.getElementById("personCount").textContent = "1";
         document.getElementById("minusBtn").disabled = true;
         document.getElementById("plusBtn").disabled = false;
@@ -1265,7 +1537,13 @@
         document.getElementById("netbanking-other").style.display = "none";
         document.getElementById("emi-months").value = "";
         document.getElementById("emi-provider").value = "";
+        travelGroupSelect.value = "solo";
+        if (itineraryTravelGroupSelect) {
+            itineraryTravelGroupSelect.value = "solo";
+        }
+        durationSelect.value = "4";
         select.value = "";
+        syncTravellerConstraints();
         clearSelectedTrekState();
         showPage("page1");
     }
@@ -1287,6 +1565,26 @@
         if (trek) renderTrekDetails(trek);
     });
 
+    durationSelect.addEventListener("change", () => {
+        if (!selectedTrek) return;
+        buildItinerary(selectedTrek);
+    });
+
+    itineraryTravelGroupSelect.addEventListener("change", () => {
+        travelGroupSelect.value = itineraryTravelGroupSelect.value;
+        syncTravellerConstraints();
+        if (selectedTrek) {
+            buildItinerary(selectedTrek);
+        }
+    });
+
+    travelGroupSelect.addEventListener("change", () => {
+        syncTravellerConstraints();
+        if (selectedTrek) {
+            buildItinerary(selectedTrek);
+        }
+    });
+
     let hasPreloadedTrek = false;
 
     if (trekId) {
@@ -1297,6 +1595,13 @@
             if (tierParam && packageConfig[tierParam]) {
                 setPackageTier(tierParam);
             }
+            if (groupParam === "solo" || groupParam === "couple" || groupParam === "group") {
+                travelGroupSelect.value = groupParam;
+                syncTravellerConstraints();
+                if (document.getElementById("page2").classList.contains("active")) {
+                    buildItinerary(trek);
+                }
+            }
             hasPreloadedTrek = true;
         }
     }
@@ -1304,6 +1609,8 @@
     if (!hasPreloadedTrek) {
         clearSelectedTrekState();
     }
+
+    syncTravellerConstraints();
 </script>
 </body>
 </html>
