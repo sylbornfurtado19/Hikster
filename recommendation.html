@@ -154,7 +154,10 @@ history.unshift(newEntry);
 history = history.slice(0,5);
 
 if (window.hkSetStoredArrayWithRecovery) {
-    window.hkSetStoredArrayWithRecovery("hiksterHistory", history);
+    const stored = window.hkSetStoredArrayWithRecovery("hiksterHistory", history);
+    if (!stored) {
+        alert("Unable to save history right now. Please clear browser storage and try again.");
+    }
 } else {
     localStorage.setItem("hiksterHistory", JSON.stringify(history));
 }
