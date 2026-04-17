@@ -976,9 +976,16 @@ function buildCardHTML(dest, isMatch=false){
 
 function resolveWeatherLocationForCard(dest) {
     if (!dest) return "";
-    if (dest.startPoint && dest.startPoint.trim()) return dest.startPoint.trim();
-    if (dest.location && dest.location.includes(",")) return dest.location.split(",")[0].trim();
-    return (dest.location || "").trim();
+
+    const trekName = (dest.name || "").trim();
+    const trekLocation = (dest.location || "").trim();
+    const startPoint = (dest.startPoint || "").trim();
+
+    if (trekName && trekLocation) return `${trekName}, ${trekLocation}`;
+    if (trekName) return trekName;
+    if (startPoint && trekLocation) return `${startPoint}, ${trekLocation}`;
+    if (startPoint) return startPoint;
+    return trekLocation;
 }
 
 function getGoogleMapsUrlForTrek(dest) {
