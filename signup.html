@@ -75,6 +75,8 @@
     </div>
 
     <script>
+        const AUTH_BASE_URL = 'http://localhost:8081/api/auth';
+
         function toggleSignupPassword() {
             const field = document.getElementById('signup-pass');
             const icon = document.getElementById('signup-pass-icon');
@@ -102,6 +104,14 @@
             return safeParseJSON(localStorage.getItem('hiksterUsers'), []);
         }
 
+        function isValidName(name) {
+            return /^[A-Za-z]+(?:[\s'-][A-Za-z]+)*$/.test(name);
+        }
+
+        function isValidEmail(email) {
+            return /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email);
+        }
+
         function toHex(buffer) {
             return Array.from(new Uint8Array(buffer))
                 .map(byte => byte.toString(16).padStart(2, '0'))
@@ -125,6 +135,16 @@
             const email = document.getElementById('signup-email').value.trim().toLowerCase();
             const pass = document.getElementById('signup-pass').value;
 
+            if (!isValidName(name)) {
+                alert('Full name can only contain letters, spaces, apostrophes, or hyphens.');
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
             if (pass.length < 8) {
                 alert('Password must be at least 8 characters!');
                 return;
@@ -138,18 +158,31 @@
                 return;
             }
 
-            const passwordHash = await hashPassword(pass);
-            const newUser = {
-                name: name,
-                email: email,
-                passwordHash: passwordHash,
-                passwordVersion: 2
-            };
+            try {
+                const response = await fetch(`${AUTH_BASE_URL}/request-otp`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email })
+                });
+                const result = await response.json();
 
-            users.push(newUser);
-            localStorage.setItem('hiksterUsers', JSON.stringify(users));
-            localStorage.setItem('hiksterUser', JSON.stringify({ name: name, email: email }));
-            window.location.href = 'home.html';
+                if (!response.ok || !result.ok) {
+                    alert(result.message || 'Could not send verification code.');
+                    return;
+                }
+
+                const passwordHash = await hashPassword(pass);
+                sessionStorage.setItem('hiksterPendingSignup', JSON.stringify({
+                    name,
+                    email,
+                    passwordHash,
+                    passwordVersion: 2
+                }));
+
+                window.location.href = `verify.html?email=${encodeURIComponent(email)}`;
+            } catch {
+                alert('Could not connect to Java verification service. Start backend-java first.');
+            }
         }
     </script>
 </body>
