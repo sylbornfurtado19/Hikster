@@ -870,6 +870,16 @@ function getStoredArray(key) {
     return Array.isArray(parsed) ? parsed : [];
 }
 
+function normalizeFavoriteValue(value) {
+    if (typeof value === "string") return value.trim();
+    if (value && typeof value === "object") {
+        if (typeof value.id === "string") return value.id.trim();
+        if (typeof value.name === "string") return value.name.trim();
+        if (typeof value.trekName === "string") return value.trekName.trim();
+    }
+    return "";
+}
+
 function clearWeatherCacheEntries() {
     const toDelete = [];
     for (let index = 0; index < localStorage.length; index += 1) {
@@ -953,7 +963,7 @@ function buildCardHTML(dest, isMatch=false){
         </div>
 
         <div class="flex justify-end mt-auto">
-    <button type="button" data-favorite-name="${escapeHTML(dest.name)}"
+    <button type="button" data-favorite-name="${escapeHTML(dest.name)}" data-favorite-id="${escapeHTML(dest.id)}"
     class="px-3 py-2 bg-red-100 text-red-500 rounded">
     ❤️
     </button>
@@ -1099,7 +1109,7 @@ document.addEventListener("click", (event) => {
     const favoriteButton = event.target.closest("[data-favorite-name]");
     if (favoriteButton) {
         event.stopPropagation();
-        saveFavorite(favoriteButton.dataset.favoriteName || "");
+        saveFavorite(favoriteButton.dataset.favoriteName || "", favoriteButton.dataset.favoriteId || "");
         return;
     }
 
@@ -1131,13 +1141,20 @@ document.addEventListener("keydown", (event) => {
 
 });
 
-function saveFavorite(name){
-    const normalized = (name || "").trim();
-    if (!normalized) return;
+function saveFavorite(name, trekId = ""){
+    const normalizedName = (name || "").trim();
+    const normalizedId = (trekId || "").trim();
+    const keyToStore = normalizedId || normalizedName;
+    if (!keyToStore) return;
     let favs = getStoredArray("favorites");
+    const favoritesSet = new Set(
+        favs
+            .map((entry) => normalizeFavoriteValue(entry).toLowerCase())
+            .filter(Boolean)
+    );
 
-    if(!favs.includes(normalized)){
-        favs.push(normalized);
+    if(!favoritesSet.has(keyToStore.toLowerCase())){
+        favs.push(keyToStore);
         const saved = setStoredArrayWithRecovery("favorites", favs);
         if (!saved) {
             alert("Unable to save favorite right now. Please clear browser storage and try again.");
@@ -1151,8 +1168,10 @@ function saveFavorite(name){
 
 function removeFavorite(name){
     let favs = getStoredArray("favorites");
+    const target = (name || "").trim().toLowerCase();
+    if (!target) return;
 
-    favs = favs.filter(f => f !== name);
+    favs = favs.filter((entry) => normalizeFavoriteValue(entry).toLowerCase() !== target);
 
     setStoredArrayWithRecovery("favorites", favs);
 
