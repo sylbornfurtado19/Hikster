@@ -346,11 +346,16 @@
 
         function resolveWeatherLocation(trek) {
             if (!trek) return '';
-            if (trek.startPoint && trek.startPoint.trim()) return trek.startPoint.trim();
-            if (trek.location && trek.location.includes(',')) {
-                return trek.location.split(',')[0].trim();
-            }
-            return trek.location || '';
+
+            const trekName = (trek.name || '').trim();
+            const trekLocation = (trek.location || '').trim();
+            const startPoint = (trek.startPoint || '').trim();
+
+            if (trekName && trekLocation) return `${trekName}, ${trekLocation}`;
+            if (trekName) return trekName;
+            if (startPoint && trekLocation) return `${startPoint}, ${trekLocation}`;
+            if (startPoint) return startPoint;
+            return trekLocation;
         }
 
         function getSeasonClass(status) {
