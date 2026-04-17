@@ -49,10 +49,10 @@
             <i class="fas fa-envelope-open-text"></i>
         </div>
         <h2 class="text-3xl font-extrabold text-juniper tracking-tight">Check your email</h2>
-        <p class="text-gray-500 mt-3 text-sm leading-relaxed">We sent a 6-digit verification code to your email address. Enter it below to confirm your account.</p>
+        <p id="verify-email-text" class="text-gray-500 mt-3 text-sm leading-relaxed">We sent a 6-digit verification code to your email address. Enter it below to confirm your account.</p>
     </div>
 
-    <form action="home.html" method="get" class="space-y-8">
+    <form id="verify-form" class="space-y-8">
         
         <div class="flex justify-between gap-2" id="otp-inputs">
             <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" autocomplete="one-time-code" class="w-12 h-14 text-center text-2xl font-extrabold text-juniper border-2 border-gray-200 rounded-xl focus:border-mint focus:ring-0 outline-none transition-colors" autofocus>
@@ -70,7 +70,7 @@
 
     <div class="mt-8 text-center">
         <p class="text-sm text-gray-500">Didn't receive the code?</p>
-        <button class="text-mint font-bold hover:text-juniper transition-colors mt-1">Resend OTP</button>
+        <button id="resend-otp" type="button" class="text-mint font-bold hover:text-juniper transition-colors mt-1">Resend OTP</button>
     </div>
     
     <div class="mt-6 text-center">
@@ -81,7 +81,66 @@
 </div>
 
 <script>
+    const AUTH_BASE_URL = 'http://localhost:8081/api/auth';
     const otpInputs = Array.from(document.querySelectorAll('#otp-inputs input'));
+    const verifyEmailText = document.getElementById('verify-email-text');
+    const verifyForm = document.getElementById('verify-form');
+    const resendButton = document.getElementById('resend-otp');
+
+    function safeParseJSON(value, fallback) {
+        try {
+            return value ? JSON.parse(value) : fallback;
+        } catch {
+            return fallback;
+        }
+    }
+
+    function getVerificationEmail() {
+        const params = new URLSearchParams(window.location.search);
+        const queryEmail = (params.get('email') || '').trim().toLowerCase();
+        if (queryEmail) {
+            return queryEmail;
+        }
+
+        const pending = safeParseJSON(sessionStorage.getItem('hiksterPendingSignup'), null);
+        return pending && pending.email ? String(pending.email).toLowerCase() : '';
+    }
+
+    function completeSignup(email) {
+        const pending = safeParseJSON(sessionStorage.getItem('hiksterPendingSignup'), null);
+        if (!pending || String(pending.email || '').toLowerCase() !== email) {
+            alert('Signup session missing. Please sign up again.');
+            window.location.href = 'signup.html';
+            return;
+        }
+
+        const users = safeParseJSON(localStorage.getItem('hiksterUsers'), []);
+        const exists = users.some(user => String(user.email || '').toLowerCase() === email);
+        if (!exists) {
+            users.push({
+                name: pending.name,
+                email: pending.email,
+                passwordHash: pending.passwordHash,
+                passwordVersion: pending.passwordVersion || 2
+            });
+            localStorage.setItem('hiksterUsers', JSON.stringify(users));
+        }
+
+        localStorage.setItem('hiksterUser', JSON.stringify({
+            name: pending.name,
+            email: pending.email
+        }));
+        sessionStorage.removeItem('hiksterPendingSignup');
+        window.location.href = 'home.html';
+    }
+
+    const verificationEmail = getVerificationEmail();
+    if (!verificationEmail) {
+        alert('No pending signup found. Please create account first.');
+        window.location.href = 'signup.html';
+    } else {
+        verifyEmailText.textContent = `We sent a 6-digit verification code to ${verificationEmail}. Enter it below to confirm your account.`;
+    }
 
     otpInputs.forEach((input, index) => {
         input.addEventListener('input', () => {
@@ -109,6 +168,51 @@
 
         const focusIndex = Math.min(digits.length, otpInputs.length - 1);
         otpInputs[focusIndex].focus();
+    });
+
+    verifyForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const otp = otpInputs.map(input => input.value).join('');
+
+        if (!/^\d{6}$/.test(otp)) {
+            alert('Please enter a valid 6-digit code.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${AUTH_BASE_URL}/verify-otp`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: verificationEmail, otp })
+            });
+            const result = await response.json();
+
+            if (!response.ok || !result.ok) {
+                alert(result.message || 'Verification failed.');
+                return;
+            }
+
+            completeSignup(verificationEmail);
+        } catch {
+            alert('Could not connect to Java verification service. Start backend-java first.');
+        }
+    });
+
+    resendButton.addEventListener('click', async () => {
+        if (!verificationEmail) {
+            return;
+        }
+        try {
+            const response = await fetch(`${AUTH_BASE_URL}/resend-otp`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: verificationEmail })
+            });
+            const result = await response.json();
+            alert(result.message || (response.ok ? 'OTP resent.' : 'Could not resend OTP.'));
+        } catch {
+            alert('Could not connect to Java verification service. Start backend-java first.');
+        }
     });
 </script>
 
