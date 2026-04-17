@@ -153,7 +153,11 @@ const newEntry = {
 history.unshift(newEntry);
 history = history.slice(0,5);
 
-localStorage.setItem("hiksterHistory", JSON.stringify(history));
+if (window.hkSetStoredArrayWithRecovery) {
+    window.hkSetStoredArrayWithRecovery("hiksterHistory", history);
+} else {
+    localStorage.setItem("hiksterHistory", JSON.stringify(history));
+}
 // =================================================
 
 // DISPLAY RESULTS
