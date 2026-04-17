@@ -87,7 +87,37 @@ function parseStoredList(key) {
 	}
 }
 
-const history = parseStoredList("hiksterHistory");
+function parseHistoryEntries() {
+	const primary = parseStoredList("hiksterHistory");
+	if (primary.length > 0) return primary;
+
+	// Backward compatibility for older/alternate keys.
+	const legacyKeys = ["history", "hikster_history", "hikster-history"];
+	for (const key of legacyKeys) {
+		const entries = parseStoredList(key);
+		if (entries.length > 0) return entries;
+	}
+	return [];
+}
+
+function resolveHistoryResultEntry(entry) {
+	if (!entry) return null;
+	if (typeof entry === "string") {
+		return destinations.find((dest) => dest.id === entry || dest.name === entry) || null;
+	}
+	if (typeof entry === "object") {
+		if (entry.id || entry.name) {
+			const byKnown = destinations.find((dest) => dest.id === entry.id || dest.name === entry.name);
+			if (byKnown) return byKnown;
+		}
+		if (entry.trekName) {
+			return destinations.find((dest) => dest.name === entry.trekName) || null;
+		}
+	}
+	return null;
+}
+
+const history = parseHistoryEntries();
 const bookings = parseStoredList("hiksterBookings");
 const container = document.getElementById("history-container");
 const actions = document.getElementById("history-actions");
@@ -136,8 +166,13 @@ if (history.length === 0 && bookings.length === 0) {
 	}
 
 	history.forEach(item => {
-		const results = Array.isArray(item.results) ? item.results : [];
-		let cards = results.map(dest => buildCardHTML(dest)).join('');
+		const rawResults = Array.isArray(item.results) ? item.results : [];
+		const results = rawResults
+			.map(resolveHistoryResultEntry)
+			.filter(Boolean);
+		let cards = results.length > 0
+			? results.map(dest => buildCardHTML(dest)).join('')
+			: `<div class="md:col-span-3 p-4 rounded-xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-700 text-sm text-gray-500 dark:text-gray-400">No trek cards available for this snapshot.</div>`;
 		const prefs = item.preferences || {};
 
 		container.innerHTML += `
