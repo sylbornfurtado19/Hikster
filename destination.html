@@ -120,6 +120,49 @@
                 <h3 class="text-xl font-bold text-juniper dark:text-white mb-4">Season Guide</h3>
                 <div id="season-grid" class="grid grid-cols-3 gap-2 text-xs"></div>
             </div>
+
+            <div
+                class="bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm">
+                <div class="flex items-start justify-between gap-4 mb-4">
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.22em] text-mint font-bold">Live Weather</p>
+                        <h3 class="text-xl font-bold text-juniper dark:text-white mt-1">Current conditions</h3>
+                        <p id="weather-status" class="text-sm text-gray-500 dark:text-gray-400 mt-1">Fetching weather...</p>
+                    </div>
+                    <div id="weather-icon-wrap"
+                        class="w-12 h-12 rounded-2xl bg-mint/10 text-mint flex items-center justify-center text-xl">
+                        <i id="weather-icon" class="fas fa-cloud-sun"></i>
+                    </div>
+                </div>
+
+                <div id="weather-loading" class="text-sm text-gray-500 dark:text-gray-400">Fetching weather...</div>
+
+                <div id="weather-current" class="hidden grid grid-cols-2 gap-3 text-sm">
+                    <div class="rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 p-4">
+                        <p class="text-gray-500 dark:text-gray-400">Temperature</p>
+                        <p id="weather-temperature" class="text-2xl font-extrabold text-juniper dark:text-white mt-1">-</p>
+                    </div>
+                    <div class="rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 p-4">
+                        <p class="text-gray-500 dark:text-gray-400">Condition</p>
+                        <p id="weather-condition" class="text-lg font-bold text-juniper dark:text-white mt-1">-</p>
+                    </div>
+                    <div class="rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 p-4">
+                        <p class="text-gray-500 dark:text-gray-400">Humidity</p>
+                        <p id="weather-humidity" class="text-lg font-bold text-juniper dark:text-white mt-1">-</p>
+                    </div>
+                    <div class="rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 p-4">
+                        <p class="text-gray-500 dark:text-gray-400">Wind Speed</p>
+                        <p id="weather-wind" class="text-lg font-bold text-juniper dark:text-white mt-1">-</p>
+                    </div>
+                </div>
+
+                <div id="weather-error" class="hidden mt-2 text-sm text-rose-600 dark:text-rose-400">Weather not available</div>
+
+                <div class="mt-5">
+                    <p class="text-sm font-bold text-juniper dark:text-white mb-3">3-Day Forecast</p>
+                    <div id="weather-forecast" class="grid grid-cols-1 gap-3"></div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -132,6 +175,182 @@
         function titleCase(value) {
             if (!value) return '-';
             return value.charAt(0).toUpperCase() + value.slice(1);
+        }
+
+        function weatherIconClass(condition) {
+            const value = (condition || '').toLowerCase();
+            if (value.includes('thunder')) return 'fa-bolt';
+            if (value.includes('rain') || value.includes('drizzle')) return 'fa-cloud-rain';
+            if (value.includes('snow')) return 'fa-snowflake';
+            if (value.includes('mist') || value.includes('fog') || value.includes('haze')) return 'fa-smog';
+            if (value.includes('cloud')) return 'fa-cloud';
+            return 'fa-sun';
+        }
+
+        function weatherCacheKey(location) {
+            return `hiksterWeather:${(location || '').trim().toLowerCase()}`;
+        }
+
+        function getCachedWeather(location) {
+            const key = weatherCacheKey(location);
+            if (!key || key.endsWith(':')) return null;
+            try {
+                const raw = localStorage.getItem(key);
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                const fetchedAt = Number(parsed?.fetchedAt || 0);
+                const tenMinutes = 10 * 60 * 1000;
+                if (!fetchedAt || (Date.now() - fetchedAt) > tenMinutes || !parsed?.data) {
+                    localStorage.removeItem(key);
+                    return null;
+                }
+                return parsed.data;
+            } catch {
+                return null;
+            }
+        }
+
+        function setCachedWeather(location, data) {
+            const key = weatherCacheKey(location);
+            if (!key || key.endsWith(':') || !data) return;
+            try {
+                localStorage.setItem(key, JSON.stringify({
+                    fetchedAt: Date.now(),
+                    data
+                }));
+            } catch {
+                // Ignore quota and storage errors; weather fetch still works without cache.
+            }
+        }
+
+        function updateWeatherIcon(condition) {
+            const icon = document.getElementById('weather-icon');
+            const wrap = document.getElementById('weather-icon-wrap');
+            if (!icon || !wrap) return;
+
+            icon.className = `fas ${weatherIconClass(condition)}`;
+            wrap.className = 'w-12 h-12 rounded-2xl flex items-center justify-center text-xl';
+
+            const value = (condition || '').toLowerCase();
+            if (value.includes('rain') || value.includes('drizzle') || value.includes('thunder')) {
+                wrap.classList.add('bg-sky-100', 'text-sky-600', 'dark:bg-sky-900/30', 'dark:text-sky-300');
+                return;
+            }
+            if (value.includes('snow')) {
+                wrap.classList.add('bg-cyan-100', 'text-cyan-600', 'dark:bg-cyan-900/30', 'dark:text-cyan-300');
+                return;
+            }
+            if (value.includes('cloud')) {
+                wrap.classList.add('bg-slate-100', 'text-slate-600', 'dark:bg-slate-700/40', 'dark:text-slate-300');
+                return;
+            }
+            wrap.classList.add('bg-amber-100', 'text-amber-600', 'dark:bg-amber-900/30', 'dark:text-amber-300');
+        }
+
+        function formatForecastDate(value) {
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return value;
+            return date.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+        }
+
+        function renderWeatherLoading() {
+            document.getElementById('weather-status').textContent = 'Fetching weather...';
+            document.getElementById('weather-loading').classList.remove('hidden');
+            document.getElementById('weather-current').classList.add('hidden');
+            document.getElementById('weather-error').classList.add('hidden');
+            document.getElementById('weather-forecast').innerHTML = '';
+        }
+
+        function renderWeatherError(message) {
+            document.getElementById('weather-status').textContent = message || 'Weather not available';
+            document.getElementById('weather-loading').classList.add('hidden');
+            document.getElementById('weather-current').classList.add('hidden');
+            document.getElementById('weather-error').classList.remove('hidden');
+            document.getElementById('weather-forecast').innerHTML = '';
+            updateWeatherIcon('cloud');
+        }
+
+        function renderWeatherCard(data) {
+            document.getElementById('weather-status').textContent = `Weather for ${data.location}`;
+            document.getElementById('weather-loading').classList.add('hidden');
+            document.getElementById('weather-error').classList.add('hidden');
+            document.getElementById('weather-current').classList.remove('hidden');
+
+            document.getElementById('weather-temperature').textContent = `${data.temperature}°C`;
+            document.getElementById('weather-condition').textContent = data.condition;
+            document.getElementById('weather-humidity').textContent = `${data.humidity}%`;
+            document.getElementById('weather-wind').textContent = `${data.windSpeed} km/h`;
+            updateWeatherIcon(data.condition);
+
+            const forecastContainer = document.getElementById('weather-forecast');
+            const forecast = Array.isArray(data.forecast) ? data.forecast : [];
+
+            if (!forecast.length) {
+                forecastContainer.innerHTML = '<div class="text-sm text-gray-500 dark:text-gray-400">Forecast unavailable</div>';
+                return;
+            }
+
+            forecastContainer.innerHTML = forecast.map((day) => {
+                const iconClass = weatherIconClass(day.condition);
+                return `
+                    <div class="rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 p-4 flex items-center justify-between gap-4">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-mint/10 text-mint flex items-center justify-center text-base">
+                                <i class="fas ${iconClass}"></i>
+                            </div>
+                            <div>
+                            <p class="font-bold text-juniper dark:text-white">${formatForecastDate(day.date)}</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">${day.condition}</p>
+                            </div>
+                        </div>
+                        <div class="text-right text-sm">
+                            <p class="font-bold text-juniper dark:text-white">${day.temperatureMin}° / ${day.temperatureMax}°C</p>
+                            <p class="text-gray-500 dark:text-gray-400">${day.humidity}% humidity</p>
+                            <p class="text-gray-500 dark:text-gray-400">${day.windSpeed} km/h wind</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function loadWeatherForLocation(location) {
+            const query = (location || '').trim();
+            if (!query) {
+                renderWeatherError('Weather not available');
+                return;
+            }
+
+            const cached = getCachedWeather(query);
+            if (cached) {
+                renderWeatherCard(cached);
+                document.getElementById('weather-status').textContent = `Weather for ${cached.location} (cached)`;
+                return;
+            }
+
+            renderWeatherLoading();
+
+            try {
+                const response = await fetch(`http://localhost:8080/api/weather?location=${encodeURIComponent(query)}`);
+                const payload = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(payload?.message || 'Weather not available');
+                }
+
+                setCachedWeather(query, payload);
+                renderWeatherCard(payload);
+            } catch (error) {
+                renderWeatherError(error.message || 'Weather not available');
+            }
+        }
+
+        function resolveWeatherLocation(trek) {
+            if (!trek) return '';
+            if (trek.startPoint && trek.startPoint.trim()) return trek.startPoint.trim();
+            if (trek.location && trek.location.includes(',')) {
+                return trek.location.split(',')[0].trim();
+            }
+            return trek.location || '';
         }
 
         function getSeasonClass(status) {
@@ -184,6 +403,9 @@
             const bookingUrl = `book.html?trek=${encodeURIComponent(trek.id)}`;
             const loginRedirectUrl = `index.html?redirect=${encodeURIComponent(bookingUrl)}`;
             document.getElementById('book-now-link').setAttribute('href', loggedInUser ? bookingUrl : loginRedirectUrl);
+
+            const weatherLocation = resolveWeatherLocation(trek);
+            loadWeatherForLocation(weatherLocation);
 
             const seasonGrid = document.getElementById('season-grid');
             const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
