@@ -116,6 +116,16 @@ const container = document.getElementById("favorites-container");
 const clearAllBtn = document.getElementById("clear-all-btn");
 const escapeHTML = window.hkEscapeHTML || ((value) => String(value ?? ""));
 
+function normalizeFavoriteEntry(entry) {
+    if (typeof entry === "string") return entry.trim().toLowerCase();
+    if (entry && typeof entry === "object") {
+        if (typeof entry.id === "string") return entry.id.trim().toLowerCase();
+        if (typeof entry.name === "string") return entry.name.trim().toLowerCase();
+        if (typeof entry.trekName === "string") return entry.trekName.trim().toLowerCase();
+    }
+    return "";
+}
+
 // Show/hide Clear All button based on favorites count
 function updateClearButton() {
     if (favs.length > 0) {
@@ -169,8 +179,12 @@ if (favs.length === 0) {
         </div>
     `;
 } else {
-    // Support both historical name-based favorites and id-based favorites.
-    const favDest = destinations.filter(d => favs.includes(d.name) || favs.includes(d.id));
+    const favoriteKeys = new Set(favs.map(normalizeFavoriteEntry).filter(Boolean));
+    const favDest = destinations.filter((d) => {
+        const byName = (d.name || "").trim().toLowerCase();
+        const byId = (d.id || "").trim().toLowerCase();
+        return favoriteKeys.has(byName) || favoriteKeys.has(byId);
+    });
     container.innerHTML = favDest.map(d => `
         <div class="relative group">
             ${buildCardHTML(d)}
