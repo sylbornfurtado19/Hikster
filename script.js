@@ -865,8 +865,43 @@ function safeParseJSON(value, fallback) {
     }
 }
 
+function getStoredArray(key) {
+    const parsed = safeParseJSON(localStorage.getItem(key), []);
+    return Array.isArray(parsed) ? parsed : [];
+}
+
+function clearWeatherCacheEntries() {
+    const toDelete = [];
+    for (let index = 0; index < localStorage.length; index += 1) {
+        const key = localStorage.key(index);
+        if (!key) continue;
+        if (key.startsWith("hiksterCardWeather:") || key.startsWith("hiksterWeather:")) {
+            toDelete.push(key);
+        }
+    }
+    toDelete.forEach((key) => localStorage.removeItem(key));
+}
+
+function setStoredArrayWithRecovery(key, value) {
+    try {
+        localStorage.setItem(key, JSON.stringify(value));
+        return true;
+    } catch {
+        // Try recovering space by pruning weather cache, then retry once.
+        clearWeatherCacheEntries();
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+            return true;
+        } catch {
+            return false;
+        }
+    }
+}
+
 window.hkEscapeHTML = escapeHTML;
 window.hkSafeParseJSON = safeParseJSON;
+window.hkGetStoredArray = getStoredArray;
+window.hkSetStoredArrayWithRecovery = setStoredArrayWithRecovery;
 
 function buildCardHTML(dest, isMatch=false){
     let tags = `<span class="px-2 py-1 bg-mint/10 text-mint text-xs font-bold rounded-md tracking-wide">${escapeHTML(toSentenceCase(dest.difficulty))}</span> 
@@ -883,6 +918,7 @@ function buildCardHTML(dest, isMatch=false){
      role="button"
      tabindex="0"
      data-trek-id="${escapeHTML(dest.id)}"
+     data-weather-location="${escapeHTML(resolveWeatherLocationForCard(dest))}"
      data-type="${escapeHTML([dest.difficulty, dest.terrain, dest.altitude].join(' '))}">
     
     ${matchBadge}
@@ -903,6 +939,19 @@ function buildCardHTML(dest, isMatch=false){
             ${escapeHTML(dest.desc)}
         </p>
 
+        <a href="${escapeHTML(getGoogleMapsUrlForTrek(dest))}"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 mb-4 text-sm font-semibold text-sky-600 hover:text-sky-700 dark:text-sky-300 dark:hover:text-sky-200">
+            <i class="fas fa-location-dot"></i>
+            <span>${escapeHTML(dest.startPoint || dest.location || "View location")}</span>
+        </a>
+
+        <div data-weather-box="${escapeHTML(dest.id)}" class="mb-4 rounded-xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm">
+            <p class="text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">Live Weather</p>
+            <p data-weather-status="${escapeHTML(dest.id)}" class="text-gray-500 dark:text-gray-400">Fetching weather...</p>
+        </div>
+
         <div class="flex justify-end mt-auto">
     <button type="button" data-favorite-name="${escapeHTML(dest.name)}"
     class="px-3 py-2 bg-red-100 text-red-500 rounded">
@@ -914,6 +963,127 @@ function buildCardHTML(dest, isMatch=false){
 </div>
 `;
 }
+
+function resolveWeatherLocationForCard(dest) {
+    if (!dest) return "";
+    if (dest.startPoint && dest.startPoint.trim()) return dest.startPoint.trim();
+    if (dest.location && dest.location.includes(",")) return dest.location.split(",")[0].trim();
+    return (dest.location || "").trim();
+}
+
+function getGoogleMapsUrlForTrek(dest) {
+    if (!dest) return "https://www.google.com/maps";
+    const startPoint = (dest.startPoint || "").trim();
+    const location = (dest.location || "").trim();
+    const trekName = (dest.name || "").trim();
+    const query = [startPoint, location, trekName].filter(Boolean).join(", ");
+    if (!query) return "https://www.google.com/maps";
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+function cardWeatherCacheKey(location) {
+    return `hiksterCardWeather:${(location || "").trim().toLowerCase()}`;
+}
+
+function getCardWeatherFromCache(location) {
+    const key = cardWeatherCacheKey(location);
+    if (!location) return null;
+
+    try {
+        const raw = localStorage.getItem(key);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        const fetchedAt = Number(parsed?.fetchedAt || 0);
+        const tenMinutesMs = 10 * 60 * 1000;
+
+        if (!parsed?.data || !fetchedAt || Date.now() - fetchedAt > tenMinutesMs) {
+            localStorage.removeItem(key);
+            return null;
+        }
+        return parsed.data;
+    } catch {
+        return null;
+    }
+}
+
+function setCardWeatherCache(location, data) {
+    if (!location || !data) return;
+    const key = cardWeatherCacheKey(location);
+    try {
+        localStorage.setItem(key, JSON.stringify({ fetchedAt: Date.now(), data }));
+    } catch {
+        // Ignore localStorage quota failures.
+    }
+}
+
+function weatherIconForCard(condition) {
+    const value = (condition || "").toLowerCase();
+    if (value.includes("thunder")) return "fa-bolt";
+    if (value.includes("rain") || value.includes("drizzle")) return "fa-cloud-rain";
+    if (value.includes("snow")) return "fa-snowflake";
+    if (value.includes("mist") || value.includes("fog") || value.includes("haze")) return "fa-smog";
+    if (value.includes("cloud")) return "fa-cloud";
+    return "fa-sun";
+}
+
+function renderCardWeatherStatus(trekId, message, isError = false) {
+    const statusEl = document.querySelector(`[data-weather-status="${trekId}"]`);
+    if (!statusEl) return;
+
+    statusEl.className = isError
+        ? "text-rose-500 dark:text-rose-400"
+        : "text-gray-700 dark:text-gray-200";
+    statusEl.textContent = message;
+}
+
+function renderCardWeather(trekId, weather) {
+    if (!weather) {
+        renderCardWeatherStatus(trekId, "Weather not available", true);
+        return;
+    }
+
+    const icon = weatherIconForCard(weather.condition);
+    renderCardWeatherStatus(
+        trekId,
+        `${weather.temperature}°C | ${weather.condition} | ${weather.humidity}% humidity | ${weather.windSpeed} km/h wind`
+    );
+
+    const statusEl = document.querySelector(`[data-weather-status="${trekId}"]`);
+    if (!statusEl) return;
+    statusEl.innerHTML = `<i class="fas ${icon} mr-2 text-mint"></i>${escapeHTML(weather.temperature)}°C | ${escapeHTML(weather.condition)} | ${escapeHTML(weather.humidity)}% humidity | ${escapeHTML(weather.windSpeed)} km/h wind`;
+}
+
+async function loadWeatherForCards() {
+    const cards = Array.from(document.querySelectorAll(".destination-card[data-trek-id]"));
+    if (!cards.length) return;
+
+    await Promise.all(cards.map(async (card) => {
+        const trekId = card.getAttribute("data-trek-id") || "";
+        const location = (card.getAttribute("data-weather-location") || "").trim();
+        if (!trekId || !location) {
+            renderCardWeatherStatus(trekId, "Weather not available", true);
+            return;
+        }
+
+        const cached = getCardWeatherFromCache(location);
+        if (cached) {
+            renderCardWeather(trekId, cached);
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/weather?location=${encodeURIComponent(location)}`);
+            const payload = await response.json();
+            if (!response.ok) {
+                throw new Error(payload?.message || "Weather not available");
+            }
+            setCardWeatherCache(location, payload);
+            renderCardWeather(trekId, payload);
+        } catch {
+            renderCardWeatherStatus(trekId, "Weather not available", true);
+        }
+    }));
+}
 // ================= LOAD =================
 
 document.addEventListener("DOMContentLoaded",()=>{
@@ -922,6 +1092,7 @@ const container = document.getElementById("catalog-container");
 
 if(container){
 container.innerHTML = destinations.map(d=>buildCardHTML(d)).join("");
+loadWeatherForCards();
 }
 
 document.addEventListener("click", (event) => {
@@ -961,11 +1132,17 @@ document.addEventListener("keydown", (event) => {
 });
 
 function saveFavorite(name){
-    let favs = safeParseJSON(localStorage.getItem("favorites"), []);
+    const normalized = (name || "").trim();
+    if (!normalized) return;
+    let favs = getStoredArray("favorites");
 
-    if(!favs.includes(name)){
-        favs.push(name);
-        localStorage.setItem("favorites", JSON.stringify(favs));
+    if(!favs.includes(normalized)){
+        favs.push(normalized);
+        const saved = setStoredArrayWithRecovery("favorites", favs);
+        if (!saved) {
+            alert("Unable to save favorite right now. Please clear browser storage and try again.");
+            return;
+        }
         alert("Added to favorites!");
     } else {
         alert("Already in favorites!");
@@ -973,11 +1150,11 @@ function saveFavorite(name){
 }
 
 function removeFavorite(name){
-    let favs = safeParseJSON(localStorage.getItem("favorites"), []);
+    let favs = getStoredArray("favorites");
 
     favs = favs.filter(f => f !== name);
 
-    localStorage.setItem("favorites", JSON.stringify(favs));
+    setStoredArrayWithRecovery("favorites", favs);
 
     location.reload();
 }
