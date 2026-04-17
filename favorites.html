@@ -169,11 +169,12 @@ if (favs.length === 0) {
         </div>
     `;
 } else {
-    const favDest = destinations.filter(d => favs.includes(d.name));
+    // Support both historical name-based favorites and id-based favorites.
+    const favDest = destinations.filter(d => favs.includes(d.name) || favs.includes(d.id));
     container.innerHTML = favDest.map(d => `
         <div class="relative group">
             ${buildCardHTML(d)}
-            <button type="button" data-remove-favorite="${escapeHTML(d.name)}" class="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow hover:bg-red-600 transition-colors">
+            <button type="button" data-remove-favorite="${escapeHTML(d.name)}" data-remove-favorite-id="${escapeHTML(d.id)}" class="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow hover:bg-red-600 transition-colors">
                 <i class="fas fa-times mr-1"></i> Remove
             </button>
         </div>
@@ -185,7 +186,12 @@ container.addEventListener('click', (event) => {
     if (!removeButton) return;
 
     event.stopPropagation();
-    removeFavorite(removeButton.dataset.removeFavorite || '');
+    const favoriteName = removeButton.dataset.removeFavorite || '';
+    const favoriteId = removeButton.dataset.removeFavoriteId || '';
+    removeFavorite(favoriteName);
+    if (favoriteId) {
+        removeFavorite(favoriteId);
+    }
 });
 
 // Initialize clear button visibility
